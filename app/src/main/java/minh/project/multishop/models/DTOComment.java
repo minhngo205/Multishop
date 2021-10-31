@@ -1,8 +1,10 @@
-package minh.project.multishop.network.dtos.DTOmodels;
+package minh.project.multishop.models;
 
 import com.google.gson.annotations.SerializedName;
 
 import java.util.Date;
+
+import minh.project.multishop.models.DTOUser;
 
 public class DTOComment {
     @SerializedName("user")

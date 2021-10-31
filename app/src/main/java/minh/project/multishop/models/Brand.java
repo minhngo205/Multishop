@@ -3,7 +3,9 @@ package minh.project.multishop.models;
 import com.google.gson.annotations.SerializedName;
 
 public class Brand {
+    @SerializedName("id")
     private int brandID;
+    @SerializedName("name")
     private String brandName;
 
     public Brand(int brandID, String brandName) {

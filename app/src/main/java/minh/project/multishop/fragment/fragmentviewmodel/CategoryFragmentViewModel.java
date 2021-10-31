@@ -1,34 +1,38 @@
 package minh.project.multishop.fragment.fragmentviewmodel;
 
 import android.annotation.SuppressLint;
-import android.os.Handler;
-import android.util.Log;
 import android.view.View;
+import android.widget.Adapter;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.core.util.Predicate;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
+import java.util.stream.Collectors;
 
+import minh.project.multishop.R;
 import minh.project.multishop.adapter.CategoryAdapter;
 import minh.project.multishop.adapter.ProductCateAdapter;
 import minh.project.multishop.base.BaseFragmentViewModel;
 import minh.project.multishop.databinding.FragmentCategoryBinding;
 import minh.project.multishop.fragment.CategoryFragment;
+import minh.project.multishop.models.Brand;
 import minh.project.multishop.models.Category;
 import minh.project.multishop.models.Product;
 import minh.project.multishop.network.IAppAPI;
 import minh.project.multishop.network.RetroInstance;
-import minh.project.multishop.network.dtos.DTOmodels.DTOCategory;
-import minh.project.multishop.network.dtos.DTOmodels.DTOProduct;
 import minh.project.multishop.network.dtos.Response.GetListProductResponse;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -36,14 +40,17 @@ import retrofit2.Response;
 
 public class CategoryFragmentViewModel extends BaseFragmentViewModel<CategoryFragment> {
     private static final String TAG = "CategoryFragment";
+    private ProductCateAdapter productCateAdapter;
 
     //View
     private RecyclerView mCategoryView;
     private RecyclerView mProductView;
     private LinearLayout noProductView;
+    private LinearLayout mSpinner;
 
     private int firstPosition;
     private List<Category> categoryList;
+    private List<Product> productList, dataset;
 
     private FragmentCategoryBinding mBinding;
 
@@ -72,14 +79,8 @@ public class CategoryFragmentViewModel extends BaseFragmentViewModel<CategoryFra
             @Override
             public void onResponse(@NonNull Call<GetListProductResponse> call, @NonNull Response<GetListProductResponse> response) {
                 if(response.isSuccessful()){
-                    List<DTOProduct> responseProductList;
-                    List<Product> result = new ArrayList<>();
                     if(response.body()!=null){
-                        responseProductList = response.body().productList;
-                        for (DTOProduct product: responseProductList ) {
-                            result.add(product.toProductEntity());
-                        }
-                        liveProdData.postValue(result);
+                        liveProdData.postValue(response.body().productList);
 //                        Log.d(TAG, "Response size: "+result.size());
                     } else {
                         liveProdData.postValue(null);
@@ -95,24 +96,20 @@ public class CategoryFragmentViewModel extends BaseFragmentViewModel<CategoryFra
     }
 
     private void loadCateData() {
-        Call<List<DTOCategory>> call = api.getAllCategory();
-        call.enqueue(new Callback<List<DTOCategory>>() {
+        Call<List<Category>> call = api.getAllCategory();
+        call.enqueue(new Callback<List<Category>>() {
             @Override
-            public void onResponse(@NonNull Call<List<DTOCategory>> call, @NonNull Response<List<DTOCategory>> response) {
-                List<Category> result = new ArrayList<>();
+            public void onResponse(@NonNull Call<List<Category>> call, @NonNull Response<List<Category>> response) {
                 if (response.isSuccessful()){
                     if(response.body()==null) return;
-                    for (DTOCategory dc: response.body()) {
-                        result.add(dc.toCateEntity());
-                    }
-                    liveCateData.postValue(result);
+                    liveCateData.postValue(response.body());
                 } else {
                     liveCateData.postValue(null);
                 }
             }
 
             @Override
-            public void onFailure(@NonNull Call<List<DTOCategory>> call, @NonNull Throwable t) {
+            public void onFailure(@NonNull Call<List<Category>> call, @NonNull Throwable t) {
                 liveCateData.postValue(null);
             }
         });
@@ -126,55 +123,116 @@ public class CategoryFragmentViewModel extends BaseFragmentViewModel<CategoryFra
     public CategoryFragmentViewModel(CategoryFragment categoryFragment) {
         super(categoryFragment);
         api = RetroInstance.getRetroInstance().create(IAppAPI.class);
+        dataset = new ArrayList<>();
     }
 
     @Override
     public void initView(View view) {
         mBinding = mFragment.getBinding();
+
         mCategoryView = mBinding.recyclerCatalogueType;
+        LinearLayoutManager layoutManager = new LinearLayoutManager(mFragment.getContext(), LinearLayoutManager.HORIZONTAL,false);
+        mCategoryView.setLayoutManager(layoutManager);
+
         mProductView = mBinding.recyclerCatalogueProduct;
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(mFragment.getContext(), 2);
+        mProductView.setLayoutManager(gridLayoutManager);
+        mProductView.setNestedScrollingEnabled(false);
+        productList = new ArrayList<>();
+        productCateAdapter = new ProductCateAdapter(mFragment.getContext(),productList);
+        mProductView.setAdapter(productCateAdapter);
+
         noProductView = mBinding.lvNoProduct;
+        mSpinner = mBinding.lvProgress;
         initCategoryView(firstPosition);
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     private void initCategoryView(int showPosition){
         categoryList = new ArrayList<>();
-        LinearLayoutManager layoutManager = new LinearLayoutManager(mFragment.getContext(), LinearLayoutManager.HORIZONTAL,false);
-        mCategoryView.setLayoutManager(layoutManager);
+
         CategoryAdapter adapter = new CategoryAdapter(categoryList,mFragment.getContext(),showPosition);
+        mCategoryView.setAdapter(adapter);
+
         adapter.setOnItemClickListener(position -> {
             initProductView(categoryList.get(position).getID());
-            Toast.makeText(mFragment.getActivity(), "id: "+position, Toast.LENGTH_SHORT).show();
+            initBrandSpinner(categoryList.get(position).getBrandList());
+            mSpinner.setVisibility(View.VISIBLE);
         });
-        getListCategory().observe(mFragment.getViewLifecycleOwner(), new Observer<List<Category>>() {
-            @SuppressLint("NotifyDataSetChanged")
-            @Override
-            public void onChanged(List<Category> categories) {
-                categoryList.addAll(categories);
-                adapter.notifyDataSetChanged();
-            }
+
+        getListCategory().observe(mFragment.getViewLifecycleOwner(), categories -> {
+            categoryList.addAll(categories);
+            adapter.notifyDataSetChanged();
         });
-        mCategoryView.setAdapter(adapter);
     }
 
-    private void initProductView(int category) {
-        getProdByCate(category).observe(mFragment.getViewLifecycleOwner(), new Observer<List<Product>>() {
-            @Override
-            public void onChanged(List<Product> products) {
-                if(products==null || products.size()==0){
-                    noProductView.setVisibility(View.VISIBLE);
-                    mProductView.setVisibility(View.GONE);
-                    return;
-                }
+    private void initBrandSpinner(List<Brand> brandList) {
+        List<String> brands = new ArrayList<>();
+        brands.add("(None)");
+        for(Brand b : brandList) brands.add(b.getBrandName());
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(mFragment.getContext(), android.R.layout.simple_spinner_item,brands);
 
-                noProductView.setVisibility(View.GONE);
-                mProductView.setVisibility(View.VISIBLE);
-                GridLayoutManager gridLayoutManager = new GridLayoutManager(mFragment.getContext(), 2);
-                mProductView.setLayoutManager(gridLayoutManager);
-                mProductView.setNestedScrollingEnabled(false);
-                ProductCateAdapter adapter = new ProductCateAdapter(mFragment.getContext(),products);
-                mProductView.setAdapter(adapter);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        mBinding.spinnerBrand.setAdapter(adapter);
+        mBinding.spinnerBrand.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                onItemSelectedHandler(adapterView, view, i, l);
             }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+    }
+
+    @SuppressLint("NotifyDataSetChanged")
+    private void onItemSelectedHandler(AdapterView<?> adapterView, View view, int position, long id) {
+        if(position == 0){
+            productList.clear();
+            productList.addAll(dataset);
+            productCateAdapter.notifyDataSetChanged();
+            return;
+        }
+
+        Adapter adapter = adapterView.getAdapter();
+        String search = (String) adapter.getItem(position);
+
+        List<Product> searchedProducts = queryByBrandName(search);
+        productList.clear();
+        productList.addAll(searchedProducts);
+        productCateAdapter.notifyDataSetChanged();
+    }
+
+    private List<Product> queryByBrandName(String search) {
+        List<Product> result = new ArrayList<>();
+        for(Product p : dataset){
+            if(search.equals(p.getBrand().getBrandName())) result.add(p);
+        }
+        return result;
+    }
+
+    @SuppressLint("NotifyDataSetChanged")
+    private void initProductView(int category) {
+        getProdByCate(category).observe(mFragment.getViewLifecycleOwner(), products -> {
+            if(products==null || products.size()==0){
+                mSpinner.setVisibility(View.GONE);
+                noProductView.setVisibility(View.VISIBLE);
+                mProductView.setVisibility(View.GONE);
+                return;
+            }
+
+            dataset.clear();
+            dataset.addAll(products);
+
+            productList.clear();
+            productList.addAll(products);
+            productCateAdapter.notifyDataSetChanged();
+
+            noProductView.setVisibility(View.GONE);
+            mProductView.setVisibility(View.VISIBLE);
+            mSpinner.setVisibility(View.GONE);
         });
     }
 

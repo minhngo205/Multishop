@@ -1,54 +1,73 @@
 package minh.project.multishop.models;
 
+import com.google.gson.annotations.SerializedName;
+
+import java.util.Date;
 import java.util.List;
 
 public class Product {
-    private int ID;
-    private String productName;
-    private String imageThumbnail;
-    private Brand brand;
-    private Category category;
-    private List<ProductSpecs> specs;
-    private String shortDes;
-    private String description;
-    private int productPrice;
-    private int salePrice;
-    private int isDiscount;
-    private double avgRate;
-    private List<Rating> ratingList;
-    private String[] imageList;
+    @SerializedName("id")
+    public int productID;
 
-    public Product(int ID, String productName, String imageThumbnail, Brand brand, Category category, List<ProductSpecs> specs, String shortDes, String description, int productPrice, int salePrice, int isDiscount, double avgRate, List<Rating> ratingList, String[] imageList) {
-        this.ID = ID;
-        this.productName = productName;
-        this.imageThumbnail = imageThumbnail;
-        this.brand = brand;
-        this.category = category;
-        this.specs = specs;
-        this.shortDes = shortDes;
-        this.description = description;
-        this.productPrice = productPrice;
-        this.salePrice = salePrice;
-        this.isDiscount = isDiscount;
-        this.avgRate = avgRate;
-        this.ratingList = ratingList;
-        this.imageList = imageList;
-    }
+    @SerializedName("name")
+    public String productName;
+
+    @SerializedName("thumbnail")
+    public String imgThumbnail;
+
+    @SerializedName("brand")
+    public Brand brand;
+
+    @SerializedName("created_at")
+    public Date createdAt;
+
+    @SerializedName("updated_at")
+    public Date updatedAt;
+
+    @SerializedName("category")
+    public Category category;
+
+    @SerializedName("specifications")
+    public List<ProductSpecs> specifications;
+
+    @SerializedName("short_description")
+    public String descriptionShort;
+
+    @SerializedName("description")
+    public String description;
+
+    @SerializedName("price")
+    public int productPrice;
+
+    @SerializedName("sale_price")
+    public int salePrice;
+
+    @SerializedName("discount")
+    public int isDiscount;
+
+    @SerializedName("avg_rating")
+    public double avgRating;
+
+    @SerializedName("ratings")
+    public List<Rating> listRatings;
+
+    @SerializedName("images")
+    public Image[] listImages;
 
     public int getID() {
-        return ID;
+        return productID;
     }
 
     public void setID(int ID) {
-        this.ID = ID;
+        this.productID = ID;
     }
 
     public double getAvgRate() {
-        return avgRate;
+        return avgRating;
     }
 
     public void setAvgRate(double avgRate) {
-        this.avgRate = avgRate;
+        this.avgRating = avgRate;
     }
 
     public String getProductName() {
@@ -68,11 +87,11 @@ public class Product {
     }
 
     public String getImageThumbnail() {
-        return imageThumbnail;
+        return imgThumbnail;
     }
 
     public void setImageThumbnail(String imageThumbnail) {
-        this.imageThumbnail = imageThumbnail;
+        this.imgThumbnail = imageThumbnail;
     }
 
     public Category getCategory() {
@@ -100,19 +119,19 @@ public class Product {
     }
 
     public List<ProductSpecs> getSpecs() {
-        return specs;
+        return specifications;
     }
 
     public void setSpecs(List<ProductSpecs> specs) {
-        this.specs = specs;
+        this.specifications = specs;
     }
 
     public String getShortDes() {
-        return shortDes;
+        return descriptionShort;
     }
 
     public void setShortDes(String shortDes) {
-        this.shortDes = shortDes;
+        this.descriptionShort = shortDes;
     }
 
     public int getSalePrice() {
@@ -132,18 +151,18 @@ public class Product {
     }
 
     public List<Rating> getRatingList() {
-        return ratingList;
+        return listRatings;
     }
 
     public void setRatingList(List<Rating> ratingList) {
-        this.ratingList = ratingList;
+        this.listRatings = ratingList;
     }
 
-    public String[] getImageList() {
-        return imageList;
+    public Image[] getImageList() {
+        return listImages;
     }
 
-    public void setImageList(String[] imageList) {
-        this.imageList = imageList;
+    public void setImageList(Image[] imageList) {
+        this.listImages = imageList;
     }
 }

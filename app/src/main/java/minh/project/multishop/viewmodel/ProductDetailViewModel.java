@@ -1,14 +1,10 @@
 package minh.project.multishop.viewmodel;
 
-import android.os.Handler;
-import android.util.Log;
-import android.view.View;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.Observer;
 import androidx.viewpager.widget.ViewPager;
 
 import java.text.NumberFormat;
@@ -18,12 +14,10 @@ import minh.project.multishop.ProductDetailActivity;
 import minh.project.multishop.R;
 import minh.project.multishop.adapter.ProductViewPagerAdapter;
 import minh.project.multishop.base.BaseActivityViewModel;
-import minh.project.multishop.databinding.ActivityProductDetailBinding;
+import minh.project.multishop.models.Image;
 import minh.project.multishop.models.Product;
 import minh.project.multishop.network.IAppAPI;
 import minh.project.multishop.network.RetroInstance;
-import minh.project.multishop.network.dtos.DTOmodels.DTOProduct;
-import minh.project.multishop.utils.FetchImage;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -35,7 +29,6 @@ public class ProductDetailViewModel extends BaseActivityViewModel<ProductDetailA
     private static final int CACHE_PAGE_COUNT = 3;
     private ProductViewPagerAdapter adapter;
 
-
     public LiveData<Product> getProductData(){
         if(liveProductData==null){
             liveProductData = new MutableLiveData<>();
@@ -46,19 +39,19 @@ public class ProductDetailViewModel extends BaseActivityViewModel<ProductDetailA
 
     private void loadProductData(int proId) {
         IAppAPI api = RetroInstance.getRetroInstance().create(IAppAPI.class);
-        Call<DTOProduct> call = api.getProductByID(proId);
-        call.enqueue(new Callback<DTOProduct>() {
+        Call<Product> call = api.getProductByID(proId);
+        call.enqueue(new Callback<Product>() {
             @Override
-            public void onResponse(@NonNull Call<DTOProduct> call, @NonNull Response<DTOProduct> response) {
+            public void onResponse(@NonNull Call<Product> call, @NonNull Response<Product> response) {
                 if(response.isSuccessful()&&response.body()!=null){
-                    liveProductData.postValue(response.body().toProductEntity());
+                    liveProductData.postValue(response.body());
                 } else {
                     liveProductData.postValue(null);
                 }
             }
 
             @Override
-            public void onFailure(@NonNull Call<DTOProduct> call, @NonNull Throwable t) {
+            public void onFailure(@NonNull Call<Product> call, @NonNull Throwable t) {
                 liveProductData.postValue(null);
             }
         });
@@ -88,7 +81,7 @@ public class ProductDetailViewModel extends BaseActivityViewModel<ProductDetailA
         return currencyFormatter.format(price);
     }
 
-    public void initViewPager(String[] linkIMG) {
+    public void initViewPager(Image[] linkIMG) {
         ViewPager viewPager = mActivity.findViewById(R.id.view_pager_product);
         adapter = new ProductViewPagerAdapter(linkIMG, mActivity);
 

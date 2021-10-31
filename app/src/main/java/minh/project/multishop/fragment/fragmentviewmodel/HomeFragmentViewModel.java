@@ -1,16 +1,17 @@
 package minh.project.multishop.fragment.fragmentviewmodel;
 
 import android.annotation.SuppressLint;
-import android.os.Handler;
 import android.view.View;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
+import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.GridLayoutManager;
 
-import java.util.ArrayList;
+import com.facebook.shimmer.ShimmerFrameLayout;
+
 import java.util.List;
 
 import minh.project.multishop.R;
@@ -21,7 +22,6 @@ import minh.project.multishop.fragment.HomeFragment;
 import minh.project.multishop.models.Product;
 import minh.project.multishop.network.IAppAPI;
 import minh.project.multishop.network.RetroInstance;
-import minh.project.multishop.network.dtos.DTOmodels.DTOProduct;
 import minh.project.multishop.network.dtos.Response.GetListProductResponse;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -33,6 +33,7 @@ public class HomeFragmentViewModel extends BaseFragmentViewModel<HomeFragment> {
     private MutableLiveData<List<Product>> liveData;
     private FragmentHomeBinding homeBinding;
     private HomeProductAdapter adapter;
+    private ShimmerFrameLayout mShimmerViewContainer;
 
     /**
      * constructor
@@ -58,15 +59,8 @@ public class HomeFragmentViewModel extends BaseFragmentViewModel<HomeFragment> {
             @Override
             public void onResponse(@NonNull Call<GetListProductResponse> call, @NonNull Response<GetListProductResponse> response) {
                 if(response.isSuccessful()){
-                    List<DTOProduct> responseProductList;
-                    List<Product> result = new ArrayList<>();
                     if(response.body()!=null){
-                        responseProductList = response.body().productList;
-                        for (DTOProduct product: responseProductList ) {
-                            result.add(product.toProductEntity());
-                        }
-                        liveData.postValue(result);
-//                        Log.d(TAG, "Response size: "+result.size());
+                        liveData.postValue(response.body().productList);
                     } else {
                         liveData.postValue(null);
                     }
@@ -83,11 +77,16 @@ public class HomeFragmentViewModel extends BaseFragmentViewModel<HomeFragment> {
     @Override
     public void initView(View view) {
         homeBinding = mFragment.getHomeBinding();
+
+        mShimmerViewContainer = homeBinding.shimmerViewContainer;
+
+        GridLayoutManager layoutManager = new GridLayoutManager(mFragment.getActivity(), 2);
+        homeBinding.recyclerRecommendation.setLayoutManager(layoutManager);
+        homeBinding.recyclerRecommendation.setItemAnimator(new DefaultItemAnimator());
+        homeBinding.recyclerRecommendation.setNestedScrollingEnabled(false);
     }
 
     public void initHomeProductRecyclerView() {
-        GridLayoutManager layoutManager = new GridLayoutManager(mFragment.getActivity(), 2);
-        homeBinding.recyclerRecommendation.setLayoutManager(layoutManager);
 
         getListProduct().observe(mFragment.getViewLifecycleOwner(), products -> {
             if(products==null){
@@ -96,8 +95,8 @@ public class HomeFragmentViewModel extends BaseFragmentViewModel<HomeFragment> {
             }
             adapter = new HomeProductAdapter(products,mFragment.getContext());
             homeBinding.recyclerRecommendation.setAdapter(adapter);
-            homeBinding.recyclerRecommendation.setNestedScrollingEnabled(false);
-            homeBinding.recyclerRecommendation.scheduleLayoutAnimation();
+            mShimmerViewContainer.stopShimmer();
+            mShimmerViewContainer.setVisibility(View.GONE);
         });
     }
 
@@ -114,5 +113,13 @@ public class HomeFragmentViewModel extends BaseFragmentViewModel<HomeFragment> {
             default:
                 break;
         }
+    }
+
+    public void StopAnimation(){
+        mShimmerViewContainer.stopShimmer();
+    }
+
+    public void StartAnimation(){
+        mShimmerViewContainer.startShimmer();
     }
 }

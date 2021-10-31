@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import minh.project.multishop.base.BaseActivity;
+import minh.project.multishop.database.DatabaseUtil;
 import minh.project.multishop.databinding.ActivityMainBinding;
 import minh.project.multishop.viewmodel.MainActivityViewModel;
 
@@ -25,6 +26,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         mainBinding = ActivityMainBinding.inflate(getLayoutInflater());
         View viewRoot = mainBinding.getRoot();
         setContentView(viewRoot);
+
+//        DatabaseUtil.init(this);
 
         mViewModel = new MainActivityViewModel(this);
     }

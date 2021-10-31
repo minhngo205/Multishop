@@ -53,6 +53,13 @@ public class HomeFragment extends BaseFragment {
     public void onResume() {
         super.onResume();
         homeViewModel.initHomeProductRecyclerView();
+        homeViewModel.StartAnimation();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        homeViewModel.StopAnimation();
     }
 
     public FragmentHomeBinding getHomeBinding() {

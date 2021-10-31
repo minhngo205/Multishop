@@ -17,21 +17,22 @@ import androidx.viewpager.widget.PagerAdapter;
 import com.bumptech.glide.Glide;
 
 import minh.project.multishop.R;
+import minh.project.multishop.models.Image;
 import minh.project.multishop.utils.FetchImage;
 
 public class ProductViewPagerAdapter extends PagerAdapter {
 
     private static final String TAG = "ProductViewPagerAdapter";
-    private final String[] listImg;
+    private final Image[] listImg;
     private final Context mContext;
     private final LayoutInflater mLayoutInflater;
-    private final Handler mHandler;
+//    private final Handler mHandler;
 
-    public ProductViewPagerAdapter(String[] listImg, Context mContext) {
+    public ProductViewPagerAdapter(Image[] listImg, Context mContext) {
         this.listImg = listImg;
         this.mContext = mContext;
         mLayoutInflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        mHandler = new Handler();
+//        mHandler = new Handler();
     }
 
     @Override
@@ -56,9 +57,9 @@ public class ProductViewPagerAdapter extends PagerAdapter {
     private void initView(View view, int position) {
         ImageView imageView = view.findViewById(R.id.iv_product);
         if (position < listImg.length) { // image
-            Log.d(TAG, "initView: "+listImg[position]);
+            Log.d(TAG, "initView: "+listImg[position].getUrl());
             Glide.with(mContext)
-                    .load(listImg[position])
+                    .load(listImg[position].getUrl())
                     .placeholder(R.drawable.progress_bar_loading)
                     .into(imageView);
 //            new FetchImage(listImg[position],imageView,mHandler).start();

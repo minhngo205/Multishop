@@ -5,9 +5,6 @@ import com.google.gson.annotations.SerializedName;
 import java.util.Date;
 import java.util.List;
 
-import minh.project.multishop.network.dtos.DTOmodels.DTOComment;
-import minh.project.multishop.network.dtos.DTOmodels.DTOUser;
-
 public class Rating {
     @SerializedName("id")
     private int id;

@@ -2,8 +2,8 @@ package minh.project.multishop.network;
 
 import java.util.List;
 
-import minh.project.multishop.network.dtos.DTOmodels.DTOCategory;
-import minh.project.multishop.network.dtos.DTOmodels.DTOProduct;
+import minh.project.multishop.models.Category;
+import minh.project.multishop.models.Product;
 import minh.project.multishop.network.dtos.Response.GetListProductResponse;
 import retrofit2.Call;
 import retrofit2.http.GET;
@@ -16,10 +16,10 @@ public interface IAppAPI {
     Call<GetListProductResponse> getHomeListProduct();
 
     @GET("products/{id}")
-    Call<DTOProduct> getProductByID(@Path("id") int id);
+    Call<Product> getProductByID(@Path("id") int id);
 
     @GET("categories")
-    Call<List<DTOCategory>> getAllCategory();
+    Call<List<Category>> getAllCategory();
 
     @GET("products")
     Call<GetListProductResponse> getProductByCategory(@Query("category") int cateID, @Query("page_size") int size);

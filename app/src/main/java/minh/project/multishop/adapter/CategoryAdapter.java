@@ -46,11 +46,6 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.MyView
         holder.cateName.setTextColor(mContext.getResources().getColor(R.color.item_catalogue_no_select));
         holder.bar.setVisibility(View.GONE);
 
-        if(row_index==showPosition){
-            holder.itemView.performClick();
-            Log.d("TAG", "onBindViewHolder: "+showPosition);
-        }
-
         holder.itemView.setOnClickListener(v -> {
             row_index = position;
             if (onItemClickListener != null) {
@@ -58,6 +53,11 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.MyView
             }
             changeStatus(holder,row_index);
         });
+
+        if(row_index==showPosition){
+            holder.itemView.performClick();
+            Log.d("TAG", "onBindViewHolder: "+showPosition);
+        }
     }
 
     private void changeStatus(MyViewHolder holder, int position) {

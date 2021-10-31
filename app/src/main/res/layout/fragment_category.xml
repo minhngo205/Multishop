@@ -29,23 +29,30 @@
         android:layout_below="@+id/scroll_category"
         android:orientation="vertical">
 
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="40dp"
+            android:background="@color/white"
             android:orientation="horizontal">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:gravity="center_vertical"
+                android:layout_centerVertical="true"
+                android:layout_toStartOf="@+id/spinner_brand"
+                android:layout_marginEnd="@dimen/tab_5dp"
+                android:textColor="@color/black"
                 android:text="Hãng sản xuất"
-                android:textSize="20dp" />
+                android:textSize="20sp" />
 
             <Spinner
                 android:id="@+id/spinner_brand"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-        </LinearLayout>
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="@dimen/tab_10dp"/>
+        </RelativeLayout>
 
 
         <androidx.recyclerview.widget.RecyclerView
@@ -72,7 +79,7 @@
             android:adjustViewBounds="true"
             android:maxWidth="60dp"
             android:maxHeight="60dp"
-            android:src="@mipmap/no_product"/>
+            android:src="@mipmap/no_product" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -80,7 +87,24 @@
             android:gravity="center"
             android:text="@string/no_product"
             android:textColor="@color/catalogue_no_product"
-            android:textSize="16sp"/>
+            android:textSize="16sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/lv_progress"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/scroll_category"
+        android:background="@color/white"
+        android:gravity="center"
+        android:visibility="visible"
+        android:orientation="vertical">
+
+        <ProgressBar
+            style="@android:style/Widget.DeviceDefault.Light.ProgressBar.Large.Inverse"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:progressTint="@color/red_type_1" />
     </LinearLayout>
 
 </RelativeLayout>

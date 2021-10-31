@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:shimmer="http://schemas.android.com/apk/res-auto"
     tools:context=".fragment.HomeFragment">
 
     <ScrollView
@@ -98,14 +99,74 @@
                 android:textColor="@color/switch_kit_tip"
                 android:textSize="14sp" />
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recycler_recommendation"
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_below="@+id/tv_recommendation"
-                android:layoutAnimation="@anim/layout_animation"
-                app:layout_behavior="@string/appbar_scrolling_view_behavior"
-                android:overScrollMode="never" />
+                android:orientation="vertical">
+
+                <com.facebook.shimmer.ShimmerFrameLayout
+                    android:id="@+id/shimmer_view_container"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    shimmer:duration="800">
+
+                    <GridLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:weightSum="2"
+                        android:columnCount="2">
+
+                        <include
+                            android:layout_columnWeight=".50"
+                            layout="@layout/item_place_holder"
+                            android:layout_height="wrap_content"
+                            android:layout_width="0dp" />
+                        <include
+                            android:layout_columnWeight=".50"
+                            layout="@layout/item_place_holder"
+                            android:layout_height="wrap_content"
+                            android:layout_width="0dp" />
+                        <include
+                            android:layout_columnWeight=".50"
+                            layout="@layout/item_place_holder"
+                            android:layout_height="wrap_content"
+                            android:layout_width="0dp" />
+                        <include
+                            android:layout_columnWeight=".50"
+                            layout="@layout/item_place_holder"
+                            android:layout_height="wrap_content"
+                            android:layout_width="0dp" />
+                        <include
+                            android:layout_columnWeight=".50"
+                            layout="@layout/item_place_holder"
+                            android:layout_height="wrap_content"
+                            android:layout_width="0dp" />
+                        <include
+                            android:layout_columnWeight=".50"
+                            layout="@layout/item_place_holder"
+                            android:layout_height="wrap_content"
+                            android:layout_width="0dp" />
+                    </GridLayout>
+
+                </com.facebook.shimmer.ShimmerFrameLayout>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recycler_recommendation"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:overScrollMode="never"
+                    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
         </RelativeLayout>
     </ScrollView>
 
