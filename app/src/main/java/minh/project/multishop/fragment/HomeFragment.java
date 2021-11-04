@@ -46,6 +46,7 @@ public class HomeFragment extends BaseFragment {
         homeBinding = FragmentHomeBinding.inflate(inflater,container,false);
         View viewRoot = homeBinding.getRoot();
         homeViewModel.initView(viewRoot);
+        homeViewModel.initViewPager();
         return viewRoot;
     }
 

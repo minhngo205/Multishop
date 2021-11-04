@@ -1,4 +1,4 @@
-package minh.project.multishop.network.dtos.Response;
+package minh.project.multishop.network.dtos.DTOResponse;
 
 import com.google.gson.annotations.SerializedName;
 

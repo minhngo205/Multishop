@@ -24,7 +24,6 @@ public class ProductDetailActivity extends BaseActivity {
     private ActivityProductDetailBinding productDetailBinding;
     private ProductDetailViewModel viewModel;
     private Product productDetail;
-    private Handler mHandle;
     private int productID;
 
     public int getProductID() {
@@ -37,7 +36,6 @@ public class ProductDetailActivity extends BaseActivity {
         productDetailBinding = ActivityProductDetailBinding.inflate(getLayoutInflater());
         View viewRoot = productDetailBinding.getRoot();
         setContentView(viewRoot);
-        mHandle = new Handler();
 
         Intent intent = getIntent();
         if(intent!=null){

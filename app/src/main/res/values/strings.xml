@@ -50,4 +50,7 @@
     <string name="empty_address">empty address</string>
     <!-- CatalogueFragment -->
     <string name="no_product">No product available.</string>
+
+    <string name="cancel">Huỷ</string>
+    <string name="confirm">Xác nhận</string>
 </resources>

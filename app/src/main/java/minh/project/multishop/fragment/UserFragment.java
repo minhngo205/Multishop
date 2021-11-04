@@ -1,15 +1,14 @@
 package minh.project.multishop.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import minh.project.multishop.R;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+
 import minh.project.multishop.base.BaseFragment;
 import minh.project.multishop.databinding.FragmentUserBinding;
 import minh.project.multishop.fragment.fragmentviewmodel.UserFragmentViewModel;
@@ -27,8 +26,6 @@ public class UserFragment extends BaseFragment implements View.OnClickListener {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-        }
     }
 
     @Override
@@ -38,6 +35,7 @@ public class UserFragment extends BaseFragment implements View.OnClickListener {
         mBinding = FragmentUserBinding.inflate(inflater,container,false);
         View viewRoot = mBinding.getRoot();
         mViewModel.initView(viewRoot);
+        mViewModel.checkSignIn();
         return viewRoot;
     }
 
