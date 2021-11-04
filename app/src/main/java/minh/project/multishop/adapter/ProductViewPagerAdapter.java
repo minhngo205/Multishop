@@ -1,15 +1,11 @@
 package minh.project.multishop.adapter;
 
 import android.content.Context;
-import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.SurfaceHolder;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.viewpager.widget.PagerAdapter;
@@ -18,7 +14,6 @@ import com.bumptech.glide.Glide;
 
 import minh.project.multishop.R;
 import minh.project.multishop.models.Image;
-import minh.project.multishop.utils.FetchImage;
 
 public class ProductViewPagerAdapter extends PagerAdapter {
 
@@ -62,10 +57,6 @@ public class ProductViewPagerAdapter extends PagerAdapter {
                     .load(listImg[position].getUrl())
                     .placeholder(R.drawable.progress_bar_loading)
                     .into(imageView);
-//            new FetchImage(listImg[position],imageView,mHandler).start();
-//            if (listImg.length >= 1) {
-//                // imageView.setOnClickListener(v -> initImgSuper(imageView));
-//            }
         }
     }
 

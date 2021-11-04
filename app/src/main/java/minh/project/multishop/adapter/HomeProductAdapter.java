@@ -1,15 +1,14 @@
 package minh.project.multishop.adapter;
 
+import static minh.project.multishop.utils.CurrencyFormat.currencyFormat;
+
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Paint;
-import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
@@ -19,14 +18,11 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 
-import java.text.NumberFormat;
 import java.util.List;
-import java.util.Locale;
 
 import minh.project.multishop.ProductDetailActivity;
 import minh.project.multishop.R;
 import minh.project.multishop.models.Product;
-import minh.project.multishop.utils.FetchImage;
 
 public class HomeProductAdapter extends RecyclerView.Adapter<HomeProductAdapter.MyViewHolder> {
     private final List<Product> productList;
@@ -100,21 +96,4 @@ public class HomeProductAdapter extends RecyclerView.Adapter<HomeProductAdapter.
             barRate = itemView.findViewById(R.id.rating_bar);
         }
     }
-
-    private String currencyFormat(int price){
-        Locale locale = new Locale("vn", "VN");
-        NumberFormat currencyFormatter = NumberFormat.getCurrencyInstance(locale);
-        return currencyFormatter.format(price);
-    }
-
-//    private void setAnimation(View viewToAnimate, int position)
-//    {
-//        // If the bound view wasn't previously displayed on screen, it's animated
-//        if (position > lastPosition)
-//        {
-//            Animation animation = AnimationUtils.loadAnimation(mContext, android.R.anim.slide_in_left);
-//            viewToAnimate.startAnimation(animation);
-//            lastPosition = position;
-//        }
-//    }
 }

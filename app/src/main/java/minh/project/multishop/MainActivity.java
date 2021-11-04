@@ -1,14 +1,18 @@
 package minh.project.multishop;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Toast;
 
+import androidx.annotation.Nullable;
+
 import minh.project.multishop.base.BaseActivity;
 import minh.project.multishop.database.DatabaseUtil;
 import minh.project.multishop.databinding.ActivityMainBinding;
+import minh.project.multishop.fragment.fragmentviewmodel.UserFragmentViewModel;
 import minh.project.multishop.viewmodel.MainActivityViewModel;
 
 public class MainActivity extends BaseActivity implements View.OnClickListener {
@@ -27,7 +31,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         View viewRoot = mainBinding.getRoot();
         setContentView(viewRoot);
 
-//        DatabaseUtil.init(this);
+        DatabaseUtil.init(this);
 
         mViewModel = new MainActivityViewModel(this);
     }

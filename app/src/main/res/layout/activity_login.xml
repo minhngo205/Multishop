@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools">
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -24,7 +22,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 android:layout_marginTop="50dp"
-                android:textSize="18dp"/>
+                android:textSize="18sp"/>
 
             <TextView
                 android:id="@+id/welcomeback"
@@ -36,7 +34,7 @@
                 android:layout_marginTop="50dp"
                 android:text="Chào mừng"
                 android:textColor="@color/black"
-                android:textSize="30dp"
+                android:textSize="30sp"
                 android:textStyle="bold"/>
 
             <TextView
@@ -47,8 +45,8 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/welcomeback"
                 android:layout_marginTop="15dp"
-                android:text="Đăng nhập để khám phá nhữung chức năng mới của cửa hàng"
-                android:textSize="13dp"
+                android:text="Đăng nhập để khám phá những chức năng mới của cửa hàng"
+                android:textSize="13sp"
                 android:gravity="center"
                 android:paddingLeft="70dp"
                 android:paddingRight="70dp"/>
@@ -61,7 +59,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/signin_with_your_email"
                 android:paddingStart="25dp"
-                android:paddingRight="25dp"
+                android:paddingEnd="25dp"
                 android:hint="Tên đăng nhập"
                 android:textColorHint="@color/base"
                 app:endIconDrawable="@drawable/ic_baseline_person_24"
@@ -85,7 +83,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/email_textinputlayout"
                 android:paddingStart="25dp"
-                android:paddingRight="25dp"
+                android:paddingEnd="25dp"
                 android:hint="Mật khẩu"
                 android:textColorHint="@color/base"
                 app:endIconMode="password_toggle"
@@ -108,7 +106,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/password_textinputlayout"
                 android:layout_marginTop="15dp"
-                android:layout_marginLeft="20dp"/>
+                android:layout_marginStart="20dp"/>
 
             <TextView
                 android:id="@+id/rememberme_textview"
@@ -126,7 +124,7 @@
                 app:layout_constraintTop_toBottomOf="@id/password_textinputlayout"
                 android:layout_marginTop="20dp"
                 android:text="Quên mật khẩu"
-                android:layout_marginRight="30dp" />
+                android:layout_marginEnd="30dp" />
 
 
             <Button
@@ -185,7 +183,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 android:layout_marginTop="50dp"
-                android:textSize="18dp"/>
+                android:textSize="18sp"/>
 
             <TextView
                 android:id="@+id/create_account"
@@ -197,7 +195,7 @@
                 android:layout_marginTop="50dp"
                 android:text="Tạo tài khoản"
                 android:textColor="@color/black"
-                android:textSize="30dp"
+                android:textSize="30sp"
                 android:textStyle="bold"/>
 
             <TextView
@@ -209,7 +207,7 @@
                 app:layout_constraintTop_toBottomOf="@id/create_account"
                 android:layout_marginTop="15dp"
                 android:text="Tạo tài khoản để khám phá những chức năng của cửa hàng"
-                android:textSize="13dp"
+                android:textSize="13sp"
                 android:gravity="center"
                 android:paddingLeft="70dp"
                 android:paddingRight="70dp"/>
@@ -222,7 +220,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/signin_with_your_email2"
                 android:paddingStart="25dp"
-                android:paddingRight="25dp"
+                android:paddingEnd="25dp"
                 android:hint="Tên của bạn"
                 android:textColorHint="@color/base"
                 app:endIconDrawable="@drawable/ic_baseline_border_color_24"
@@ -270,7 +268,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/username_textinputlayout2"
                 android:paddingStart="25dp"
-                android:paddingRight="25dp"
+                android:paddingEnd="25dp"
                 android:hint="Email"
                 android:textColorHint="@color/base"
                 app:endIconDrawable="@drawable/email"
@@ -319,7 +317,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/password_textinputlayout2"
                 android:paddingStart="25dp"
-                android:paddingRight="25dp"
+                android:paddingEnd="25dp"
                 android:hint="Nhập lại mật khẩu"
                 android:textColorHint="@color/base"
                 app:endIconMode="password_toggle"

@@ -5,11 +5,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 
+import minh.project.multishop.base.BaseActivity;
 import minh.project.multishop.databinding.ActivityLoginBinding;
+import minh.project.multishop.viewmodel.LoginActivityViewModel;
 
-public class LoginActivity extends AppCompatActivity {
+public class LoginActivity extends BaseActivity implements View.OnClickListener {
 
     private ActivityLoginBinding loginBinding;
+    private LoginActivityViewModel mViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -18,15 +21,22 @@ public class LoginActivity extends AppCompatActivity {
         View viewRoot = loginBinding.getRoot();
         setContentView(viewRoot);
 
-        loginBinding.signin.setOnClickListener(view -> {
-            loginBinding.signupPage.setVisibility(View.GONE);
-            loginBinding.signinPage.setVisibility(View.VISIBLE);
-        });
+        mViewModel = new LoginActivityViewModel(this);
+        setResult(RESULT_OK);
+    }
 
-        loginBinding.signup.setOnClickListener(view -> {
-            loginBinding.signupPage.setVisibility(View.VISIBLE);
-            loginBinding.signinPage.setVisibility(View.GONE);
-        });
+    @Override
+    protected void onResume() {
+        super.onResume();
+        mViewModel.initView();
+    }
 
+    public ActivityLoginBinding getLoginBinding() {
+        return loginBinding;
+    }
+
+    @Override
+    public void onClick(View view) {
+        mViewModel.onClickEvent(view.getId());
     }
 }

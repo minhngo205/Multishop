@@ -1,16 +1,15 @@
 package minh.project.multishop.fragment.fragmentviewmodel;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.view.View;
 import android.widget.Adapter;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
-import android.widget.Spinner;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.core.util.Predicate;
+import androidx.annotation.Nullable;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -18,11 +17,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
-import java.util.stream.Collectors;
 
-import minh.project.multishop.R;
 import minh.project.multishop.adapter.CategoryAdapter;
 import minh.project.multishop.adapter.ProductCateAdapter;
 import minh.project.multishop.base.BaseFragmentViewModel;
@@ -33,7 +29,8 @@ import minh.project.multishop.models.Category;
 import minh.project.multishop.models.Product;
 import minh.project.multishop.network.IAppAPI;
 import minh.project.multishop.network.RetroInstance;
-import minh.project.multishop.network.dtos.Response.GetListProductResponse;
+import minh.project.multishop.network.dtos.DTOResponse.GetListProductResponse;
+import minh.project.multishop.utils.InternetConnection;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -50,7 +47,8 @@ public class CategoryFragmentViewModel extends BaseFragmentViewModel<CategoryFra
 
     private int firstPosition;
     private List<Category> categoryList;
-    private List<Product> productList, dataset;
+    private List<Product> productList;
+    private final List<Product> dataset;
 
     private FragmentCategoryBinding mBinding;
 
@@ -122,7 +120,7 @@ public class CategoryFragmentViewModel extends BaseFragmentViewModel<CategoryFra
      */
     public CategoryFragmentViewModel(CategoryFragment categoryFragment) {
         super(categoryFragment);
-        api = RetroInstance.getRetroInstance().create(IAppAPI.class);
+        api = RetroInstance.getAppAPI();
         dataset = new ArrayList<>();
     }
 
@@ -161,6 +159,10 @@ public class CategoryFragmentViewModel extends BaseFragmentViewModel<CategoryFra
         });
 
         getListCategory().observe(mFragment.getViewLifecycleOwner(), categories -> {
+            if (categories==null){
+                noProductView.setVisibility(View.VISIBLE);
+                return;
+            }
             categoryList.addAll(categories);
             adapter.notifyDataSetChanged();
         });
@@ -168,7 +170,7 @@ public class CategoryFragmentViewModel extends BaseFragmentViewModel<CategoryFra
 
     private void initBrandSpinner(List<Brand> brandList) {
         List<String> brands = new ArrayList<>();
-        brands.add("(None)");
+        brands.add("(Tất cả)");
         for(Brand b : brandList) brands.add(b.getBrandName());
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(mFragment.getContext(), android.R.layout.simple_spinner_item,brands);
 

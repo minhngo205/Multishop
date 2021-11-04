@@ -6,7 +6,7 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class RetroInstance {
-    public static final String BASE_URL = "http://yshuynh.pythonanywhere.com/api/";
+    public static final String BASE_URL = "https://yshuynh.pythonanywhere.com/api/";
 
     private static Retrofit retrofit;
     private static IAppAPI AppAPI;
