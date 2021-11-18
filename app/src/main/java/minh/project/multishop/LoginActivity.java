@@ -1,7 +1,12 @@
 package minh.project.multishop;
 
+import static minh.project.multishop.fragment.fragmentviewmodel.UserFragmentViewModel.REQUEST_LOGIN;
+
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 

@@ -52,7 +52,7 @@ public class ProductViewPagerAdapter extends PagerAdapter {
     private void initView(View view, int position) {
         ImageView imageView = view.findViewById(R.id.iv_product);
         if (position < listImg.length) { // image
-            Log.d(TAG, "initView: "+listImg[position].getUrl());
+//            Log.d(TAG, "initView: "+listImg[position].getUrl());
             Glide.with(mContext)
                     .load(listImg[position].getUrl())
                     .placeholder(R.drawable.progress_bar_loading)

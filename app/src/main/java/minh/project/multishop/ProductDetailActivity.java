@@ -13,13 +13,12 @@ import minh.project.multishop.databinding.ActivityProductDetailBinding;
 import minh.project.multishop.models.Product;
 import minh.project.multishop.viewmodel.ProductDetailViewModel;
 
-public class ProductDetailActivity extends BaseActivity {
+public class ProductDetailActivity extends BaseActivity implements View.OnClickListener {
 
     private static final String TAG = "ProductDetailActivity";
 
     private ActivityProductDetailBinding productDetailBinding;
     private ProductDetailViewModel viewModel;
-    private Product productDetail;
     private int productID;
 
     public int getProductID() {
@@ -40,20 +39,15 @@ public class ProductDetailActivity extends BaseActivity {
 
         productDetailBinding.back.setOnClickListener(view -> finish());
         viewModel = new ProductDetailViewModel(this);
+        viewModel.initProductView();
+    }
 
-        viewModel.getProductData().observe(this, product -> {
-            if(product==null){
-                Toast.makeText(ProductDetailActivity.this, "No product founded", Toast.LENGTH_SHORT).show();
-                return;
-            }
-            productDetail = product;
-            viewModel.initViewPager(productDetail.getImageList());
-            productDetailBinding.textPrice.setText(currencyFormat(productDetail.getProductPrice()));
-            productDetailBinding.textCategory.setText(productDetail.getCategory().getName());
-            productDetailBinding.textName.setText(productDetail.getProductName());
-            productDetailBinding.textBrand.setText(productDetail.getBrand().getBrandName());
-            productDetailBinding.textDescription.setText(Html.fromHtml(productDetail.getDescription()));
-        });
+    public ActivityProductDetailBinding getProductDetailBinding() {
+        return productDetailBinding;
+    }
 
+    @Override
+    public void onClick(View view) {
+        viewModel.onClickEvent(view.getId());
     }
 }

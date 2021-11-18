@@ -3,11 +3,14 @@ package minh.project.multishop.viewmodel;
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
@@ -16,13 +19,20 @@ import com.google.android.material.navigation.NavigationView;
 import java.util.ArrayList;
 import java.util.List;
 
+import minh.project.multishop.CartActivity;
 import minh.project.multishop.MainActivity;
 import minh.project.multishop.R;
 import minh.project.multishop.base.BaseActivityViewModel;
+import minh.project.multishop.database.entity.User;
+import minh.project.multishop.database.repository.UserDBRepository;
+import minh.project.multishop.databinding.ActivityMainBinding;
 import minh.project.multishop.fragment.CategoryFragment;
 import minh.project.multishop.fragment.HomeFragment;
 import minh.project.multishop.fragment.NewInFragment;
 import minh.project.multishop.fragment.UserFragment;
+import minh.project.multishop.network.dtos.DTORequest.RefreshAccessTokenRequest;
+import minh.project.multishop.network.dtos.DTOResponse.RefreshAccessTokenResponse;
+import minh.project.multishop.network.repository.UserNetRepository;
 
 public class MainActivityViewModel extends BaseActivityViewModel<MainActivity> {
 
@@ -36,6 +46,8 @@ public class MainActivityViewModel extends BaseActivityViewModel<MainActivity> {
 
     private UserFragment userFragment;
 
+    private ActivityMainBinding mainBinding;
+
     private final BottomNavigationView.OnNavigationItemSelectedListener navigationListener =
             new BottomNavigationView.OnNavigationItemSelectedListener() {
                 @SuppressLint("NonConstantResourceId")
@@ -48,6 +60,7 @@ public class MainActivityViewModel extends BaseActivityViewModel<MainActivity> {
                             }
                             addFragment(homeFragment);
                             showFragment(homeFragment);
+                            mainBinding.barHomeLayout.setVisibility(View.VISIBLE);
                             break;
                         }
                         case R.id.category:{
@@ -56,6 +69,7 @@ public class MainActivityViewModel extends BaseActivityViewModel<MainActivity> {
                             }
                             addFragment(categoryFragment);
                             showFragment(categoryFragment);
+                            mainBinding.barHomeLayout.setVisibility(View.VISIBLE);
                             break;
                         }
                         case R.id.new_in:{
@@ -64,10 +78,7 @@ public class MainActivityViewModel extends BaseActivityViewModel<MainActivity> {
                             }
                             addFragment(newInFragment);
                             showFragment(newInFragment);
-                            break;
-                        }
-                        case R.id.cart:{
-                            Toast.makeText(mActivity, "Cart", Toast.LENGTH_SHORT).show();
+                            mainBinding.barHomeLayout.setVisibility(View.VISIBLE);
                             break;
                         }
                         case R.id.user:{
@@ -76,6 +87,7 @@ public class MainActivityViewModel extends BaseActivityViewModel<MainActivity> {
                             }
                             addFragment(userFragment);
                             showFragment(userFragment);
+                            mainBinding.barHomeLayout.setVisibility(View.GONE);
                             break;
                         }
                         default: break;
@@ -94,12 +106,15 @@ public class MainActivityViewModel extends BaseActivityViewModel<MainActivity> {
 
     @Override
     public void initView() {
-        mActivity.getMainBinding().barHome.ivTakePhoto.setOnClickListener(mActivity);
-        mActivity.getMainBinding().barHome.imageSearch.setOnClickListener(mActivity);
-        mActivity.getMainBinding().barHome.barSearch.setOnClickListener(mActivity);
-        mActivity.getMainBinding().barHome.ivInterestKits.setOnClickListener(mActivity);
+        mainBinding = mActivity.getMainBinding();
 
-        mActivity.getMainBinding().bottomNavigationView
+        mainBinding.barHome.ivTakePhoto.setOnClickListener(mActivity);
+        mainBinding.barHome.imageSearch.setOnClickListener(mActivity);
+        mainBinding.barHome.barSearch.setOnClickListener(mActivity);
+        mainBinding.barHome.ivInterestKits.setOnClickListener(mActivity);
+        mainBinding.barHome.ivCart.setOnClickListener(mActivity);
+
+        mainBinding.bottomNavigationView
                 .setOnNavigationItemSelectedListener(navigationListener);
     }
 
@@ -116,6 +131,11 @@ public class MainActivityViewModel extends BaseActivityViewModel<MainActivity> {
             case R.id.iv_take_photo: // take photo
 
                 break;
+            case R.id.iv_cart:{
+                Intent intent = new Intent(mActivity, CartActivity.class);
+                mActivity.startActivity(intent);
+                break;
+            }
             default:
                 break;
         }
@@ -156,11 +176,25 @@ public class MainActivityViewModel extends BaseActivityViewModel<MainActivity> {
         showFragment(homeFragment);
     }
 
-    public boolean backToHomeFragment() {
-//        if (mainBinding.tabsRg.getCheckedRadioButtonId() != R.id.tab_home) {
-//            mainBinding.tabsRg.check(R.id.tab_home);
-//            return true;
-//        }
-        return false;
+    public void initAfterLogin(){
+        userFragment = new UserFragment();
+        addFragment(userFragment);
+        showFragment(userFragment);
+    }
+
+    public void refreshToken() {
+        UserDBRepository dbRepository = UserDBRepository.getInstance();
+        UserNetRepository netRepository = UserNetRepository.getInstance();
+        User mUser = dbRepository.getCurrentUser();
+        if(mUser==null){
+            return;
+        }
+        RefreshAccessTokenRequest request = new RefreshAccessTokenRequest(mUser.getRefToken());
+        netRepository.getTokenData(request).observe(mActivity, refreshAccessTokenResponse -> {
+            mUser.setAccToken(refreshAccessTokenResponse.getNewAccessToken());
+            dbRepository.updateToken(mUser);
+
+            Log.d("TAG", "Token in DB: " + dbRepository.getCurrentUser().getAccToken());
+        });
     }
 }

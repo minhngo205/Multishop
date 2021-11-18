@@ -5,6 +5,7 @@ import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
+import androidx.room.Update;
 
 import minh.project.multishop.database.entity.User;
 
@@ -22,4 +23,7 @@ public interface UserDAO {
 
     @Query("DELETE FROM user")
     void deleteAll();
+
+    @Update()
+    void updateAccessToken(User user);
 }

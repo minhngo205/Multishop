@@ -48,9 +48,16 @@
     <string name="no_product_tip">No Product</string>
     <string name="add_to_car_success">Add Successfully</string>
     <string name="empty_address">empty address</string>
+    <string name="Specs_head">Thông số kỹ thuật</string>
+    <string name="cart">Giỏ hàng</string>
     <!-- CatalogueFragment -->
     <string name="no_product">No product available.</string>
 
     <string name="cancel">Huỷ</string>
     <string name="confirm">Xác nhận</string>
+    <string name="cart_title">Giỏ hàng của bạn</string>
+    <string name="string_login_first">Xin đăng nhập trước</string>
+    <string name="llb_no_items_in_your_cart">\"Hổng\" có gì trong giỏ hết !!</string>
+    <string name="lbl_shop_now">Mua sắm ngay</string>
+
 </resources>

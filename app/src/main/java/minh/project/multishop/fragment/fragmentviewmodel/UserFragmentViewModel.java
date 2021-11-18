@@ -1,33 +1,23 @@
 package minh.project.multishop.fragment.fragmentviewmodel;
 
-import static android.app.Activity.RESULT_OK;
-import static minh.project.multishop.adapter.BaseDialog.CANCEL_BUTTON;
-import static minh.project.multishop.adapter.BaseDialog.CONFIRM_BUTTON;
-import static minh.project.multishop.adapter.BaseDialog.CONTENT;
+import static minh.project.multishop.base.BaseDialog.CANCEL_BUTTON;
+import static minh.project.multishop.base.BaseDialog.CONFIRM_BUTTON;
+import static minh.project.multishop.base.BaseDialog.CONTENT;
 
-import android.Manifest;
 import android.annotation.SuppressLint;
-import android.app.Dialog;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.Observer;
 
-import com.bumptech.glide.Glide;
-
+import minh.project.multishop.CartActivity;
 import minh.project.multishop.LoginActivity;
-import minh.project.multishop.MainActivity;
 import minh.project.multishop.R;
-import minh.project.multishop.adapter.BaseDialog;
-import minh.project.multishop.base.BaseFragment;
+import minh.project.multishop.base.BaseDialog;
 import minh.project.multishop.base.BaseFragmentViewModel;
 import minh.project.multishop.database.entity.User;
 import minh.project.multishop.database.repository.UserDBRepository;
@@ -38,7 +28,7 @@ import minh.project.multishop.network.repository.UserNetRepository;
 
 public class UserFragmentViewModel extends BaseFragmentViewModel<UserFragment> {
 
-    private static final int REQUEST_LOGIN = 10001;
+    public static final int REQUEST_LOGIN = 10001;
     private User mUser;
     private final UserDBRepository mUserDBRepository;
     private FragmentUserBinding binding;
@@ -51,7 +41,7 @@ public class UserFragmentViewModel extends BaseFragmentViewModel<UserFragment> {
      */
     public UserFragmentViewModel(UserFragment userFragment) {
         super(userFragment);
-        mUserDBRepository = new UserDBRepository();
+        mUserDBRepository = UserDBRepository.getInstance();
         mUserNetRepository = UserNetRepository.getInstance();
     }
 
@@ -115,9 +105,8 @@ public class UserFragmentViewModel extends BaseFragmentViewModel<UserFragment> {
 
                 break;
             case R.id.tv_sign_in: // Sign in
-                Intent intent = new Intent(mFragment.getActivity(), LoginActivity.class);
-                mFragment.requireActivity().startActivity(intent);
-                mFragment.requireActivity().finish();
+                Intent loginIntent = new Intent(mFragment.getActivity(), LoginActivity.class);
+                mFragment.requireActivity().startActivityForResult(loginIntent,REQUEST_LOGIN);
                 break;
             case R.id.lv_scan: // Scan to pay
 
@@ -126,7 +115,8 @@ public class UserFragmentViewModel extends BaseFragmentViewModel<UserFragment> {
 
                 break;
             case R.id.lv_bag: // Bag
-
+                Intent cartIntent = new Intent(mFragment.getActivity(), CartActivity.class);
+                mFragment.requireActivity().startActivity(cartIntent);
                 break;
             case R.id.lv_order: // Order Center
 

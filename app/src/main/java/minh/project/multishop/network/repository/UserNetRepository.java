@@ -8,7 +8,9 @@ import minh.project.multishop.models.UserProfile;
 import minh.project.multishop.network.IAppAPI;
 import minh.project.multishop.network.RetroInstance;
 import minh.project.multishop.network.dtos.DTORequest.LoginRequest;
+import minh.project.multishop.network.dtos.DTORequest.RefreshAccessTokenRequest;
 import minh.project.multishop.network.dtos.DTOResponse.LoginResponse;
+import minh.project.multishop.network.dtos.DTOResponse.RefreshAccessTokenResponse;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -18,6 +20,7 @@ public class UserNetRepository {
     private final IAppAPI api;
     private MutableLiveData<LoginResponse> loginData;
     private MutableLiveData<UserProfile> profileData;
+    private MutableLiveData<RefreshAccessTokenResponse> tokenData;
 
     private static UserNetRepository instance;
 
@@ -42,6 +45,29 @@ public class UserNetRepository {
         profileData = new MutableLiveData<>();
         loadProfileData(accessToken);
         return profileData;
+    }
+
+    public LiveData<RefreshAccessTokenResponse> getTokenData(RefreshAccessTokenRequest request){
+        tokenData = new MutableLiveData<>();
+        loadTokenData(request);
+        return tokenData;
+    }
+
+    private void loadTokenData(RefreshAccessTokenRequest request) {
+        Call<RefreshAccessTokenResponse> call = api.refreshToken(request);
+        call.enqueue(new Callback<RefreshAccessTokenResponse>() {
+            @Override
+            public void onResponse(@NonNull Call<RefreshAccessTokenResponse> call, @NonNull Response<RefreshAccessTokenResponse> response) {
+                if(response.isSuccessful()&&response.body()!=null){
+                    tokenData.postValue(response.body());
+                } else tokenData.postValue(null);
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<RefreshAccessTokenResponse> call, @NonNull Throwable t) {
+                call.cancel();
+            }
+        });
     }
 
     private void loadProfileData(String accessToken) {
@@ -77,4 +103,6 @@ public class UserNetRepository {
             }
         });
     }
+
+
 }

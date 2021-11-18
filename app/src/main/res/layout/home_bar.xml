@@ -27,9 +27,9 @@
             <View
                 android:id="@+id/bar_search"
                 android:layout_width="match_parent"
+                android:layout_height="40dp"
                 android:layout_centerVertical="true"
-                android:background="@drawable/search_icon_drawable"
-                android:layout_height="40dp"/>
+                android:background="@drawable/search_icon_drawable" />
 
             <ImageView
                 android:layout_alignBottom="@+id/bar_search"
@@ -61,8 +61,8 @@
             android:padding="10dp"/>
 
         <ImageView
-            android:id="@+id/iv_notification"
-            android:src="@mipmap/ringing"
+            android:id="@+id/iv_cart"
+            android:src="@mipmap/shopping_cart"
             android:layout_width="55dp"
             android:layout_height="55dp"
             android:padding="12dp"/>

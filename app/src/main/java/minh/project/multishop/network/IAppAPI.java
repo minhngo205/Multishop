@@ -2,23 +2,32 @@ package minh.project.multishop.network;
 
 import java.util.List;
 
+import minh.project.multishop.models.CartItem;
 import minh.project.multishop.models.Category;
 import minh.project.multishop.models.Product;
 import minh.project.multishop.models.UserProfile;
+import minh.project.multishop.network.dtos.DTOResponse.EditCartResponse;
 import minh.project.multishop.network.dtos.DTORequest.LoginRequest;
+import minh.project.multishop.network.dtos.DTORequest.RefreshAccessTokenRequest;
+import minh.project.multishop.network.dtos.DTORequest.EditCartRequest;
 import minh.project.multishop.network.dtos.DTOResponse.GetListProductResponse;
 import minh.project.multishop.network.dtos.DTOResponse.LoginResponse;
+import minh.project.multishop.network.dtos.DTOResponse.RefreshAccessTokenResponse;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.POST;
+import retrofit2.http.PUT;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
 
 public interface IAppAPI {
 
     //Product API
+    @GET("products?page=1&page_size=220")
+    Call<GetListProductResponse> getAllProduct();
+
     @GET("products?page=1&page_size=20")
     Call<GetListProductResponse> getHomeListProduct();
 
@@ -32,9 +41,22 @@ public interface IAppAPI {
     Call<GetListProductResponse> getProductByCategory(@Query("category") int cateID, @Query("page_size") int size);
 
     //UserAPI
+    @POST("refresh")
+    Call<RefreshAccessTokenResponse> refreshToken(@Body RefreshAccessTokenRequest param);
+
     @POST("login")
     Call<LoginResponse> login(@Body LoginRequest params);
 
     @GET("user/me")
     Call<UserProfile> getProfile(@Header("Authorization") String value);
+
+    //Cart API
+    @GET("user/carts")
+    Call<List<CartItem>> getCartList(@Header("Authorization") String value);
+
+    @PUT("user/carts/add")
+    Call<EditCartResponse> addProductToCart(@Header("Authorization") String value, @Body EditCartRequest params);
+
+    @PUT("user/carts/remove")
+    Call<EditCartResponse> removeProductFromCart(@Header("Authorization") String value, @Body EditCartRequest params);
 }

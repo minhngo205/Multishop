@@ -1,6 +1,9 @@
 package minh.project.multishop;
 
+import static minh.project.multishop.fragment.fragmentviewmodel.UserFragmentViewModel.REQUEST_LOGIN;
+
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.KeyEvent;
@@ -34,6 +37,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         DatabaseUtil.init(this);
 
         mViewModel = new MainActivityViewModel(this);
+        mViewModel.refreshToken();
     }
 
     @Override
@@ -77,5 +81,15 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     @Override
     public void onClick(View view) {
         mViewModel.onClickEvent(view.getId());
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == REQUEST_LOGIN) {
+            if(resultCode == Activity.RESULT_OK && data!=null){
+                mViewModel.initAfterLogin();
+            }
+        }
     }
 }

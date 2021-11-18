@@ -265,64 +265,6 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:padding="8dp"
-                    android:text="@string/product_count"
-                    android:textColor="@color/product_text"
-                    android:textSize="12sp"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:id="@+id/btn_delete"
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginStart="10dp"
-                    android:background="@drawable/circle_add_delete_type"
-                    android:gravity="center"
-                    android:padding="0dp"
-                    android:text="-"
-                    android:textColor="@color/product_text"
-                    android:textSize="12sp"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:id="@+id/text_count"
-                    android:layout_width="30dp"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginStart="4dp"
-                    android:layout_marginEnd="4dp"
-                    android:gravity="center"
-                    android:padding="4dp"
-                    android:text="1"
-                    android:textColor="@color/product_text"
-                    android:textSize="16sp"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:id="@+id/btn_add"
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:layout_gravity="center_vertical"
-                    android:background="@drawable/circle_add_delete_type"
-                    android:gravity="center"
-                    android:padding="0dp"
-                    android:text="+"
-                    android:textColor="@color/product_text"
-                    android:textSize="12sp" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="6dp"
-                android:background="@color/product_layout"
-                android:padding="6dp">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
                     android:padding="8dp"
                     android:text="@string/product_send"
@@ -335,10 +277,37 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
-                    android:padding="8dp"
+                    android:layout_marginStart="@dimen/tab_5dp"
                     android:text="@string/product_address"
                     android:textColor="@color/product_text"
                     android:textSize="16sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:background="@color/product_layout"
+                android:padding="6dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:padding="8dp"
+                    android:text="@string/Specs_head"
+                    android:textColor="@color/product_text"
+                    android:textSize="12sp"
+                    android:textStyle="bold" />
+
+                <TableLayout
+                    android:id="@+id/table_specs"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="8dp"
+                    android:orientation="vertical"/>
+
             </LinearLayout>
         </LinearLayout>
 
@@ -352,5 +321,7 @@
         android:background="@color/product_layout"
         android:visibility="gone" />
 
-    <include layout="@layout/tab_product_home_guide" />
+    <include
+        android:id="@+id/product_action_bar"
+        layout="@layout/tab_product_home_guide" />
 </LinearLayout>

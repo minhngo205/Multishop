@@ -9,6 +9,9 @@
     <color name="white">#FFFFFFFF</color>
     <color name="base">#333</color>
     <color name="transparent">#F2FFFFFF</color>
+    <color name="gray_80">#80ECECEC</color>
+    <color name="textColorPrimary">#212121</color>
+    <color name="textColorSecondary">#757575</color>
 
     <!--no need night-->
     <color name="colorPrimary">#008577</color>
@@ -131,4 +134,6 @@
     <color name="description">#1a1a1a</color>
     <color name="chef">#777</color>
     <color name="timestamp">#777</color>
+    <color name="yellow">#FED76D</color>
+    <color name="view_color">#eaeaea</color>
 </resources>

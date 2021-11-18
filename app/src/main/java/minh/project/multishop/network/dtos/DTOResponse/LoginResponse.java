@@ -9,11 +9,25 @@ public class LoginResponse {
     private String accessToken;
 
 
+    @SerializedName("detail")
+    private String errorDetail;
+    @SerializedName("code")
+    private String errorCode;
+
+
     public String getAccessToken() {
         return accessToken;
     }
 
     public String getRefreshToken() {
         return refreshToken;
+    }
+
+    public String getErrorDetail() {
+        return errorDetail;
+    }
+
+    public String getErrorCode() {
+        return errorCode;
     }
 }

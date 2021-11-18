@@ -6,32 +6,25 @@
     <item
         android:id="@+id/home"
         android:icon="@drawable/tab_icon_home_selector"
-        app:showAsAction="ifRoom"
+        app:showAsAction="always"
         android:title="@string/title_home" />
 
     <item
         android:id="@+id/category"
         android:icon="@drawable/tab_icon_category_selector"
-        app:showAsAction="ifRoom"
+        app:showAsAction="always"
         android:title="@string/title_catalogue" />
-
 
     <item
         android:id="@+id/new_in"
         android:icon="@drawable/tab_icon_new_in_selector"
-        app:showAsAction="ifRoom"
+        app:showAsAction="always"
         android:title="@string/title_new_in" />
-
-    <item
-        android:id="@+id/cart"
-        android:icon="@drawable/tab_icon_cart_selector"
-        app:showAsAction="ifRoom"
-        android:title="Giỏ hàng"/>
 
     <item
         android:id="@+id/user"
         android:icon="@drawable/tab_icon_user_selector"
-        app:showAsAction="ifRoom"
-        android:title="Cá nhân" />
+        app:showAsAction="always"
+        android:title="Tài khoản" />
 
 </menu>

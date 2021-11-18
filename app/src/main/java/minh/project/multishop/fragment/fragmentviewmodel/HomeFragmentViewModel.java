@@ -306,18 +306,18 @@ public class HomeFragmentViewModel extends BaseFragmentViewModel<HomeFragment> {
                     currentItem++;
                     viewModel.setCurrentPosition(currentItem);
                     viewModel.getHandler().sendEmptyMessageDelayed(UPDATE, TIME_DELAY);
-                    Log.d(TAG, "UPDATE");
+//                    Log.d(TAG, "UPDATE");
                     break;
                 case PAUSE:
-                    Log.d(TAG, "PAUSE");
+//                    Log.d(TAG, "PAUSE");
                     break;
                 case RESTART:
                     viewModel.getHandler().sendEmptyMessageDelayed(UPDATE, TIME_DELAY);
-                    Log.d(TAG, "RESTART");
+//                    Log.d(TAG, "RESTART");
                     break;
                 case CHANGED:
                     currentItem = msg.arg1;
-                    Log.d(TAG, "CHANGED");
+//                    Log.d(TAG, "CHANGED");
                     break;
                 default:
                     break;
