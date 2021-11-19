@@ -21,6 +21,7 @@ public class CartRepository {
 
     private MutableLiveData<List<CartItem>> listCartData;
     private MutableLiveData<EditCartResponse> editCartData;
+    private MutableLiveData<String> deleteCartItemResult;
 
     private CartRepository() {
         this.api = RetroInstance.getAppAPI();
@@ -47,6 +48,29 @@ public class CartRepository {
         editCartData = new MutableLiveData<>();
         loadRemoveCartData(token, request);
         return editCartData;
+    }
+
+    public LiveData<String> deleteCartItem(String token, int cartID){
+        deleteCartItemResult = new MutableLiveData<>();
+        deleteCartItemCall(token,cartID);
+        return deleteCartItemResult;
+    }
+
+    private void deleteCartItemCall(String token, int cartID) {
+        Call<String> call = api.deleteCartItem("Bearer "+token,cartID);
+        call.enqueue(new Callback<String>() {
+            @Override
+            public void onResponse(@NonNull Call<String> call, @NonNull Response<String> response) {
+                if(response.isSuccessful()){
+                    deleteCartItemResult.postValue(response.body());
+                } else deleteCartItemResult.postValue(null);
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<String> call, @NonNull Throwable t) {
+                deleteCartItemResult.postValue(null);
+            }
+        });
     }
 
     private void loadRemoveCartData(String token, EditCartRequest request) {

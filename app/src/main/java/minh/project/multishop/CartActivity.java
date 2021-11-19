@@ -15,6 +15,7 @@ public class CartActivity extends BaseActivity implements View.OnClickListener, 
 
     private ActivityCartBinding mBinding;
     private CartActivityViewModel mViewModel;
+    private boolean isInit = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,7 +31,10 @@ public class CartActivity extends BaseActivity implements View.OnClickListener, 
     @Override
     protected void onResume() {
         super.onResume();
-        mViewModel.initData();
+        if(!isInit){
+            mViewModel.initData();
+            isInit = true;
+        }
     }
 
     public ActivityCartBinding getBinding() {

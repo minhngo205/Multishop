@@ -90,6 +90,28 @@
         <item name="android:overScrollMode">never</item>
     </style>
 
+    <style name="OrderTextView">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginTop">@dimen/spacing_control</item>
+        <item name="android:textColor">@color/textColorSecondary</item>
+        <item name="android:textSize">@dimen/font_size_small</item>
+    </style>
+
+    <style name="BottomButton">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:padding">@dimen/_14sdp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textSize">@dimen/font_size_normal</item>
+    </style>
+
+    <style name="BottomButton.Primary">
+        <item name="android:textColor">@color/white</item>
+        <item name="android:background">@color/red_type_2</item>
+    </style>
+
     <!--payment succeed-->
     <style name="paymentSucceedText1">
         <item name="android:textColor">@color/payment_succeed_text3</item>

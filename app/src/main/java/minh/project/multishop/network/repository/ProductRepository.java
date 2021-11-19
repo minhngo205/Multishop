@@ -20,6 +20,7 @@ public class ProductRepository {
     private final IAppAPI api;
     private static final String TAG = "ProductRepository";
     private MutableLiveData<List<Product>> allProduct;
+    private MutableLiveData<Product> product;
     private static ProductRepository instance;
 
     ProductRepository() {
@@ -37,6 +38,29 @@ public class ProductRepository {
             loadAllProduct();
         }
         return allProduct;
+    }
+
+    public LiveData<Product> getProductByID(int ID){
+        product = new MutableLiveData<>();
+        loadProductData(ID);
+        return product;
+    }
+
+    private void loadProductData(int id) {
+        Call<Product> call = api.getProductByID(id);
+        call.enqueue(new Callback<Product>() {
+            @Override
+            public void onResponse(@NonNull Call<Product> call, @NonNull Response<Product> response) {
+                if(response.isSuccessful()){
+                    product.postValue(response.body());
+                } else product.postValue(null);
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<Product> call, @NonNull Throwable t) {
+                product.postValue(null);
+            }
+        });
     }
 
     private void loadAllProduct() {

@@ -14,6 +14,7 @@ import android.view.ViewConfiguration;
 import android.view.animation.DecelerateInterpolator;
 import android.widget.ListView;
 
+import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
@@ -36,15 +37,16 @@ public class RecyclerTouchListener implements RecyclerView.OnItemTouchListener, 
     List<Integer> optionViews;
     Set<Integer> ignoredViewTypes;
     // Cached ViewConfiguration and system-wide constant values
-    private int touchSlop;
-    private int minFlingVel;
-    private int maxFlingVel;
-    private long ANIMATION_STANDARD = 300;
-    private long ANIMATION_CLOSE = 150;
+    private final int touchSlop;
+    private final int minFlingVel;
+    private final int maxFlingVel;
+    private final long ANIMATION_STANDARD = 300;
+    private final long ANIMATION_CLOSE = 150;
     // Fixed properties
-    private RecyclerView rView;
+    private final RecyclerView rView;
     // private SwipeListener mSwipeListener;
-    private int bgWidth = 1, bgWidthLeft = 1; // 1 and not 0 to prevent dividing by zero
+    private int bgWidth = 1;
+    private final int bgWidthLeft = 1; // 1 and not 0 to prevent dividing by zero
     // Transient properties
     // private List<PendingDismissData> mPendingDismisses = new ArrayList<>();
     private int mDismissAnimationRefCount = 0;
@@ -75,8 +77,9 @@ public class RecyclerTouchListener implements RecyclerView.OnItemTouchListener, 
     // user choices
     private boolean clickable = false;
     private boolean longClickable = false;
-    private boolean swipeable = false, swipeableLeftOptions = false;
-    private int LONG_CLICK_DELAY = 800;
+    private boolean swipeable = false;
+    private final boolean swipeableLeftOptions = false;
+    private final int LONG_CLICK_DELAY = 800;
     private boolean longClickVibrate;
     Runnable mLongPressed = new Runnable() {
         public void run() {
@@ -118,7 +121,7 @@ public class RecyclerTouchListener implements RecyclerView.OnItemTouchListener, 
 
         rView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
-            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+            public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
                 /**
                  * This will ensure that this RecyclerTouchListener is paused during recycler view scrolling.
                  * If a scroll listener is already assigned, the caller should still pass scroll changes through
@@ -133,7 +136,7 @@ public class RecyclerTouchListener implements RecyclerView.OnItemTouchListener, 
             }
 
             @Override
-            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
 
             }
         });

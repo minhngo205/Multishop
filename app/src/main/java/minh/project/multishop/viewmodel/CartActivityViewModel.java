@@ -3,7 +3,8 @@ package minh.project.multishop.viewmodel;
 import static minh.project.multishop.utils.CurrencyFormat.currencyFormat;
 
 import android.annotation.SuppressLint;
-import android.util.Log;
+import android.content.Intent;
+import android.graphics.Color;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.LinearLayout;
@@ -21,6 +22,7 @@ import java.util.List;
 import java.util.Map;
 
 import minh.project.multishop.CartActivity;
+import minh.project.multishop.OrderSubmitActivity;
 import minh.project.multishop.R;
 import minh.project.multishop.adapter.CartAdapter;
 import minh.project.multishop.base.BaseActivityViewModel;
@@ -28,9 +30,11 @@ import minh.project.multishop.database.entity.User;
 import minh.project.multishop.database.repository.UserDBRepository;
 import minh.project.multishop.databinding.ActivityCartBinding;
 import minh.project.multishop.models.CartItem;
+import minh.project.multishop.models.OrderItem;
 import minh.project.multishop.network.dtos.DTORequest.EditCartRequest;
-import minh.project.multishop.network.dtos.DTOResponse.EditCartResponse;
 import minh.project.multishop.network.repository.CartRepository;
+import minh.project.multishop.utils.MyButtonClickListener;
+import minh.project.multishop.utils.SwipeHelper;
 
 public class CartActivityViewModel extends BaseActivityViewModel<CartActivity> {
 
@@ -42,16 +46,14 @@ public class CartActivityViewModel extends BaseActivityViewModel<CartActivity> {
     private List<CartItem> cartList;
 
     private TextView textActualPrice;
-    private TextView textShipCost;
-    private TextView textPay;
-    private TextView textDelete;
     private CheckBox checkAllSelect;
     private RecyclerView recyclerBagList;
-    private TextView textEdit;
     private LinearLayout layoutLoginFirst;
     private RelativeLayout layoutBottom;
     private int totalPrice;
     private int totalQuantity;
+
+//    private Map<Integer,Boolean> checkState;
 
     /**
      * constructor
@@ -61,6 +63,7 @@ public class CartActivityViewModel extends BaseActivityViewModel<CartActivity> {
     public CartActivityViewModel(CartActivity cartActivity) {
         super(cartActivity);
         cartList = new ArrayList<>();
+//        checkState = new HashMap<>();
         dbRepository = UserDBRepository.getInstance();
         cartRepository = CartRepository.getInstance();
         mUser = dbRepository.getCurrentUser();
@@ -78,13 +81,28 @@ public class CartActivityViewModel extends BaseActivityViewModel<CartActivity> {
         textActualPrice.setText(currencyFormat(0));
 
 //        textShipCost = mBinding.textViewShipCost;
-        textPay = mBinding.textViewPay;
-        textDelete = mBinding.textViewDelete;
+        mBinding.textViewPay.setOnClickListener(mActivity);
         checkAllSelect = mBinding.checkBoxAllSelect;
 
         recyclerBagList = mBinding.listShoppingCart;
         recyclerBagList.setAdapter(cartAdapter);
         recyclerBagList.setLayoutManager(new LinearLayoutManager(mActivity));
+        SwipeHelper swipeHelper = new SwipeHelper(mActivity, recyclerBagList, 150) {
+            @Override
+            public void instantiateMyButton(RecyclerView.ViewHolder viewHolder, List buffer) {
+
+                buffer.add(new MyButton(mActivity,
+                        R.drawable.ic_trash_can_regular__1_,
+                        Color.parseColor("#D81B60"),
+                        new MyButtonClickListener() {
+                            @Override
+                            public void onClick(int pos) {
+                                deleteItem(pos);
+                            }
+                        }
+                ));
+            }
+        };
 
 //        textEdit = mBinding.titleOrderEvaluation.
         layoutLoginFirst = mBinding.layoutLoginFirst;
@@ -93,6 +111,27 @@ public class CartActivityViewModel extends BaseActivityViewModel<CartActivity> {
         mBinding.titleOrderEvaluation.ivBack.setOnClickListener(mActivity);
         mBinding.textViewPay.setOnClickListener(mActivity);
         checkAllSelect.setOnClickListener(mActivity);
+    }
+
+    private void deleteItem(int position) {
+        int deleteID = cartList.get(position).getID();
+        cartRepository.deleteCartItem(mUser.getAccToken(),deleteID).observe(mActivity, new Observer<String>() {
+            @Override
+            public void onChanged(String s) {
+                if(null == s || s.isEmpty()){
+                    Toast.makeText(mActivity, "Đã xảy ra lỗi. Không thể xoá giỏ hàng", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                Map<Integer,Boolean> checkedMap = new HashMap<>();
+                for(CartItem item : cartList){
+                    if(item.isChoose()){
+                        checkedMap.put(item.getID(), true);
+                    }
+                }
+                reloadData(checkedMap);
+                Toast.makeText(mActivity, "Server: "+s, Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     @SuppressLint("NonConstantResourceId")
@@ -115,6 +154,15 @@ public class CartActivityViewModel extends BaseActivityViewModel<CartActivity> {
                 break;
             }
             case R.id.textView_pay:{
+                if(0==totalQuantity){
+                    Toast.makeText(mActivity, "Hãy chọn ít nhất 1 sản phẩm", Toast.LENGTH_SHORT).show();
+                } else {
+                    ArrayList<OrderItem> orderItemData = GenerateOrder();
+                    Intent intent = new Intent(mActivity, OrderSubmitActivity.class);
+                    intent.putParcelableArrayListExtra("ORDER_DATA",orderItemData);
+                    intent.putExtra("TOTAL_PRICE",totalPrice);
+                    mActivity.startActivity(intent);
+                }
                 break;
             }
             case R.id.iv_back:{
@@ -123,6 +171,14 @@ public class CartActivityViewModel extends BaseActivityViewModel<CartActivity> {
             }
             default: break;
         }
+    }
+
+    private ArrayList<OrderItem> GenerateOrder() {
+        ArrayList<OrderItem> result = new ArrayList<>();
+        for(CartItem cartItem : cartList){
+            if(cartItem.isChoose()) result.add(cartItem.toOrderItem());
+        }
+        return result;
     }
 
     public void initData() {
@@ -176,7 +232,7 @@ public class CartActivityViewModel extends BaseActivityViewModel<CartActivity> {
 
     public void onItemChoose(int position, boolean isChecked) {
         cartList.get(position).setChoose(isChecked);
-        checkAllSelect.setChecked(isAllChoosed());
+        checkAllSelect.setChecked(isAllChosen());
         modifyData(cartList);
     }
 
@@ -201,15 +257,12 @@ public class CartActivityViewModel extends BaseActivityViewModel<CartActivity> {
 
     private void reloadData(Map<Integer, Boolean> checkedMap) {
         cartList.clear();
-        cartRepository.getListCartData(mUser.getAccToken()).observe(mActivity, new Observer<List<CartItem>>() {
-            @Override
-            public void onChanged(List<CartItem> cartItems) {
-                cartList = cartItems;
-                for(CartItem item : cartList){
-                    if(checkedMap.containsKey(item.getID())) item.setChoose(true);
-                }
-                modifyData(cartList);
+        cartRepository.getListCartData(mUser.getAccToken()).observe(mActivity, cartItems -> {
+            cartList = cartItems;
+            for(CartItem item : cartList){
+                if(checkedMap.containsKey(item.getID())) item.setChoose(true);
             }
+            modifyData(cartList);
         });
     }
 
@@ -232,7 +285,7 @@ public class CartActivityViewModel extends BaseActivityViewModel<CartActivity> {
         });
     }
 
-    private boolean isAllChoosed() {
+    private boolean isAllChosen() {
         if (cartList.isEmpty()) {
             return false;
         }
