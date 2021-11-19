@@ -8,6 +8,7 @@ import androidx.room.Query;
 import androidx.room.Update;
 
 import minh.project.multishop.database.entity.User;
+import minh.project.multishop.database.entity.UserInfo;
 
 @Dao
 public interface UserDAO {
@@ -26,4 +27,16 @@ public interface UserDAO {
 
     @Update()
     void updateAccessToken(User user);
+
+    @Query("SELECT * FROM userinfo")
+    UserInfo getUserInfo();
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    void insertUserInfo(UserInfo userInfo);
+
+    @Update
+    void updateInfo(UserInfo userInfo);
+
+    @Query("DELETE FROM userInfo")
+    void clearUserData();
 }

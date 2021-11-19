@@ -19,6 +19,8 @@ import androidx.viewpager.widget.ViewPager;
 import com.bumptech.glide.Glide;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 
+import java.util.ArrayList;
+
 import minh.project.multishop.CartActivity;
 import minh.project.multishop.OrderSubmitActivity;
 import minh.project.multishop.ProductDetailActivity;
@@ -30,6 +32,7 @@ import minh.project.multishop.database.repository.UserDBRepository;
 import minh.project.multishop.databinding.ActivityProductDetailBinding;
 import minh.project.multishop.databinding.CartBuyDialogLayoutBinding;
 import minh.project.multishop.models.Image;
+import minh.project.multishop.models.OrderItem;
 import minh.project.multishop.models.Product;
 import minh.project.multishop.models.ProductSpecs;
 import minh.project.multishop.network.IAppAPI;
@@ -236,8 +239,7 @@ public class ProductDetailViewModel extends BaseActivityViewModel<ProductDetailA
                         break;
                     }
                     case "Mua ngay":{
-                        Intent intent = new Intent(mActivity, OrderSubmitActivity.class);
-                        mActivity.startActivity(intent);
+                        OnBuyNow();
                         break;
                     }
                     default: break;
@@ -246,6 +248,30 @@ public class ProductDetailViewModel extends BaseActivityViewModel<ProductDetailA
         });
 
         bottomSheetDialog.show();
+    }
+
+    private void OnBuyNow() {
+        if(mUser == null){
+            Toast.makeText(mActivity, "Bạn chưa đăng nhập tài khoản", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        ArrayList<OrderItem> orderItemData = generateOrder();
+        int totalPrice = productDetail.getSalePrice()*productCount;
+        Intent intent = new Intent(mActivity, OrderSubmitActivity.class);
+        intent.putParcelableArrayListExtra("ORDER_DATA",orderItemData);
+        intent.putExtra("TOTAL_PRICE",totalPrice);
+        mActivity.startActivity(intent);
+    }
+
+    private ArrayList<OrderItem> generateOrder() {
+        ArrayList<OrderItem> result = new ArrayList<>();
+        result.add(new OrderItem(
+                productDetail.getID(),
+                productDetail.getImageThumbnail(),
+                productDetail.getProductName(),
+                productDetail.getSalePrice(),
+                productCount));
+        return result;
     }
 
     private void OnAddToCart() {

@@ -4,6 +4,7 @@ import minh.project.multishop.database.AppDatabase;
 import minh.project.multishop.database.DatabaseUtil;
 import minh.project.multishop.database.dao.UserDAO;
 import minh.project.multishop.database.entity.User;
+import minh.project.multishop.database.entity.UserInfo;
 
 public class UserDBRepository {
     private final UserDAO userDao;
@@ -40,5 +41,21 @@ public class UserDBRepository {
 
     public User getUsername(String username){
         return userDao.getUserByUSN(username);
+    }
+
+    public UserInfo getUserInfo(){
+        return userDao.getUserInfo();
+    }
+
+    public void insertUserInfo(UserInfo userInfo){
+        userDao.insertUserInfo(userInfo);
+    }
+
+    public void updateInfo(UserInfo userInfo){
+        userDao.updateInfo(userInfo);
+    }
+
+    public void clearInfoData(){
+        userDao.clearUserData();
     }
 }

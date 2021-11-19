@@ -2,6 +2,9 @@ package minh.project.multishop.models;
 
 import java.util.Date;
 
+import minh.project.multishop.database.entity.UserInfo;
+import minh.project.multishop.utils.DateConverter;
+
 public class UserProfile {
     private int id;
     private String username;
@@ -36,5 +39,18 @@ public class UserProfile {
 
     public String getDob() {
         return dob;
+    }
+
+    public UserInfo castToInfo(){
+        return new UserInfo(
+                id,
+                username,
+                email,
+                name,
+                address,
+                phone_number,
+                dob,
+                DateConverter.fromDate(updated_at)
+        );
     }
 }

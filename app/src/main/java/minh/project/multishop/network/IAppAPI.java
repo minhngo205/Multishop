@@ -6,6 +6,8 @@ import minh.project.multishop.models.CartItem;
 import minh.project.multishop.models.Category;
 import minh.project.multishop.models.Product;
 import minh.project.multishop.models.UserProfile;
+import minh.project.multishop.network.dtos.DTORequest.CreateOrderRequest;
+import minh.project.multishop.network.dtos.DTOResponse.CreateOrderResponse;
 import minh.project.multishop.network.dtos.DTOResponse.EditCartResponse;
 import minh.project.multishop.network.dtos.DTORequest.LoginRequest;
 import minh.project.multishop.network.dtos.DTORequest.RefreshAccessTokenRequest;
@@ -15,6 +17,7 @@ import minh.project.multishop.network.dtos.DTOResponse.LoginResponse;
 import minh.project.multishop.network.dtos.DTOResponse.RefreshAccessTokenResponse;
 import retrofit2.Call;
 import retrofit2.http.Body;
+import retrofit2.http.DELETE;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.POST;
@@ -59,4 +62,11 @@ public interface IAppAPI {
 
     @PUT("user/carts/remove")
     Call<EditCartResponse> removeProductFromCart(@Header("Authorization") String value, @Body EditCartRequest params);
+
+    @DELETE("user/carts/{cartID}")
+    Call<String> deleteCartItem(@Header("Authorization") String value, @Path("cartID") int cartID);
+
+    //Order API
+    @POST("user/orders")
+    Call<CreateOrderResponse> createOrder(@Header("Authorization") String value, @Body CreateOrderRequest params);
 }

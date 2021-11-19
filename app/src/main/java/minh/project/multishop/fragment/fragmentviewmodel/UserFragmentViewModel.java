@@ -81,20 +81,6 @@ public class UserFragmentViewModel extends BaseFragmentViewModel<UserFragment> {
         params.addRule(RelativeLayout.BELOW, 0);
         binding.ivQrCode.setLayoutParams(params);
         binding.tvUserName.setText(mUser.getUsername());
-
-        mUserNetRepository.getUserProfile(mUser.getAccToken()).observe(mFragment.getViewLifecycleOwner(), new Observer<UserProfile>() {
-            @Override
-            public void onChanged(UserProfile userProfile) {
-                Log.d("TAG", "onChanged: User profile success");
-            }
-        });
-//        mTvUserName.setText(mUser.getHuaweiAccount().getDisplayName());
-//
-//        if (mUser.getHuaweiAccount().getAvatarUri() == Uri.EMPTY) {
-//            Glide.with(mActivity).load(R.mipmap.head_my).apply(option).into(mIvUserHead);
-//        } else {
-//            Glide.with(mActivity).load(mUser.getHuaweiAccount().getAvatarUriString()).apply(option).into(mIvUserHead);
-//        }
     }
 
     @SuppressLint("NonConstantResourceId")
@@ -112,7 +98,7 @@ public class UserFragmentViewModel extends BaseFragmentViewModel<UserFragment> {
 
                 break;
             case R.id.lv_account: // My Account
-
+                Toast.makeText(mFragment.getContext(), "Username: "+mUserDBRepository.getUserInfo().getUsername(), Toast.LENGTH_SHORT).show();
                 break;
             case R.id.lv_bag: // Bag
                 Intent cartIntent = new Intent(mFragment.getActivity(), CartActivity.class);
@@ -165,6 +151,7 @@ public class UserFragmentViewModel extends BaseFragmentViewModel<UserFragment> {
 
     private void signOut() {
         mUserDBRepository.deleteUser();
+        mUserDBRepository.clearInfoData();
         checkSignIn();
     }
 }

@@ -16,6 +16,11 @@ public class CartItem {
     @SerializedName("updated_at")
     private Date updated_at;
 
+    public CartItem(Product product, int count) {
+        this.product = product;
+        this.count = count;
+    }
+
     private boolean Choose;
 
     public int getID() {
@@ -24,6 +29,10 @@ public class CartItem {
 
     public Product getProduct() {
         return product;
+    }
+
+    public void setProduct(Product product) {
+        this.product = product;
     }
 
     public int getCount() {
@@ -48,5 +57,15 @@ public class CartItem {
 
     public boolean isChoose() {
         return Choose;
+    }
+
+    public OrderItem toOrderItem() {
+        return new OrderItem(
+                product.getID(),
+                product.getImageThumbnail(),
+                product.getProductName(),
+                product.getSalePrice(),
+                count
+        );
     }
 }
