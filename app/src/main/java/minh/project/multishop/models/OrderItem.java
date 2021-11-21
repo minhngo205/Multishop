@@ -4,12 +4,14 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 public class OrderItem implements Parcelable {
+    private int productID;
     private String imageURL;
     private String productName;
     private int salePrice;
     private int count;
 
-    public OrderItem(String imageURL, String productName, int salePrice, int count) {
+    public OrderItem(int productID, String imageURL, String productName, int salePrice, int count) {
+        this.productID = productID;
         this.imageURL = imageURL;
         this.productName = productName;
         this.salePrice = salePrice;
@@ -17,6 +19,7 @@ public class OrderItem implements Parcelable {
     }
 
     protected OrderItem(Parcel in) {
+        productID = in.readInt();
         imageURL = in.readString();
         productName = in.readString();
         salePrice = in.readInt();
@@ -67,6 +70,18 @@ public class OrderItem implements Parcelable {
         this.count = count;
     }
 
+    public int getProductID() {
+        return productID;
+    }
+
+    public void setProductID(int productID) {
+        this.productID = productID;
+    }
+
+    public int getItemTotalPrice() {
+        return salePrice*count;
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -74,13 +89,10 @@ public class OrderItem implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeInt(productID);
         parcel.writeString(imageURL);
         parcel.writeString(productName);
         parcel.writeInt(salePrice);
         parcel.writeInt(count);
-    }
-
-    public int getItemTotalPrice() {
-        return salePrice*count;
     }
 }

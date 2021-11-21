@@ -34,6 +34,12 @@ public class UserInfo {
         this.updated_at = updated_at;
     }
 
+    public UserInfo(String name, String address, String phone_number) {
+        this.name = name;
+        this.address = address;
+        this.phone_number = phone_number;
+    }
+
     public int getId() {
         return id;
     }

@@ -266,6 +266,7 @@ public class ProductDetailViewModel extends BaseActivityViewModel<ProductDetailA
     private ArrayList<OrderItem> generateOrder() {
         ArrayList<OrderItem> result = new ArrayList<>();
         result.add(new OrderItem(
+                productDetail.getID(),
                 productDetail.getImageThumbnail(),
                 productDetail.getProductName(),
                 productDetail.getSalePrice(),

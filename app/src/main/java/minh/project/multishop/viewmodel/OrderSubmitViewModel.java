@@ -1,14 +1,7 @@
 package minh.project.multishop.viewmodel;
 
-import android.util.Log;
-
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 import minh.project.multishop.OrderSubmitActivity;
 import minh.project.multishop.adapter.OrderItemAdapter;
@@ -16,8 +9,6 @@ import minh.project.multishop.base.BaseActivityViewModel;
 import minh.project.multishop.database.entity.UserInfo;
 import minh.project.multishop.database.repository.UserDBRepository;
 import minh.project.multishop.databinding.ActivityOrderSubmitBinding;
-import minh.project.multishop.models.OrderItem;
-import minh.project.multishop.network.repository.ProductRepository;
 import minh.project.multishop.utils.CurrencyFormat;
 
 public class OrderSubmitViewModel extends BaseActivityViewModel<OrderSubmitActivity> {
@@ -45,10 +36,20 @@ public class OrderSubmitViewModel extends BaseActivityViewModel<OrderSubmitActiv
     @Override
     public void initView() {
         rvOrderItems = mBinding.rvItems;
-        mBinding.layoutAddress.setUserinfo(userInfo);
+        mBinding.btnChangeAddress.setOnClickListener(mActivity);
         mBinding.toolbarLay.tvTitle.setText("Đặt hàng");
+        initUserInfo();
         initRecycleView();
         initPaymentDetail();
+//        mBinding.paymentMethode.paymentRadioGroup.get
+    }
+
+    private void initUserInfo() {
+        if (null==userInfo){
+            mBinding.layoutAddress.setUserinfo(new UserInfo("Không có thông tin","",""));
+            return;
+        }
+        mBinding.layoutAddress.setUserinfo(userInfo);
     }
 
     private void initPaymentDetail() {

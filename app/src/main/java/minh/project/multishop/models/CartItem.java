@@ -61,6 +61,7 @@ public class CartItem {
 
     public OrderItem toOrderItem() {
         return new OrderItem(
+                product.getID(),
                 product.getImageThumbnail(),
                 product.getProductName(),
                 product.getSalePrice(),
