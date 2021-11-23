@@ -7,7 +7,7 @@ import minh.project.multishop.models.Category;
 import minh.project.multishop.models.Product;
 import minh.project.multishop.models.UserProfile;
 import minh.project.multishop.network.dtos.DTORequest.CreateOrderRequest;
-import minh.project.multishop.network.dtos.DTOResponse.CreateOrderResponse;
+import minh.project.multishop.network.dtos.DTOResponse.OrderDetailResponse;
 import minh.project.multishop.network.dtos.DTOResponse.EditCartResponse;
 import minh.project.multishop.network.dtos.DTORequest.LoginRequest;
 import minh.project.multishop.network.dtos.DTORequest.RefreshAccessTokenRequest;
@@ -68,5 +68,8 @@ public interface IAppAPI {
 
     //Order API
     @POST("user/orders")
-    Call<CreateOrderResponse> createOrder(@Header("Authorization") String value, @Body CreateOrderRequest params);
+    Call<OrderDetailResponse> createOrder(@Header("Authorization") String value, @Body CreateOrderRequest params);
+
+    @GET("user/orders/{orderID}")
+    Call<OrderDetailResponse> getOrderDetail(@Header("Authorization") String value, @Path("orderID") int orderID);
 }

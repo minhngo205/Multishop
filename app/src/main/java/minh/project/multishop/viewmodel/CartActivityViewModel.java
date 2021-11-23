@@ -1,10 +1,14 @@
 package minh.project.multishop.viewmodel;
 
+import static minh.project.multishop.base.BaseDialog.CANCEL_BUTTON;
+import static minh.project.multishop.base.BaseDialog.CONFIRM_BUTTON;
+import static minh.project.multishop.base.BaseDialog.CONTENT;
 import static minh.project.multishop.utils.CurrencyFormat.currencyFormat;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Color;
+import android.os.Bundle;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.LinearLayout;
@@ -26,6 +30,7 @@ import minh.project.multishop.OrderSubmitActivity;
 import minh.project.multishop.R;
 import minh.project.multishop.adapter.CartAdapter;
 import minh.project.multishop.base.BaseActivityViewModel;
+import minh.project.multishop.base.BaseDialog;
 import minh.project.multishop.database.entity.User;
 import minh.project.multishop.database.repository.UserDBRepository;
 import minh.project.multishop.databinding.ActivityCartBinding;
@@ -52,6 +57,7 @@ public class CartActivityViewModel extends BaseActivityViewModel<CartActivity> {
     private RelativeLayout layoutBottom;
     private int totalPrice;
     private int totalQuantity;
+    private Map<Integer,Boolean> checkedMap;
 
 //    private Map<Integer,Boolean> checkState;
 
@@ -63,7 +69,7 @@ public class CartActivityViewModel extends BaseActivityViewModel<CartActivity> {
     public CartActivityViewModel(CartActivity cartActivity) {
         super(cartActivity);
         cartList = new ArrayList<>();
-//        checkState = new HashMap<>();
+        checkedMap = new HashMap<>();
         dbRepository = UserDBRepository.getInstance();
         cartRepository = CartRepository.getInstance();
         mUser = dbRepository.getCurrentUser();
@@ -97,7 +103,7 @@ public class CartActivityViewModel extends BaseActivityViewModel<CartActivity> {
                         new MyButtonClickListener() {
                             @Override
                             public void onClick(int pos) {
-                                deleteItem(pos);
+                                showDeleteDialog(pos);
                             }
                         }
                 ));
@@ -113,6 +119,21 @@ public class CartActivityViewModel extends BaseActivityViewModel<CartActivity> {
         checkAllSelect.setOnClickListener(mActivity);
     }
 
+    private void showDeleteDialog(int pos) {
+        Bundle data = new Bundle();
+        data.putString(CONFIRM_BUTTON, mActivity.getString(R.string.confirm));
+        data.putString(CANCEL_BUTTON, mActivity.getString(R.string.cancel));
+        data.putString(CONTENT, mActivity.getString(R.string.confirm_cart_item_delete));
+
+        BaseDialog dialog = new BaseDialog(mActivity, data, true);
+        dialog.setConfirmListener(v -> {
+            deleteItem(pos);
+            dialog.dismiss();
+        });
+        dialog.setCancelListener(v -> dialog.dismiss());
+        dialog.show();
+    }
+
     private void deleteItem(int position) {
         int deleteID = cartList.get(position).getID();
         cartRepository.deleteCartItem(mUser.getAccToken(),deleteID).observe(mActivity, new Observer<String>() {
@@ -122,13 +143,8 @@ public class CartActivityViewModel extends BaseActivityViewModel<CartActivity> {
                     Toast.makeText(mActivity, "Đã xảy ra lỗi. Không thể xoá giỏ hàng", Toast.LENGTH_SHORT).show();
                     return;
                 }
-                Map<Integer,Boolean> checkedMap = new HashMap<>();
-                for(CartItem item : cartList){
-                    if(item.isChoose()){
-                        checkedMap.put(item.getID(), true);
-                    }
-                }
-                reloadData(checkedMap);
+
+                reloadData(getCheckedMap());
                 Toast.makeText(mActivity, "Server: "+s, Toast.LENGTH_SHORT).show();
             }
         });
@@ -158,8 +174,10 @@ public class CartActivityViewModel extends BaseActivityViewModel<CartActivity> {
                     Toast.makeText(mActivity, "Hãy chọn ít nhất 1 sản phẩm", Toast.LENGTH_SHORT).show();
                 } else {
                     ArrayList<OrderItem> orderItemData = GenerateOrder();
+                    ArrayList<Integer> listCartID = getListID();
                     Intent intent = new Intent(mActivity, OrderSubmitActivity.class);
                     intent.putParcelableArrayListExtra("ORDER_DATA",orderItemData);
+                    intent.putIntegerArrayListExtra("LIST_CART_ID",listCartID);
                     intent.putExtra("TOTAL_PRICE",totalPrice);
                     mActivity.startActivity(intent);
                 }
@@ -171,6 +189,14 @@ public class CartActivityViewModel extends BaseActivityViewModel<CartActivity> {
             }
             default: break;
         }
+    }
+
+    private ArrayList<Integer> getListID() {
+        ArrayList<Integer> result = new ArrayList<>();
+        for(CartItem cartItem : cartList){
+            if(cartItem.isChoose()) result.add(cartItem.getID());
+        }
+        return result;
     }
 
     private ArrayList<OrderItem> GenerateOrder() {
@@ -244,18 +270,12 @@ public class CartActivityViewModel extends BaseActivityViewModel<CartActivity> {
                 Toast.makeText(mActivity, "Không thể chỉnh sửa giỏ hàng", Toast.LENGTH_SHORT).show();
                 return;
             }
-            Map<Integer,Boolean> checkedMap = new HashMap<>();
-            for(CartItem item : cartList){
-//                checkedMap.put(item.getID(), item.isChoose());
-                if(item.isChoose()){
-                    checkedMap.put(item.getID(), true);
-                }
-            }
-            reloadData(checkedMap);
+
+            reloadData(getCheckedMap());
         });
     }
 
-    private void reloadData(Map<Integer, Boolean> checkedMap) {
+    public void reloadData(Map<Integer, Boolean> checkedMap) {
         cartList.clear();
         cartRepository.getListCartData(mUser.getAccToken()).observe(mActivity, cartItems -> {
             cartList = cartItems;
@@ -268,20 +288,18 @@ public class CartActivityViewModel extends BaseActivityViewModel<CartActivity> {
 
     public void onItemQuantityReduce(int position, View quantityView) {
         CartItem shoppingCart = cartList.get(position);
+        if (shoppingCart.getCount()==1){
+            showDeleteDialog(position);
+            return;
+        }
         EditCartRequest request = new EditCartRequest(shoppingCart.getProduct().productID,1);
         cartRepository.getRemoveCartData(mUser.getAccToken(),request).observe(mActivity, editCartResponse -> {
             if(editCartResponse==null){
                 Toast.makeText(mActivity, "Không thể chỉnh sửa giỏ hàng", Toast.LENGTH_SHORT).show();
                 return;
             }
-            Map<Integer,Boolean> checkedMap = new HashMap<>();
-            for(CartItem item : cartList){
-//                checkedMap.put(item.getID(), item.isChoose());
-                if(item.isChoose()){
-                    checkedMap.put(item.getID(), true);
-                }
-            }
-            reloadData(checkedMap);
+
+            reloadData(getCheckedMap());
         });
     }
 
@@ -295,5 +313,15 @@ public class CartActivityViewModel extends BaseActivityViewModel<CartActivity> {
             }
         }
         return true;
+    }
+
+    public Map<Integer, Boolean> getCheckedMap() {
+        checkedMap = new HashMap<>();
+        for(CartItem item : cartList){
+            if(item.isChoose()){
+                checkedMap.put(item.getID(), true);
+            }
+        }
+        return checkedMap;
     }
 }

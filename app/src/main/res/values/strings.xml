@@ -59,5 +59,7 @@
     <string name="string_login_first">Xin đăng nhập trước</string>
     <string name="llb_no_items_in_your_cart">\"Hổng\" có gì trong giỏ hết !!</string>
     <string name="lbl_shop_now">Mua sắm ngay</string>
+    <string name="confirm_order">Bạn đã kiểm tra đúng thông tin và chắc chắn muốn đặt hàng</string>
+    <string name="confirm_cart_item_delete">Bạn chắc chắn muốn xoá sản phẩm khỏi Giỏ hàng ?</string>
 
 </resources>

@@ -56,9 +56,9 @@ public class ProductDetailViewModel extends BaseActivityViewModel<ProductDetailA
     private TextView textViewCount;
     private TextView addButton;
     
-    private User mUser;
-    private UserDBRepository dbRepository;
-    private CartRepository cartRepository;
+    private final User mUser;
+    private final UserDBRepository dbRepository;
+    private final CartRepository cartRepository;
 
     public LiveData<Product> getProductData(){
         if(liveProductData==null){

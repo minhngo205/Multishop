@@ -2,13 +2,13 @@ package minh.project.multishop.network.dtos.DTOmodels;
 
 import com.google.gson.annotations.SerializedName;
 
-public class OrderItemDTO {
+public class DTOOrderItemRequest {
     @SerializedName("product")
     private int productID;
     @SerializedName("count")
     private int count;
 
-    public OrderItemDTO(int productID, int count) {
+    public DTOOrderItemRequest(int productID, int count) {
         this.productID = productID;
         this.count = count;
     }

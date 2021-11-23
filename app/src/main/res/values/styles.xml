@@ -112,6 +112,30 @@
         <item name="android:background">@color/red_type_2</item>
     </style>
 
+    <style name="TextInputLayoutStyle">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/textColorSecondary</item>
+        <item name="android:textSize">@dimen/font_size_small</item>
+        <item name="android:background">@color/white</item>
+        <item name="android:paddingStart">@dimen/spacing_control_half</item>
+        <item name="android:paddingEnd">@dimen/spacing_control_half</item>
+        <item name="android:layout_marginStart">@dimen/spacing_standard_new</item>
+    </style>
+
+    <style name="TextInputEditTextStyle">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/textColorPrimary</item>
+        <item name="android:textSize">@dimen/font_size_medium</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:paddingStart">@dimen/spacing_standard_new</item>
+        <item name="android:padding">@dimen/spacing_middle</item>
+        <item name="android:layout_marginTop">@dimen/_7sdp</item>
+        <item name="android:background">@drawable/bg_rounded_border_edittext</item>
+        <item name="android:gravity">center_vertical</item>
+    </style>
+
     <!--payment succeed-->
     <style name="paymentSucceedText1">
         <item name="android:textColor">@color/payment_succeed_text3</item>

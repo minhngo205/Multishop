@@ -3,6 +3,8 @@ package minh.project.multishop.models;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import minh.project.multishop.network.dtos.DTOmodels.DTOOrderItemRequest;
+
 public class OrderItem implements Parcelable {
     private int productID;
     private String imageURL;
@@ -94,5 +96,12 @@ public class OrderItem implements Parcelable {
         parcel.writeString(productName);
         parcel.writeInt(salePrice);
         parcel.writeInt(count);
+    }
+
+    public DTOOrderItemRequest castToDTO(){
+        return new DTOOrderItemRequest(
+                productID,
+                count
+        );
     }
 }

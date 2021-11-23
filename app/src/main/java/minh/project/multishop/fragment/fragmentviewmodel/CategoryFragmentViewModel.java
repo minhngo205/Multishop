@@ -1,7 +1,6 @@
 package minh.project.multishop.fragment.fragmentviewmodel;
 
 import android.annotation.SuppressLint;
-import android.content.Intent;
 import android.view.View;
 import android.widget.Adapter;
 import android.widget.AdapterView;
@@ -9,7 +8,6 @@ import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -30,7 +28,6 @@ import minh.project.multishop.models.Product;
 import minh.project.multishop.network.IAppAPI;
 import minh.project.multishop.network.RetroInstance;
 import minh.project.multishop.network.dtos.DTOResponse.GetListProductResponse;
-import minh.project.multishop.utils.InternetConnection;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -48,7 +45,6 @@ public class CategoryFragmentViewModel extends BaseFragmentViewModel<CategoryFra
     private int firstPosition;
     private List<Category> categoryList;
     private List<Product> productList;
-    private final List<Product> dataset;
 
     private FragmentCategoryBinding mBinding;
 
@@ -121,7 +117,6 @@ public class CategoryFragmentViewModel extends BaseFragmentViewModel<CategoryFra
     public CategoryFragmentViewModel(CategoryFragment categoryFragment) {
         super(categoryFragment);
         api = RetroInstance.getAppAPI();
-        dataset = new ArrayList<>();
     }
 
     @Override
@@ -129,7 +124,7 @@ public class CategoryFragmentViewModel extends BaseFragmentViewModel<CategoryFra
         mBinding = mFragment.getBinding();
 
         mCategoryView = mBinding.recyclerCatalogueType;
-        LinearLayoutManager layoutManager = new LinearLayoutManager(mFragment.getContext(), LinearLayoutManager.HORIZONTAL,false);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(mFragment.getContext());
         mCategoryView.setLayoutManager(layoutManager);
 
         mProductView = mBinding.recyclerCatalogueProduct;
@@ -143,6 +138,7 @@ public class CategoryFragmentViewModel extends BaseFragmentViewModel<CategoryFra
         noProductView = mBinding.lvNoProduct;
         mSpinner = mBinding.lvProgress;
         initCategoryView(firstPosition);
+        initProductView(1);
     }
 
     @SuppressLint("NotifyDataSetChanged")
@@ -192,9 +188,7 @@ public class CategoryFragmentViewModel extends BaseFragmentViewModel<CategoryFra
     @SuppressLint("NotifyDataSetChanged")
     private void onItemSelectedHandler(AdapterView<?> adapterView, View view, int position, long id) {
         if(position == 0){
-            productList.clear();
-            productList.addAll(dataset);
-            productCateAdapter.notifyDataSetChanged();
+            productCateAdapter.setProductList(productList);
             return;
         }
 
@@ -202,14 +196,12 @@ public class CategoryFragmentViewModel extends BaseFragmentViewModel<CategoryFra
         String search = (String) adapter.getItem(position);
 
         List<Product> searchedProducts = queryByBrandName(search);
-        productList.clear();
-        productList.addAll(searchedProducts);
-        productCateAdapter.notifyDataSetChanged();
+        productCateAdapter.setProductList(searchedProducts);
     }
 
     private List<Product> queryByBrandName(String search) {
         List<Product> result = new ArrayList<>();
-        for(Product p : dataset){
+        for(Product p : productList){
             if(search.equals(p.getBrand().getBrandName())) result.add(p);
         }
         return result;
@@ -225,12 +217,9 @@ public class CategoryFragmentViewModel extends BaseFragmentViewModel<CategoryFra
                 return;
             }
 
-            dataset.clear();
-            dataset.addAll(products);
-
             productList.clear();
             productList.addAll(products);
-            productCateAdapter.notifyDataSetChanged();
+            productCateAdapter.setProductList(productList);
 
             noProductView.setVisibility(View.GONE);
             mProductView.setVisibility(View.VISIBLE);

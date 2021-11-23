@@ -2,6 +2,7 @@ package minh.project.multishop.adapter;
 
 import static minh.project.multishop.utils.CurrencyFormat.currencyFormat;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
@@ -24,11 +25,17 @@ import minh.project.multishop.models.Product;
 public class ProductCateAdapter extends RecyclerView.Adapter<ProductCateAdapter.MyViewHolder> {
 
     private final Context mContext;
-    private final List<Product> productList;
+    private List<Product> productList;
 
     public ProductCateAdapter(Context mContext, List<Product> productList) {
         this.mContext = mContext;
         this.productList = productList;
+    }
+
+    @SuppressLint("NotifyDataSetChanged")
+    public void setProductList(List<Product> productList) {
+        this.productList = productList;
+        notifyDataSetChanged();
     }
 
     @NonNull

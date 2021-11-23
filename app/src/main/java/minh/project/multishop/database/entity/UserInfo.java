@@ -1,11 +1,15 @@
 package minh.project.multishop.database.entity;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
+import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
 @Entity
-public class UserInfo {
+public class UserInfo implements Parcelable {
     @PrimaryKey
     private int id;
     @ColumnInfo
@@ -34,11 +38,61 @@ public class UserInfo {
         this.updated_at = updated_at;
     }
 
+    @Ignore
     public UserInfo(String name, String address, String phone_number) {
         this.name = name;
         this.address = address;
         this.phone_number = phone_number;
     }
+
+    protected UserInfo(Parcel in) {
+        id = in.readInt();
+        username = in.readString();
+        email = in.readString();
+        name = in.readString();
+        address = in.readString();
+        phone_number = in.readString();
+        dob = in.readString();
+        if (in.readByte() == 0) {
+            updated_at = null;
+        } else {
+            updated_at = in.readLong();
+        }
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(id);
+        dest.writeString(username);
+        dest.writeString(email);
+        dest.writeString(name);
+        dest.writeString(address);
+        dest.writeString(phone_number);
+        dest.writeString(dob);
+        if (updated_at == null) {
+            dest.writeByte((byte) 0);
+        } else {
+            dest.writeByte((byte) 1);
+            dest.writeLong(updated_at);
+        }
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    public static final Creator<UserInfo> CREATOR = new Creator<UserInfo>() {
+        @Override
+        public UserInfo createFromParcel(Parcel in) {
+            return new UserInfo(in);
+        }
+
+        @Override
+        public UserInfo[] newArray(int size) {
+            return new UserInfo[size];
+        }
+    };
 
     public int getId() {
         return id;

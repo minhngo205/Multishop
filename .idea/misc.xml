@@ -15,14 +15,17 @@
         <entry key="..\:/Hoc tap/AndroidCode/Multishop/app/src/main/res/drawable-v24/ic_remove.xml" value="0.34774774774774775" />
         <entry key="..\:/Hoc tap/AndroidCode/Multishop/app/src/main/res/drawable-v24/search_icon_drawable.xml" value="0.3958974358974359" />
         <entry key="..\:/Hoc tap/AndroidCode/Multishop/app/src/main/res/drawable-v24/shape_background_eeeaeb.xml" value="0.40208333333333335" />
+        <entry key="..\:/Hoc tap/AndroidCode/Multishop/app/src/main/res/drawable-v24/tab_bgd_config.xml" value="0.20270270270270271" />
         <entry key="..\:/Hoc tap/AndroidCode/Multishop/app/src/main/res/drawable-v24/tab_center_bgd_color_selector.xml" value="0.23385416666666667" />
         <entry key="..\:/Hoc tap/AndroidCode/Multishop/app/src/main/res/drawable-v24/tab_color_selector.xml" value="0.23385416666666667" />
         <entry key="..\:/Hoc tap/AndroidCode/Multishop/app/src/main/res/drawable-v24/tab_end_bgd_color_no_selected.xml" value="0.23385416666666667" />
+        <entry key="..\:/Hoc tap/AndroidCode/Multishop/app/src/main/res/drawable-v24/tab_end_bgd_color_selected.xml" value="0.20270270270270271" />
         <entry key="..\:/Hoc tap/AndroidCode/Multishop/app/src/main/res/drawable-v24/tab_end_bgd_color_selector.xml" value="0.23385416666666667" />
         <entry key="..\:/Hoc tap/AndroidCode/Multishop/app/src/main/res/drawable-v24/tab_icon_cart_selector.xml" value="0.23385416666666667" />
         <entry key="..\:/Hoc tap/AndroidCode/Multishop/app/src/main/res/drawable-v24/tab_icon_category_selector.xml" value="0.23385416666666667" />
         <entry key="..\:/Hoc tap/AndroidCode/Multishop/app/src/main/res/drawable-v24/tab_icon_home_selector.xml" value="0.23385416666666667" />
         <entry key="..\:/Hoc tap/AndroidCode/Multishop/app/src/main/res/drawable-v24/tab_icon_new_in_selector.xml" value="0.40208333333333335" />
+        <entry key="..\:/Hoc tap/AndroidCode/Multishop/app/src/main/res/drawable-v24/tab_icon_user_selector.xml" value="0.34774774774774775" />
         <entry key="..\:/Hoc tap/AndroidCode/Multishop/app/src/main/res/drawable-v24/tab_start_bgd_color_no_selected.xml" value="0.23385416666666667" />
         <entry key="..\:/Hoc tap/AndroidCode/Multishop/app/src/main/res/drawable-v24/tab_start_bgd_color_selected.xml" value="0.40208333333333335" />
         <entry key="..\:/Hoc tap/AndroidCode/Multishop/app/src/main/res/drawable-v24/tab_start_bgd_color_selector.xml" value="0.23385416666666667" />
@@ -30,7 +33,9 @@
         <entry key="..\:/Hoc tap/AndroidCode/Multishop/app/src/main/res/drawable/background_check_out.xml" value="0.40208333333333335" />
         <entry key="..\:/Hoc tap/AndroidCode/Multishop/app/src/main/res/drawable/background_delete_bag_item.xml" value="0.40208333333333335" />
         <entry key="..\:/Hoc tap/AndroidCode/Multishop/app/src/main/res/drawable/background_dialog.xml" value="0.23385416666666667" />
+        <entry key="..\:/Hoc tap/AndroidCode/Multishop/app/src/main/res/drawable/bg_ractangal.xml" value="0.24755555555555556" />
         <entry key="..\:/Hoc tap/AndroidCode/Multishop/app/src/main/res/drawable/bg_review_circle.xml" value="0.40208333333333335" />
+        <entry key="..\:/Hoc tap/AndroidCode/Multishop/app/src/main/res/drawable/bg_rounded_border_edittext.xml" value="0.24755555555555556" />
         <entry key="..\:/Hoc tap/AndroidCode/Multishop/app/src/main/res/drawable/bg_seekbar_green.xml" value="0.40208333333333335" />
         <entry key="..\:/Hoc tap/AndroidCode/Multishop/app/src/main/res/drawable/bg_seekbar_red.xml" value="0.40208333333333335" />
         <entry key="..\:/Hoc tap/AndroidCode/Multishop/app/src/main/res/drawable/bg_seekbar_yellow.xml" value="0.40208333333333335" />
@@ -60,6 +65,7 @@
         <entry key="..\:/Hoc tap/AndroidCode/Multishop/app/src/main/res/drawable/ic_list_ul.xml" value="0.40208333333333335" />
         <entry key="..\:/Hoc tap/AndroidCode/Multishop/app/src/main/res/drawable/ic_momo_2.xml" value="0.2072072072072072" />
         <entry key="..\:/Hoc tap/AndroidCode/Multishop/app/src/main/res/drawable/ic_money_flat_icon.xml" value="0.2072072072072072" />
+        <entry key="..\:/Hoc tap/AndroidCode/Multishop/app/src/main/res/drawable/ic_my_location.xml" value="0.24755555555555556" />
         <entry key="..\:/Hoc tap/AndroidCode/Multishop/app/src/main/res/drawable/ic_rectangle_list_solid.xml" value="0.40208333333333335" />
         <entry key="..\:/Hoc tap/AndroidCode/Multishop/app/src/main/res/drawable/ic_shopping_cart.xml" value="0.40208333333333335" />
         <entry key="..\:/Hoc tap/AndroidCode/Multishop/app/src/main/res/drawable/ic_star_black.xml" value="0.40208333333333335" />
@@ -70,9 +76,11 @@
         <entry key="..\:/Hoc tap/AndroidCode/Multishop/app/src/main/res/drawable/item_border.xml" value="0.23385416666666667" />
         <entry key="..\:/Hoc tap/AndroidCode/Multishop/app/src/main/res/drawable/loading_placeholder.xml" value="0.40208333333333335" />
         <entry key="..\:/Hoc tap/AndroidCode/Multishop/app/src/main/res/drawable/progress_bar_loading.xml" value="0.23385416666666667" />
+        <entry key="..\:/Hoc tap/AndroidCode/Multishop/app/src/main/res/drawable/progress_bg.xml" value="0.2509009009009009" />
         <entry key="..\:/Hoc tap/AndroidCode/Multishop/app/src/main/res/drawable/select_position_bgd.xml" value="0.23385416666666667" />
         <entry key="..\:/Hoc tap/AndroidCode/Multishop/app/src/main/res/drawable/textview_border_shape.xml" value="0.40208333333333335" />
         <entry key="..\:/Hoc tap/AndroidCode/Multishop/app/src/main/res/font/main_font.xml" value="0.4161458333333333" />
+        <entry key="..\:/Hoc tap/AndroidCode/Multishop/app/src/main/res/layout/activity_add_address.xml" value="0.23693693693693693" />
         <entry key="..\:/Hoc tap/AndroidCode/Multishop/app/src/main/res/layout/activity_cart.xml" value="0.3859375" />
         <entry key="..\:/Hoc tap/AndroidCode/Multishop/app/src/main/res/layout/activity_login.xml" value="0.22554347826086957" />
         <entry key="..\:/Hoc tap/AndroidCode/Multishop/app/src/main/res/layout/activity_main.xml" value="0.25" />

@@ -2,10 +2,13 @@ package minh.project.multishop.adapter;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.graphics.Color;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -22,9 +25,17 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.MyView
     private final Context mContext;
     private OnItemClickListener onItemClickListener;
     private final int showPosition;
-    private TextView currentType;
-    private View currentBar;
-    private int row_index = 0;
+    private int selectedItemPosition = 0;
+    Integer[] images = new Integer[]{
+            R.mipmap.laptop,
+            R.mipmap.pc_parts,
+            R.mipmap.television,
+            R.mipmap.screen,
+            R.mipmap.smart_devices,
+            R.mipmap.smart_phone,
+            R.mipmap.mouse,
+            R.mipmap.key_board
+    };
 
     public CategoryAdapter(List<Category> categoryList, Context context, int showPosition) {
         this.categoryList = categoryList;
@@ -38,57 +49,46 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.MyView
         return new MyViewHolder(LayoutInflater.from(mContext).inflate(R.layout.item_category_list,parent,false));
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, @SuppressLint("RecyclerView") int position) {
         Category category = categoryList.get(position);
 
+        holder.ivCategory.setImageResource(images[position]);
         holder.cateName.setText(category.getName());
         holder.cateName.setTextColor(mContext.getResources().getColor(R.color.item_catalogue_no_select));
-        holder.bar.setVisibility(View.GONE);
 
         holder.itemView.setOnClickListener(v -> {
-            row_index = position;
+            selectedItemPosition = position;
             if (onItemClickListener != null) {
                 onItemClickListener.onItemClick(position);
             }
-            changeStatus(holder,row_index);
+            notifyDataSetChanged();
         });
 
-        if(row_index==showPosition){
-            holder.itemView.performClick();
-            Log.d("TAG", "onBindViewHolder: "+showPosition);
+        if (selectedItemPosition == position){
+            holder.cardView.setBackgroundColor(mContext.getResources().getColor(R.color.red_type_1));
+            holder.cateName.setTextColor(mContext.getResources().getColor(R.color.white));
+        } else {
+            holder.cardView.setBackgroundColor(mContext.getResources().getColor(R.color.color_bdg_gray));
+            holder.cateName.setTextColor(mContext.getResources().getColor(R.color.item_catalogue_no_select));
         }
-    }
-
-    private void changeStatus(MyViewHolder holder, int position) {
-        Category category = categoryList.get(position);
-        if (currentType != null) {
-            currentType.setTextColor(mContext.getResources().getColor(R.color.item_catalogue_no_select));
-            currentBar.setVisibility(View.GONE);
-            currentType.setBackgroundColor(mContext.getResources().getColor(R.color.transparent));
-        }
-
-        currentType = holder.cateName;
-        currentBar = holder.bar;
-
-        currentType.setText(category.getName());
-        currentBar.setVisibility(View.GONE);
-        currentType.setBackgroundColor(mContext.getResources().getColor(R.color.red_type_1));
-        currentType.setTextColor(mContext.getResources().getColor(R.color.white));
     }
 
     @Override
     public int getItemCount() {
-        return categoryList.size();
+        return null == categoryList || categoryList.isEmpty() ? 0 : categoryList.size();
     }
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
         TextView cateName;
-        View bar;
+        LinearLayout cardView;
+        ImageView ivCategory;
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
             cateName = itemView.findViewById(R.id.catalogue_type);
-            bar = itemView.findViewById(R.id.item_bar);
+            ivCategory = itemView.findViewById(R.id.iv_category);
+            cardView = itemView.findViewById(R.id.item_category_list);
         }
     }
 

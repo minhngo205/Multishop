@@ -6,7 +6,6 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Paint;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -78,12 +77,8 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.MyViewHolder> 
         holder.textQuantity.setText(String.valueOf(cartItem.getCount()));
         holder.checkItemChoose.setChecked(cartItem.isChoose());
 
-        holder.textAdd.setOnClickListener(v -> {
-            onItemModifyListener.onItemQuantityAdd(position, holder.textQuantity);
-        });
-        holder.textReduce.setOnClickListener(v -> {
-            onItemModifyListener.onItemQuantityReduce(position, holder.textQuantity);
-        });
+        holder.textAdd.setOnClickListener(v -> onItemModifyListener.onItemQuantityAdd(position, holder.textQuantity));
+        holder.textReduce.setOnClickListener(v -> onItemModifyListener.onItemQuantityReduce(position, holder.textQuantity));
         holder.checkItemChoose.setOnClickListener(view -> {
             cartItem.setChoose(((CheckBox) view).isChecked());
             onItemModifyListener.onItemChoose(position, ((CheckBox) view).isChecked());

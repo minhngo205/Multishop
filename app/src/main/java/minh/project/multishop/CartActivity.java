@@ -1,10 +1,11 @@
 package minh.project.multishop;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import minh.project.multishop.base.BaseActivity;
 import minh.project.multishop.databinding.ActivityCartBinding;
@@ -16,6 +17,7 @@ public class CartActivity extends BaseActivity implements View.OnClickListener, 
     private ActivityCartBinding mBinding;
     private CartActivityViewModel mViewModel;
     private boolean isInit = false;
+    private Map<Integer,Boolean> cartItemSelectedMap;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,6 +28,7 @@ public class CartActivity extends BaseActivity implements View.OnClickListener, 
 
         mViewModel = new CartActivityViewModel(this);
         mViewModel.initView();
+        cartItemSelectedMap = new HashMap<>();
     }
 
     @Override
@@ -35,6 +38,7 @@ public class CartActivity extends BaseActivity implements View.OnClickListener, 
             mViewModel.initData();
             isInit = true;
         }
+        mViewModel.reloadData(cartItemSelectedMap);
     }
 
     public ActivityCartBinding getBinding() {
@@ -65,5 +69,11 @@ public class CartActivity extends BaseActivity implements View.OnClickListener, 
     @Override
     public void onItemQuantityReduce(int position, View quantityView) {
         mViewModel.onItemQuantityReduce(position, quantityView);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        cartItemSelectedMap = mViewModel.getCheckedMap();
     }
 }

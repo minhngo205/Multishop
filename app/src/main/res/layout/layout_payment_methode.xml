@@ -36,7 +36,7 @@
         android:layout_height="wrap_content">
 
         <RadioButton
-            android:id="@+id/bcr_payment_button"
+            android:id="@+id/cash_methode"
             android:layout_width="match_parent"
             android:layout_height="42dp"
             android:layout_marginStart="16dp"
@@ -50,7 +50,7 @@
             android:textSize="15sp" />
 
         <RadioButton
-            android:id="@+id/other_payment_button"
+            android:id="@+id/momo_methode"
             android:layout_width="match_parent"
             android:layout_height="42dp"
             android:layout_marginStart="16dp"
