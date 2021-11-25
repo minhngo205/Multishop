@@ -7,15 +7,12 @@ import static minh.project.multishop.base.BaseDialog.CONTENT;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
-import androidx.lifecycle.Observer;
-
-import minh.project.multishop.CartActivity;
-import minh.project.multishop.LoginActivity;
+import minh.project.multishop.activity.CartActivity;
+import minh.project.multishop.activity.LoginActivity;
 import minh.project.multishop.R;
 import minh.project.multishop.base.BaseDialog;
 import minh.project.multishop.base.BaseFragmentViewModel;
@@ -23,7 +20,6 @@ import minh.project.multishop.database.entity.User;
 import minh.project.multishop.database.repository.UserDBRepository;
 import minh.project.multishop.databinding.FragmentUserBinding;
 import minh.project.multishop.fragment.UserFragment;
-import minh.project.multishop.models.UserProfile;
 import minh.project.multishop.network.repository.UserNetRepository;
 
 public class UserFragmentViewModel extends BaseFragmentViewModel<UserFragment> {

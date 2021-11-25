@@ -17,28 +17,31 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="n">
         <activity
-            android:name=".AddAddressActivity"
+            android:name=".activity.SearchActivity"
             android:exported="false" />
         <activity
-            android:name=".OrderDetailActivity"
+            android:name=".activity.AddAddressActivity"
             android:exported="false" />
         <activity
-            android:name=".OrderSubmitActivity"
+            android:name=".activity.OrderDetailActivity"
             android:exported="false" />
         <activity
-            android:name=".CartActivity"
+            android:name=".activity.OrderSubmitActivity"
             android:exported="false" />
         <activity
-            android:name=".ReviewActivity"
+            android:name=".activity.CartActivity"
             android:exported="false" />
         <activity
-            android:name=".ProductDetailActivity"
+            android:name=".activity.RatingActivity"
             android:exported="false" />
         <activity
-            android:name=".LoginActivity"
+            android:name=".activity.ProductDetailActivity"
             android:exported="false" />
         <activity
-            android:name=".MainActivity"
+            android:name=".activity.LoginActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activity.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

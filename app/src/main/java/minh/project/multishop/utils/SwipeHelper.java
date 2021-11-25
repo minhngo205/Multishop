@@ -1,7 +1,5 @@
 package minh.project.multishop.utils;
 
-import static com.makeramen.roundedimageview.RoundedDrawable.drawableToBitmap;
-
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.Resources;
@@ -29,8 +27,6 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Queue;
-
-import minh.project.multishop.CartActivity;
 
 public abstract class SwipeHelper extends ItemTouchHelper.SimpleCallback {
 

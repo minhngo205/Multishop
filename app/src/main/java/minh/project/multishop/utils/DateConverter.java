@@ -1,7 +1,12 @@
 package minh.project.multishop.utils;
 
+import android.annotation.SuppressLint;
+
 import androidx.room.TypeConverter;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
 public class DateConverter {
@@ -13,5 +18,16 @@ public class DateConverter {
     @TypeConverter
     public static Long fromDate(Date date){
         return date == null ? null : date.getTime();
+    }
+
+    public static String DateTimeFormat(Date DateTime){
+        @SuppressLint("SimpleDateFormat")
+        DateFormat dateFormat = new SimpleDateFormat("d/M/y");
+        @SuppressLint("SimpleDateFormat")
+        DateFormat hourFormat = new SimpleDateFormat("h:mm a");
+
+        String date = dateFormat.format(DateTime.getTime());
+        String time = hourFormat.format(DateTime.getTime());
+        return time + "\t" + date;
     }
 }

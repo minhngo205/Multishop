@@ -21,10 +21,10 @@
                 <item>
                     <shape
                             android:shape="rectangle"
-                            android:tint="@color/yellow">
+                            android:tint="@color/orange_type_2">
 
                         <corners android:radius="4dp"/>
-                        <solid android:color="@color/yellow"/>
+                        <solid android:color="@color/orange_type_2"/>
                     </shape>
                 </item>
             </selector>

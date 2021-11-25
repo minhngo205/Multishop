@@ -5,6 +5,7 @@ import java.util.List;
 import minh.project.multishop.models.CartItem;
 import minh.project.multishop.models.Category;
 import minh.project.multishop.models.Product;
+import minh.project.multishop.models.Rating;
 import minh.project.multishop.models.UserProfile;
 import minh.project.multishop.network.dtos.DTORequest.CreateOrderRequest;
 import minh.project.multishop.network.dtos.DTOResponse.OrderDetailResponse;
@@ -72,4 +73,8 @@ public interface IAppAPI {
 
     @GET("user/orders/{orderID}")
     Call<OrderDetailResponse> getOrderDetail(@Header("Authorization") String value, @Path("orderID") int orderID);
+
+    //Review API
+    @GET("ratings/{product_id}")
+    Call<List<Rating>> getProductRating(@Path("product_id") int productID);
 }
