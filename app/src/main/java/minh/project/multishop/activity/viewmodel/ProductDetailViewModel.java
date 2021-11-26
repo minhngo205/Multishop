@@ -177,6 +177,7 @@ public class ProductDetailViewModel extends BaseActivityViewModel<ProductDetailA
             case R.id.layout_evaluate:{
                 Intent reviewIntent = new Intent(mActivity, RatingActivity.class);
                 reviewIntent.putExtra("PRODUCT_ID",productDetail.getID());
+                reviewIntent.putExtra("AVG_RATING",productDetail.getAvgRate());
                 mActivity.startActivity(reviewIntent);
                 break;
             }

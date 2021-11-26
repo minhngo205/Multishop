@@ -61,5 +61,8 @@
     <string name="lbl_shop_now">Mua sắm ngay</string>
     <string name="confirm_order">Bạn đã kiểm tra đúng thông tin và chắc chắn muốn đặt hàng</string>
     <string name="confirm_cart_item_delete">Bạn chắc chắn muốn xoá sản phẩm khỏi Giỏ hàng ?</string>
+    <string name="order_center_order_number">Mã đơn hàng: %d</string>
+    <string name="order_center_pending_payment_time">Chưa xác nhận</string>
+    <string name="order_center_total">"%d sản phẩm, Tổng đơn: "</string>
 
 </resources>

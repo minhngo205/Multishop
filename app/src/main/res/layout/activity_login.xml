@@ -221,7 +221,7 @@
                 app:layout_constraintTop_toBottomOf="@id/signin_with_your_email2"
                 android:paddingStart="25dp"
                 android:paddingEnd="25dp"
-                android:hint="Tên của bạn"
+                android:hint="Họ và tên"
                 android:textColorHint="@color/base"
                 app:endIconDrawable="@drawable/ic_baseline_border_color_24"
                 app:endIconMode="custom"
@@ -260,29 +260,6 @@
 
             </com.google.android.material.textfield.TextInputLayout>
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/email_textinputlayout2"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/username_textinputlayout2"
-                android:paddingStart="25dp"
-                android:paddingEnd="25dp"
-                android:hint="Email"
-                android:textColorHint="@color/base"
-                app:endIconDrawable="@drawable/email"
-                app:endIconMode="custom"
-                android:layout_marginTop="15dp">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:id="@+id/email2"
-                    android:inputType="textEmailAddress"
-                    android:textColor="@color/black"/>
-
-            </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/password_textinputlayout2"
@@ -290,7 +267,7 @@
                 android:layout_height="wrap_content"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/email_textinputlayout2"
+                app:layout_constraintTop_toBottomOf="@id/username_textinputlayout2"
                 android:paddingStart="25dp"
                 android:paddingRight="25dp"
                 android:hint="Mật khẩu"

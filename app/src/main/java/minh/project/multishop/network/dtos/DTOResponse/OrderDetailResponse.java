@@ -18,7 +18,7 @@ public class OrderDetailResponse {
     @SerializedName("id")
     public int orderID;
     @SerializedName("status")
-    public String payStatus;
+    public String orderStatus;
     @SerializedName("user")
     public int userID;
     @SerializedName("is_paid")

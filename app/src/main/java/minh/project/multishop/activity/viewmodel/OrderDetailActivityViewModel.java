@@ -16,6 +16,7 @@ import minh.project.multishop.network.dtos.DTOResponse.OrderDetailResponse;
 import minh.project.multishop.network.repository.OrderRepository;
 import minh.project.multishop.utils.CurrencyFormat;
 import minh.project.multishop.utils.DateConverter;
+import minh.project.multishop.utils.Statistics;
 
 public class OrderDetailActivityViewModel extends BaseActivityViewModel<OrderDetailActivity> {
 
@@ -62,7 +63,7 @@ public class OrderDetailActivityViewModel extends BaseActivityViewModel<OrderDet
         mBinding.tvOrderId.setText(String.valueOf(orderDetail.orderID));
         mBinding.tvOrderDate.setText(DateConverter.DateTimeFormat(orderDetail.orderDay));
         mBinding.tvPayment.setText(orderDetail.payment.name);
-        mBinding.tvStatus.setText(orderDetail.payStatus);
+        mBinding.tvStatus.setText(Statistics.getStatusText(orderDetail.orderStatus));
     }
 
     private void initRecycleView() {

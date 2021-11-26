@@ -8,6 +8,8 @@ import minh.project.multishop.models.Product;
 import minh.project.multishop.models.Rating;
 import minh.project.multishop.models.UserProfile;
 import minh.project.multishop.network.dtos.DTORequest.CreateOrderRequest;
+import minh.project.multishop.network.dtos.DTORequest.RegisterRequest;
+import minh.project.multishop.network.dtos.DTOResponse.GetListOrderResponse;
 import minh.project.multishop.network.dtos.DTOResponse.OrderDetailResponse;
 import minh.project.multishop.network.dtos.DTOResponse.EditCartResponse;
 import minh.project.multishop.network.dtos.DTORequest.LoginRequest;
@@ -51,6 +53,9 @@ public interface IAppAPI {
     @POST("login")
     Call<LoginResponse> login(@Body LoginRequest params);
 
+    @POST("register")
+    Call<UserProfile> register(@Body RegisterRequest request);
+
     @GET("user/me")
     Call<UserProfile> getProfile(@Header("Authorization") String value);
 
@@ -73,6 +78,12 @@ public interface IAppAPI {
 
     @GET("user/orders/{orderID}")
     Call<OrderDetailResponse> getOrderDetail(@Header("Authorization") String value, @Path("orderID") int orderID);
+
+    @GET("user/orders?page=1&page_size=1")
+    Call<GetListOrderResponse> getTotalFirst(@Header("Authorization") String value);
+
+    @GET("user/orders?page=1")
+    Call<GetListOrderResponse> getOrderByStatus(@Header("Authorization") String value, @Query("page_size") int size, @Query("status") String status);
 
     //Review API
     @GET("ratings/{product_id}")

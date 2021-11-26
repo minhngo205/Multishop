@@ -9,6 +9,7 @@ import minh.project.multishop.network.IAppAPI;
 import minh.project.multishop.network.RetroInstance;
 import minh.project.multishop.network.dtos.DTORequest.LoginRequest;
 import minh.project.multishop.network.dtos.DTORequest.RefreshAccessTokenRequest;
+import minh.project.multishop.network.dtos.DTORequest.RegisterRequest;
 import minh.project.multishop.network.dtos.DTOResponse.LoginResponse;
 import minh.project.multishop.network.dtos.DTOResponse.RefreshAccessTokenResponse;
 import retrofit2.Call;
@@ -51,6 +52,29 @@ public class UserNetRepository {
         tokenData = new MutableLiveData<>();
         loadTokenData(request);
         return tokenData;
+    }
+
+    public LiveData<UserProfile> getRegisterData(RegisterRequest request){
+        profileData = new MutableLiveData<>();
+        registerUser(request);
+        return profileData;
+    }
+
+    private void registerUser(RegisterRequest request) {
+        Call<UserProfile> call = api.register(request);
+        call.enqueue(new Callback<UserProfile>() {
+            @Override
+            public void onResponse(@NonNull Call<UserProfile> call, @NonNull Response<UserProfile> response) {
+                if(response.isSuccessful()){
+                    profileData.postValue(response.body());
+                } else profileData.postValue(null);
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<UserProfile> call, @NonNull Throwable t) {
+                profileData.postValue(null);
+            }
+        });
     }
 
     private void loadTokenData(RefreshAccessTokenRequest request) {

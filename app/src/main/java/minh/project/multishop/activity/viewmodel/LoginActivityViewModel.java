@@ -7,6 +7,8 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
+import androidx.lifecycle.Observer;
+
 import minh.project.multishop.activity.LoginActivity;
 import minh.project.multishop.R;
 import minh.project.multishop.base.BaseActivityViewModel;
@@ -14,7 +16,9 @@ import minh.project.multishop.database.entity.User;
 import minh.project.multishop.database.entity.UserInfo;
 import minh.project.multishop.database.repository.UserDBRepository;
 import minh.project.multishop.databinding.ActivityLoginBinding;
+import minh.project.multishop.models.UserProfile;
 import minh.project.multishop.network.dtos.DTORequest.LoginRequest;
+import minh.project.multishop.network.dtos.DTORequest.RegisterRequest;
 import minh.project.multishop.network.repository.UserNetRepository;
 
 public class LoginActivityViewModel extends BaseActivityViewModel<LoginActivity> {
@@ -40,6 +44,7 @@ public class LoginActivityViewModel extends BaseActivityViewModel<LoginActivity>
         mBinding.signin.setOnClickListener(mActivity);
         mBinding.signup.setOnClickListener(mActivity);
         mBinding.continueButton.setOnClickListener(mActivity);
+        mBinding.signupButton.setOnClickListener(mActivity);
     }
 
     @SuppressLint("NonConstantResourceId")
@@ -69,11 +74,57 @@ public class LoginActivityViewModel extends BaseActivityViewModel<LoginActivity>
                     mBinding.password.requestFocus();
                     return;
                 }
-                login(username,password);
+                login(username.trim(),password.trim());
                 break;
+            }
+            case R.id.signup_button:{
+                String name = String.valueOf(mBinding.name.getText());
+                String username = String.valueOf(mBinding.user2.getText());
+                String password = String.valueOf(mBinding.password2.getText());
+                String rePassword = String.valueOf(mBinding.reenterPassword.getText());
+
+                if (name.trim().isEmpty()){
+                    mBinding.name.setError("Cần có họ và tên");
+                    mBinding.name.requestFocus();
+                    return;
+                }
+                if(username.trim().isEmpty()){
+                    mBinding.user2.setError("Cần có tên đăng nhập");
+                    mBinding.user2.requestFocus();
+                    return;
+                }
+                if (password.trim().isEmpty()){
+                    mBinding.password2.setError("Cần có mật khẩu");
+                    mBinding.password2.requestFocus();
+                    return;
+                }
+                if(rePassword.trim().isEmpty()||!rePassword.trim().equals(password.trim())){
+                    mBinding.reenterPassword.setError("Cần nhập lại mật khẩu đúng với mật khẩu cần đăng ký");
+                    mBinding.reenterPassword.requestFocus();
+                    return;
+                }
+
+                register(name.trim(),username.trim(),password.trim());
             }
             default: break;
         }
+    }
+
+    private void register(String name, String username, String password) {
+        RegisterRequest registerRequest = new RegisterRequest(name,username,password);
+
+        netRepository.getRegisterData(registerRequest).observe(mActivity, new Observer<UserProfile>() {
+            @Override
+            public void onChanged(UserProfile userProfile) {
+                if(null == userProfile){
+                    Toast.makeText(mActivity, "Không thể đăng ký", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                dbRepository.insertUserInfo(userProfile.castToInfo());
+                login(userProfile.getUsername(),password);
+            }
+        });
     }
 
     private void login(String username, String password) {
@@ -87,7 +138,9 @@ public class LoginActivityViewModel extends BaseActivityViewModel<LoginActivity>
 
             User user = new User(username,loginResponse.getRefreshToken(),loginResponse.getAccessToken());
             dbRepository.setCurrentUser(user);
-            CacheUserInfo(user);
+            if(null == dbRepository.getUserInfo()){
+                CacheUserInfo(user);
+            }
             Intent returnIntent = new Intent();
             returnIntent.putExtra("result","LOGIN_SUCCESS");
             mActivity.setResult(Activity.RESULT_OK,returnIntent);

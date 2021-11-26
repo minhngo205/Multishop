@@ -39,7 +39,7 @@ public class UserDBRepository {
         userDao.updateAccessToken(user);
     }
 
-    public User getUsername(String username){
+    public User getUserByUsername(String username){
         return userDao.getUserByUSN(username);
     }
 

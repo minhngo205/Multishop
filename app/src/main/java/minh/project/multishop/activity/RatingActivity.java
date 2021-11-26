@@ -12,6 +12,7 @@ public class RatingActivity extends BaseActivity {
 
     private ActivityRatingBinding mBinding;
     private int productID;
+    private double avgRating;
     private RatingActViewModel mViewModel;
     private boolean isInit = false;
 
@@ -24,6 +25,7 @@ public class RatingActivity extends BaseActivity {
         Intent intent = getIntent();
         if(null != intent){
             productID = intent.getIntExtra("PRODUCT_ID",-1);
+            avgRating = intent.getDoubleExtra("AVG_RATING",-1);
         }
         Toast.makeText(this, "Product ID: "+productID, Toast.LENGTH_SHORT).show();
         mViewModel = new RatingActViewModel(this);
@@ -44,5 +46,9 @@ public class RatingActivity extends BaseActivity {
 
     public ActivityRatingBinding getBinding() {
         return mBinding;
+    }
+
+    public double getAvgRating() {
+        return avgRating;
     }
 }

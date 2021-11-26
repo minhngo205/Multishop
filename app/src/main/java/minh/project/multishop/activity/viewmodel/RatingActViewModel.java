@@ -64,6 +64,7 @@ public class RatingActViewModel extends BaseActivityViewModel<RatingActivity> {
     @SuppressLint("SetTextI18n")
     private void initRatingInfo() {
         ratingCount = ratingData.size();
+        mBinding.layoutReview.tvReviewRate.setText(String.valueOf(mActivity.getAvgRating()));
         mBinding.layoutReview.tvTotalReview.setText(ratingCount +" đánh giá");
         for(Rating rating : ratingData){
             switch (rating.getRate()){

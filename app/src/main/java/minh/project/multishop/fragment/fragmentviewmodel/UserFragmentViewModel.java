@@ -14,9 +14,11 @@ import android.widget.Toast;
 import minh.project.multishop.activity.CartActivity;
 import minh.project.multishop.activity.LoginActivity;
 import minh.project.multishop.R;
+import minh.project.multishop.activity.OrderCentreActivity;
 import minh.project.multishop.base.BaseDialog;
 import minh.project.multishop.base.BaseFragmentViewModel;
 import minh.project.multishop.database.entity.User;
+import minh.project.multishop.database.entity.UserInfo;
 import minh.project.multishop.database.repository.UserDBRepository;
 import minh.project.multishop.databinding.FragmentUserBinding;
 import minh.project.multishop.fragment.UserFragment;
@@ -26,6 +28,7 @@ public class UserFragmentViewModel extends BaseFragmentViewModel<UserFragment> {
 
     public static final int REQUEST_LOGIN = 10001;
     private User mUser;
+    private UserInfo mUserInfo;
     private final UserDBRepository mUserDBRepository;
     private FragmentUserBinding binding;
     private final UserNetRepository mUserNetRepository;
@@ -39,6 +42,7 @@ public class UserFragmentViewModel extends BaseFragmentViewModel<UserFragment> {
         super(userFragment);
         mUserDBRepository = UserDBRepository.getInstance();
         mUserNetRepository = UserNetRepository.getInstance();
+        mUserInfo = mUserDBRepository.getUserInfo();
     }
 
     @Override
@@ -76,7 +80,11 @@ public class UserFragmentViewModel extends BaseFragmentViewModel<UserFragment> {
         RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) binding.ivQrCode.getLayoutParams();
         params.addRule(RelativeLayout.BELOW, 0);
         binding.ivQrCode.setLayoutParams(params);
-        binding.tvUserName.setText(mUser.getUsername());
+        if(null == mUserInfo || mUserInfo.getName().isEmpty()){
+            binding.tvUserName.setText(mUser.getUsername());
+            return;
+        }
+        binding.tvUserName.setText(mUserInfo.getName());
     }
 
     @SuppressLint("NonConstantResourceId")
@@ -94,14 +102,14 @@ public class UserFragmentViewModel extends BaseFragmentViewModel<UserFragment> {
 
                 break;
             case R.id.lv_account: // My Account
-                Toast.makeText(mFragment.getContext(), "Username: "+mUserDBRepository.getUserInfo().getUsername(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(mFragment.getContext(), "Username: "+mUserDBRepository.getUserInfo().getName(), Toast.LENGTH_SHORT).show();
                 break;
             case R.id.lv_bag: // Bag
                 Intent cartIntent = new Intent(mFragment.getActivity(), CartActivity.class);
                 mFragment.requireActivity().startActivity(cartIntent);
                 break;
             case R.id.lv_order: // Order Center
-
+                mFragment.requireActivity().startActivity(new Intent(mFragment.getActivity(), OrderCentreActivity.class));
                 break;
             case R.id.lv_save: // Favourite
 
