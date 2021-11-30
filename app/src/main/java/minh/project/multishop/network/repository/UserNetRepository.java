@@ -60,6 +60,29 @@ public class UserNetRepository {
         return profileData;
     }
 
+    public LiveData<UserProfile> updateInfoData(String token, UserProfile request){
+        profileData = new MutableLiveData<>();
+        loadUpdateProfile(token,request);
+        return profileData;
+    }
+
+    private void loadUpdateProfile(String token, UserProfile request) {
+        Call<UserProfile> call = api.updateProfile("Bearer "+token,request);
+        call.enqueue(new Callback<UserProfile>() {
+            @Override
+            public void onResponse(@NonNull Call<UserProfile> call, @NonNull Response<UserProfile> response) {
+                if(response.isSuccessful()){
+                    profileData.postValue(response.body());
+                } else profileData.postValue(null);
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<UserProfile> call, @NonNull Throwable t) {
+                profileData.postValue(null);
+            }
+        });
+    }
+
     private void registerUser(RegisterRequest request) {
         Call<UserProfile> call = api.register(request);
         call.enqueue(new Callback<UserProfile>() {

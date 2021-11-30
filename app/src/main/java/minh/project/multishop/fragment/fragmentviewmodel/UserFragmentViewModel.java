@@ -5,13 +5,21 @@ import static minh.project.multishop.base.BaseDialog.CONFIRM_BUTTON;
 import static minh.project.multishop.base.BaseDialog.CONTENT;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
+
 import minh.project.multishop.activity.CartActivity;
+import minh.project.multishop.activity.EditInfoActivity;
 import minh.project.multishop.activity.LoginActivity;
 import minh.project.multishop.R;
 import minh.project.multishop.activity.OrderCentreActivity;
@@ -28,7 +36,7 @@ public class UserFragmentViewModel extends BaseFragmentViewModel<UserFragment> {
 
     public static final int REQUEST_LOGIN = 10001;
     private User mUser;
-    private UserInfo mUserInfo;
+    private final UserInfo mUserInfo;
     private final UserDBRepository mUserDBRepository;
     private FragmentUserBinding binding;
     private final UserNetRepository mUserNetRepository;
@@ -64,51 +72,73 @@ public class UserFragmentViewModel extends BaseFragmentViewModel<UserFragment> {
     public void checkSignIn() {
         mUser = mUserDBRepository.getCurrentUser();
         if (mUser == null) { // no sign
-            binding.tvUserName.setVisibility(View.GONE);
-            binding.ivHead.setVisibility(View.GONE);
+            binding.layoutWelcome.setVisibility(View.GONE);
             binding.tvSignIn.setVisibility(View.VISIBLE);
-            RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) binding.ivQrCode.getLayoutParams();
-            params.addRule(RelativeLayout.ALIGN_RIGHT, R.id.iv_head);
-            binding.ivQrCode.setLayoutParams(params);
             return;
         }
 
         // sign in
-        binding.tvUserName.setVisibility(View.VISIBLE);
+        binding.layoutWelcome.setVisibility(View.VISIBLE);
         binding.tvSignIn.setVisibility(View.GONE);
-        binding.ivHead.setVisibility(View.VISIBLE);
-        RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) binding.ivQrCode.getLayoutParams();
-        params.addRule(RelativeLayout.BELOW, 0);
-        binding.ivQrCode.setLayoutParams(params);
+        Log.d("TAG", "checkSignIn: "+mUserInfo);
         if(null == mUserInfo || mUserInfo.getName().isEmpty()){
-            binding.tvUserName.setText(mUser.getUsername());
+            binding.tvUserName.setText(mFragment.requireContext().getString(R.string.welcome_user,mUser.getUsername()));
             return;
         }
-        binding.tvUserName.setText(mUserInfo.getName());
+        binding.tvUserName.setText(mFragment.requireContext().getString(R.string.welcome_user,mUserInfo.getName()));
+    }
+
+    ActivityResultLauncher<Intent> activityResultLauncher = mFragment.registerForActivityResult(
+            new ActivityResultContracts.StartActivityForResult(),
+            result -> {
+                if(result.getResultCode() == Activity.RESULT_OK){
+                    checkSignIn();
+                    Intent data = result.getData();
+                    if(null != data){
+                        String name = data.getStringExtra("NAME");
+                        setUserName(name);
+                    }
+                }
+            }
+    );
+
+    private void setUserName(String name) {
+        if(null == name || name.isEmpty()){
+            binding.tvUserName.setText(mFragment.requireContext().getString(R.string.welcome_user,mUser.getUsername()));
+            return;
+        }
+
+        binding.tvUserName.setText(mFragment.requireContext().getString(R.string.welcome_user,name));
     }
 
     @SuppressLint("NonConstantResourceId")
     @Override
     public void onClickEvent(int viewId) {
         switch (viewId) {
-            case R.id.iv_qr_code: // QR Code
-
-                break;
             case R.id.tv_sign_in: // Sign in
                 Intent loginIntent = new Intent(mFragment.getActivity(), LoginActivity.class);
-                mFragment.requireActivity().startActivityForResult(loginIntent,REQUEST_LOGIN);
+                activityResultLauncher.launch(loginIntent);
                 break;
             case R.id.lv_scan: // Scan to pay
 
                 break;
             case R.id.lv_account: // My Account
-                Toast.makeText(mFragment.getContext(), "Username: "+mUserDBRepository.getUserInfo().getName(), Toast.LENGTH_SHORT).show();
+                if(null == mUser){
+                    Toast.makeText(mFragment.getContext(), "Bạn cần phải đăng nhập", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                Intent editInfoIntent = new Intent(mFragment.getActivity(), EditInfoActivity.class);
+                activityResultLauncher.launch(editInfoIntent);
                 break;
             case R.id.lv_bag: // Bag
                 Intent cartIntent = new Intent(mFragment.getActivity(), CartActivity.class);
                 mFragment.requireActivity().startActivity(cartIntent);
                 break;
             case R.id.lv_order: // Order Center
+                if(null == mUser){
+                    Toast.makeText(mFragment.getContext(), "Bạn cần phải đăng nhập", Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 mFragment.requireActivity().startActivity(new Intent(mFragment.getActivity(), OrderCentreActivity.class));
                 break;
             case R.id.lv_save: // Favourite

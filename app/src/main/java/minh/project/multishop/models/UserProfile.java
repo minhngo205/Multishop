@@ -17,6 +17,34 @@ public class UserProfile {
     private Date created_at;
     private Date updated_at;
 
+    public UserProfile(String email, String name, String address, String phone_number, String dob) {
+        this.email = email;
+        this.name = name;
+        this.address = address;
+        this.phone_number = phone_number;
+        this.dob = dob;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public void setPhone_number(String phone_number) {
+        this.phone_number = phone_number;
+    }
+
+    public void setDob(String dob) {
+        this.dob = dob;
+    }
+
     public String getUsername() {
         return username;
     }
@@ -39,6 +67,10 @@ public class UserProfile {
 
     public String getDob() {
         return dob;
+    }
+
+    public Date getUpdated_at() {
+        return updated_at;
     }
 
     public UserInfo castToInfo(){

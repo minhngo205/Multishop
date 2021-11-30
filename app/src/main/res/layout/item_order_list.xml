@@ -23,7 +23,7 @@
         android:layout_toStartOf="@+id/tv_product_price"
         android:layout_toEndOf="@+id/iv_product"
         android:ellipsize="end"
-        android:maxLines="1"
+        android:maxLines="2"
         android:padding="6dp"
         android:text="Tên sản phẩm"
         android:textColor="@color/black"

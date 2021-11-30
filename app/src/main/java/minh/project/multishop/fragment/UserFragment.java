@@ -1,5 +1,6 @@
 package minh.project.multishop.fragment;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -35,8 +36,13 @@ public class UserFragment extends BaseFragment implements View.OnClickListener {
         mBinding = FragmentUserBinding.inflate(inflater,container,false);
         View viewRoot = mBinding.getRoot();
         mViewModel.initView(viewRoot);
-        mViewModel.checkSignIn();
         return viewRoot;
+    }
+
+    @Override
+    public void onViewStateRestored(@Nullable Bundle savedInstanceState) {
+        super.onViewStateRestored(savedInstanceState);
+        mViewModel.checkSignIn();
     }
 
     public FragmentUserBinding getBinding() {

@@ -1,22 +1,14 @@
 package minh.project.multishop.activity;
 
-import static minh.project.multishop.fragment.fragmentviewmodel.UserFragmentViewModel.REQUEST_LOGIN;
-
-import android.annotation.SuppressLint;
-import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Toast;
 
-import androidx.annotation.Nullable;
-
 import minh.project.multishop.R;
-import minh.project.multishop.base.BaseActivity;
-import minh.project.multishop.database.DatabaseUtil;
-import minh.project.multishop.databinding.ActivityMainBinding;
 import minh.project.multishop.activity.viewmodel.MainActivityViewModel;
+import minh.project.multishop.base.BaseActivity;
+import minh.project.multishop.databinding.ActivityMainBinding;
 
 public class MainActivity extends BaseActivity implements View.OnClickListener {
 
@@ -26,7 +18,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     private boolean isInit = false;
     private long firstTime = 0;
 
-    @SuppressLint("NonConstantResourceId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,10 +25,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         View viewRoot = mainBinding.getRoot();
         setContentView(viewRoot);
 
-        DatabaseUtil.init(this);
-
         mViewModel = new MainActivityViewModel(this);
-        mViewModel.refreshToken();
     }
 
     @Override
@@ -52,15 +40,13 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 
     @Override
     public void recreate() {
-        mViewModel.removeAllFragment();
         super.recreate();
+        mViewModel.removeAllFragment();
     }
-
 
     public ActivityMainBinding getMainBinding() {
         return mainBinding;
     }
-
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
@@ -81,15 +67,5 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     @Override
     public void onClick(View view) {
         mViewModel.onClickEvent(view.getId());
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == REQUEST_LOGIN) {
-            if(resultCode == Activity.RESULT_OK && data!=null){
-                mViewModel.initAfterLogin();
-            }
-        }
     }
 }

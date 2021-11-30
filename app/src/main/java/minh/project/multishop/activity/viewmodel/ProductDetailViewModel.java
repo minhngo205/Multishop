@@ -234,21 +234,19 @@ public class ProductDetailViewModel extends BaseActivityViewModel<ProductDetailA
         addButton.setOnClickListener(mActivity);
         delButton.setOnClickListener(mActivity);
 
-        binding.productAction.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                switch (action){
-                    case "Thêm vào giỏ hàng":{
-                        OnAddToCart();
-                        bottomSheetDialog.dismiss();
-                        break;
-                    }
-                    case "Mua ngay":{
-                        OnBuyNow();
-                        break;
-                    }
-                    default: break;
+        binding.productAction.setOnClickListener(view -> {
+            switch (action){
+                case "Thêm vào giỏ hàng":{
+                    OnAddToCart();
+                    bottomSheetDialog.dismiss();
+                    break;
                 }
+                case "Mua ngay":{
+                    OnBuyNow();
+                    bottomSheetDialog.dismiss();
+                    break;
+                }
+                default: break;
             }
         });
 

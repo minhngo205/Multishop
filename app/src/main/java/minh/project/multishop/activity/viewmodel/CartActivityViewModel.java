@@ -39,6 +39,7 @@ import minh.project.multishop.models.CartItem;
 import minh.project.multishop.models.OrderItem;
 import minh.project.multishop.network.dtos.DTORequest.EditCartRequest;
 import minh.project.multishop.network.repository.CartRepository;
+import minh.project.multishop.utils.CustomProgress;
 import minh.project.multishop.utils.MyButtonClickListener;
 import minh.project.multishop.utils.SwipeHelper;
 
@@ -137,15 +138,19 @@ public class CartActivityViewModel extends BaseActivityViewModel<CartActivity> {
 
     private void deleteItem(int position) {
         int deleteID = cartList.get(position).getID();
+        CustomProgress dialog = CustomProgress.getInstance();
+        dialog.showProgress(mActivity,"Đang xoá...",true);
         cartRepository.deleteCartItem(mUser.getAccToken(),deleteID).observe(mActivity, new Observer<String>() {
             @Override
             public void onChanged(String s) {
                 if(null == s || s.isEmpty()){
                     Toast.makeText(mActivity, "Đã xảy ra lỗi. Không thể xoá giỏ hàng", Toast.LENGTH_SHORT).show();
+                    dialog.hideProgress();
                     return;
                 }
 
                 reloadData(getCheckedMap());
+                dialog.hideProgress();
                 Toast.makeText(mActivity, "Server: "+s, Toast.LENGTH_SHORT).show();
             }
         });
@@ -264,14 +269,18 @@ public class CartActivityViewModel extends BaseActivityViewModel<CartActivity> {
 
     public void onItemQuantityAdd(int position, View quantityView) {
         CartItem shoppingCart = cartList.get(position);
+        CustomProgress dialog = CustomProgress.getInstance();
+        dialog.showProgress(mActivity,"Đang thêm...",true);
         EditCartRequest request = new EditCartRequest(shoppingCart.getProduct().productID,1);
         cartRepository.getAddCartData(mUser.getAccToken(),request).observe(mActivity, editCartResponse -> {
             if(editCartResponse==null){
                 Toast.makeText(mActivity, "Không thể chỉnh sửa giỏ hàng", Toast.LENGTH_SHORT).show();
+                dialog.hideProgress();
                 return;
             }
 
             reloadData(getCheckedMap());
+            dialog.hideProgress();
         });
     }
 
@@ -292,14 +301,18 @@ public class CartActivityViewModel extends BaseActivityViewModel<CartActivity> {
             showDeleteDialog(position);
             return;
         }
+        CustomProgress dialog = CustomProgress.getInstance();
+        dialog.showProgress(mActivity,"Đang bớt...",true);
         EditCartRequest request = new EditCartRequest(shoppingCart.getProduct().productID,1);
         cartRepository.getRemoveCartData(mUser.getAccToken(),request).observe(mActivity, editCartResponse -> {
             if(editCartResponse==null){
                 Toast.makeText(mActivity, "Không thể chỉnh sửa giỏ hàng", Toast.LENGTH_SHORT).show();
+                dialog.hideProgress();
                 return;
             }
 
             reloadData(getCheckedMap());
+            dialog.hideProgress();
         });
     }
 

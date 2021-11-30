@@ -138,17 +138,15 @@ public class LoginActivityViewModel extends BaseActivityViewModel<LoginActivity>
 
             User user = new User(username,loginResponse.getRefreshToken(),loginResponse.getAccessToken());
             dbRepository.setCurrentUser(user);
-            if(null == dbRepository.getUserInfo()){
-                CacheUserInfo(user);
-            }
-            Intent returnIntent = new Intent();
-            returnIntent.putExtra("result","LOGIN_SUCCESS");
-            mActivity.setResult(Activity.RESULT_OK,returnIntent);
-            mActivity.finish();
+            CacheUserInfo(user);
         });
     }
 
     private void CacheUserInfo(User user) {
+        if(null != dbRepository.getUserInfo()){
+            onQuit(dbRepository.getUserInfo().getName());
+            return;
+        }
         netRepository.getUserProfile(user.getAccToken()).observe(mActivity, userProfile -> {
             if(null == userProfile){
                 Toast.makeText(mActivity, "Không thể lấy được thông tin người dùng", Toast.LENGTH_SHORT).show();
@@ -158,8 +156,16 @@ public class LoginActivityViewModel extends BaseActivityViewModel<LoginActivity>
             UserInfo userInfo = userProfile.castToInfo();
             Log.d("TAG", "CacheUserInfo: "+userInfo.getUsername());
             dbRepository.insertUserInfo(userInfo);
+            onQuit(userInfo.getName());
 //
 //            Toast.makeText(mActivity, "Username from DB" + dbRepository.getUserInfo().getUsername(), Toast.LENGTH_SHORT).show();
         });
+    }
+
+    private void onQuit(String username){
+        Intent returnIntent = new Intent();
+        returnIntent.putExtra("NAME",username);
+        mActivity.setResult(Activity.RESULT_OK,returnIntent);
+        mActivity.finish();
     }
 }

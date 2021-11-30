@@ -59,6 +59,9 @@ public interface IAppAPI {
     @GET("user/me")
     Call<UserProfile> getProfile(@Header("Authorization") String value);
 
+    @PUT("user/me")
+    Call<UserProfile> updateProfile(@Header("Authorization") String value, @Body UserProfile profile);
+
     //Cart API
     @GET("user/carts")
     Call<List<CartItem>> getCartList(@Header("Authorization") String value);

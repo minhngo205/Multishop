@@ -170,30 +170,4 @@ public class MainActivityViewModel extends BaseActivityViewModel<MainActivity> {
         addFragment(homeFragment);
         showFragment(homeFragment);
     }
-
-    public void initAfterLogin(){
-        userFragment = new UserFragment();
-        addFragment(userFragment);
-        showFragment(userFragment);
-    }
-
-    public void refreshToken() {
-        UserDBRepository dbRepository = UserDBRepository.getInstance();
-        UserNetRepository netRepository = UserNetRepository.getInstance();
-        User mUser = dbRepository.getCurrentUser();
-        if(mUser==null){
-            return;
-        }
-        RefreshAccessTokenRequest request = new RefreshAccessTokenRequest(mUser.getRefToken());
-        netRepository.getTokenData(request).observe(mActivity, refreshAccessTokenResponse -> {
-            if (null == refreshAccessTokenResponse){
-                Toast.makeText(mActivity, "Cannot get information", Toast.LENGTH_SHORT).show();
-                return;
-            }
-            mUser.setAccToken(refreshAccessTokenResponse.getNewAccessToken());
-            dbRepository.updateToken(mUser);
-
-            Log.d("TAG", "Token in DB: " + dbRepository.getCurrentUser().getAccToken());
-        });
-    }
 }

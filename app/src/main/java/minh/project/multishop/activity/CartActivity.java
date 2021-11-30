@@ -7,10 +7,10 @@ import android.view.View;
 import java.util.HashMap;
 import java.util.Map;
 
+import minh.project.multishop.activity.viewmodel.CartActivityViewModel;
 import minh.project.multishop.base.BaseActivity;
 import minh.project.multishop.databinding.ActivityCartBinding;
 import minh.project.multishop.utils.OnItemModifyListener;
-import minh.project.multishop.activity.viewmodel.CartActivityViewModel;
 
 public class CartActivity extends BaseActivity implements View.OnClickListener, OnItemModifyListener {
 

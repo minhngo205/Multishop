@@ -8,6 +8,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
 
 public class DateConverter {
     @TypeConverter
@@ -29,5 +30,12 @@ public class DateConverter {
         String date = dateFormat.format(DateTime.getTime());
         String time = hourFormat.format(DateTime.getTime());
         return time + "\t" + date;
+    }
+
+    public static String AppDateFormat(Date DateTime){
+        @SuppressLint("SimpleDateFormat")
+        SimpleDateFormat sdf = new SimpleDateFormat("y-M-d");
+
+        return sdf.format(DateTime.getTime());
     }
 }
