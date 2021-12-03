@@ -65,5 +65,7 @@
     <string name="order_center_pending_payment_time">Chưa xác nhận</string>
     <string name="order_center_total">"%d sản phẩm, Tổng đơn: "</string>
     <string name="welcome_user">Xin chào: %s</string>
+    <string name="already_rate">Đã đánh giá: %s</string>
+    <string name="title_rate_product">Đánh giá sản phẩm</string>
 
 </resources>

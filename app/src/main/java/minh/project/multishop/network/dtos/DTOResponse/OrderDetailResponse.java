@@ -44,8 +44,8 @@ public class OrderDetailResponse {
     @SerializedName("items")
     public List<DTOOrderItemResponse> orderItemResponses;
 
-    public List<OrderItem> castToModelList(){
-        List<OrderItem> result = new ArrayList<>();
+    public ArrayList<OrderItem> castToModelList(){
+        ArrayList<OrderItem> result = new ArrayList<>();
         for (DTOOrderItemResponse itemResponse : orderItemResponses){
             result.add(itemResponse.castToModel());
         }

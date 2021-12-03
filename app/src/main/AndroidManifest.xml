@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="minh.project.multishop">
+    package="minh.project.multishop" >
 
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
@@ -14,9 +14,12 @@
         android:networkSecurityConfig="@xml/network_security_config"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.MaterialComponents.Light.NoActionBar.Bridge"
+        android:theme="@style/Main_AppTheme"
         android:usesCleartextTraffic="true"
-        tools:targetApi="n">
+        tools:targetApi="n" >
+        <activity
+            android:name=".activity.RateProductActivity"
+            android:exported="false" />
         <activity
             android:name=".activity.EditInfoActivity"
             android:exported="false" />
@@ -49,7 +52,7 @@
             android:exported="false" />
         <activity
             android:name=".activity.MainActivity"
-            android:exported="true">
+            android:exported="true" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

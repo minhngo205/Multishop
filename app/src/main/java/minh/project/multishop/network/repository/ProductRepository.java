@@ -8,19 +8,25 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import minh.project.multishop.database.entity.ProductName;
 import minh.project.multishop.models.Product;
 import minh.project.multishop.network.IAppAPI;
 import minh.project.multishop.network.RetroInstance;
 import minh.project.multishop.network.dtos.DTOResponse.GetListProductResponse;
+import minh.project.multishop.network.dtos.DTOResponse.GetProductNameResponse;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
 public class ProductRepository {
     private final IAppAPI api;
+
     private static final String TAG = "ProductRepository";
+
     private MutableLiveData<List<Product>> allProduct;
     private MutableLiveData<Product> product;
+    private MutableLiveData<List<ProductName>> productNameData;
+
     private static ProductRepository instance;
 
     ProductRepository() {
@@ -44,6 +50,31 @@ public class ProductRepository {
         product = new MutableLiveData<>();
         loadProductData(ID);
         return product;
+    }
+
+    public LiveData<List<ProductName>> getAllProductName(){
+        if(null == productNameData){
+            productNameData = new MutableLiveData<>();
+            loadProductNameData();
+        }
+        return productNameData;
+    }
+
+    private void loadProductNameData() {
+        Call<GetProductNameResponse> call = api.getAllProductName();
+        call.enqueue(new Callback<GetProductNameResponse>() {
+            @Override
+            public void onResponse(@NonNull Call<GetProductNameResponse> call, @NonNull Response<GetProductNameResponse> response) {
+                if(response.isSuccessful() && null != response.body()){
+                    productNameData.postValue(response.body().getProductNameList());
+                } else productNameData.postValue(null);
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<GetProductNameResponse> call, @NonNull Throwable t) {
+                productNameData.postValue(null);
+            }
+        });
     }
 
     private void loadProductData(int id) {

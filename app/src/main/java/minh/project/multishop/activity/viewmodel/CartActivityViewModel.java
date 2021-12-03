@@ -231,7 +231,6 @@ public class CartActivityViewModel extends BaseActivityViewModel<CartActivity> {
                 checkNoProduct();
 
                 cartAdapter.setCartItems(cartList);
-                Toast.makeText(mActivity, "Cart Item: "+cartAdapter.getItemCount(), Toast.LENGTH_SHORT).show();
             });
         }
     }
@@ -339,7 +338,6 @@ public class CartActivityViewModel extends BaseActivityViewModel<CartActivity> {
     }
 
     private void checkNoProduct(){
-        Toast.makeText(mActivity, "Count: "+cartList.size(), Toast.LENGTH_SHORT).show();
         if (cartList.isEmpty()){
             mBinding.llNoItems.setVisibility(View.VISIBLE);
             return;

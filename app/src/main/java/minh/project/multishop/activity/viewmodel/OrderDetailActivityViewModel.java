@@ -1,17 +1,28 @@
 package minh.project.multishop.activity.viewmodel;
 
+import static minh.project.multishop.utils.Statistics.SUCCESS_ORDER;
+
+import android.annotation.SuppressLint;
+import android.content.Intent;
+import android.view.View;
 import android.widget.Toast;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import minh.project.multishop.R;
 import minh.project.multishop.activity.OrderDetailActivity;
+import minh.project.multishop.activity.RateProductActivity;
 import minh.project.multishop.adapter.OrderItemAdapter;
 import minh.project.multishop.base.BaseActivityViewModel;
 import minh.project.multishop.database.entity.User;
 import minh.project.multishop.database.entity.UserInfo;
 import minh.project.multishop.database.repository.UserDBRepository;
 import minh.project.multishop.databinding.ActivityOrderdescriptionBinding;
+import minh.project.multishop.models.OrderItem;
 import minh.project.multishop.network.dtos.DTOResponse.OrderDetailResponse;
 import minh.project.multishop.network.repository.OrderRepository;
 import minh.project.multishop.utils.CurrencyFormat;
@@ -41,6 +52,7 @@ public class OrderDetailActivityViewModel extends BaseActivityViewModel<OrderDet
     public void initView() {
         mBinding.toolbars.tvTitle.setText("Chi tiết đơn hàng");
         mBinding.toolbars.ivBack.setOnClickListener(mActivity);
+        mBinding.btnRateProduct.setOnClickListener(mActivity);
         rvOrderItems = mBinding.rvOrderItems;
         initRecycleView();
         initOrderDetail();
@@ -64,6 +76,7 @@ public class OrderDetailActivityViewModel extends BaseActivityViewModel<OrderDet
         mBinding.tvOrderDate.setText(DateConverter.DateTimeFormat(orderDetail.orderDay));
         mBinding.tvPayment.setText(orderDetail.payment.name);
         mBinding.tvStatus.setText(Statistics.getStatusText(orderDetail.orderStatus));
+        if(SUCCESS_ORDER.equals(orderDetail.orderStatus)) mBinding.layoutBtnRate.setVisibility(View.VISIBLE);
     }
 
     private void initRecycleView() {
@@ -95,8 +108,21 @@ public class OrderDetailActivityViewModel extends BaseActivityViewModel<OrderDet
         initView();
     }
 
+    @SuppressLint("NonConstantResourceId")
     @Override
     public void onClickEvent(int viewId) {
-
+        switch (viewId){
+            case R.id.iv_back:
+                mActivity.finish();
+                break;
+            case R.id.btnRateProduct:
+                ArrayList<OrderItem> listData = orderDetail.castToModelList();
+                Intent rateIntent = new Intent(mActivity, RateProductActivity.class);
+                rateIntent.putParcelableArrayListExtra("LIST_ITEM_DATA", listData);
+                mActivity.startActivity(rateIntent);
+                Toast.makeText(mActivity, "To rate product", Toast.LENGTH_SHORT).show();
+                break;
+            default: break;
+        }
     }
 }

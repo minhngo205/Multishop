@@ -8,8 +8,10 @@ import minh.project.multishop.models.Product;
 import minh.project.multishop.models.Rating;
 import minh.project.multishop.models.UserProfile;
 import minh.project.multishop.network.dtos.DTORequest.CreateOrderRequest;
+import minh.project.multishop.network.dtos.DTORequest.RateProductRequest;
 import minh.project.multishop.network.dtos.DTORequest.RegisterRequest;
 import minh.project.multishop.network.dtos.DTOResponse.GetListOrderResponse;
+import minh.project.multishop.network.dtos.DTOResponse.GetProductNameResponse;
 import minh.project.multishop.network.dtos.DTOResponse.OrderDetailResponse;
 import minh.project.multishop.network.dtos.DTOResponse.EditCartResponse;
 import minh.project.multishop.network.dtos.DTORequest.LoginRequest;
@@ -45,6 +47,12 @@ public interface IAppAPI {
 
     @GET("products")
     Call<GetListProductResponse> getProductByCategory(@Query("category") int cateID, @Query("page_size") int size);
+
+    @GET("products/lite?page_size=220")
+    Call<GetProductNameResponse> getAllProductName();
+
+    @GET("products?page=1&page_size=220")
+    Call<GetListProductResponse> getListProductByName(@Query("search_name") String searchName);
 
     //UserAPI
     @POST("refresh")
@@ -91,4 +99,7 @@ public interface IAppAPI {
     //Review API
     @GET("ratings/{product_id}")
     Call<List<Rating>> getProductRating(@Path("product_id") int productID);
+
+    @POST("user/ratings")
+    Call<Rating> rateProduct(@Header("Authorization") String value, @Body RateProductRequest request);
 }

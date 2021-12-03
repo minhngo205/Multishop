@@ -2,18 +2,27 @@ package minh.project.multishop;
 
 import android.app.Application;
 import android.content.Context;
+import android.os.Handler;
+import android.os.Looper;
 import android.util.Log;
 import android.widget.Toast;
 
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ProcessLifecycleOwner;
 
+import java.util.List;
+
 import minh.project.multishop.database.DatabaseUtil;
+import minh.project.multishop.database.entity.ProductName;
 import minh.project.multishop.database.entity.User;
+import minh.project.multishop.database.repository.ProductDBRepository;
 import minh.project.multishop.database.repository.UserDBRepository;
 import minh.project.multishop.network.dtos.DTORequest.RefreshAccessTokenRequest;
+import minh.project.multishop.network.repository.ProductRepository;
 import minh.project.multishop.network.repository.UserNetRepository;
 
 public class MainApplication extends Application {
+    private static final String TAG = MainApplication.class.getSimpleName();
     private static MainApplication mApplication;
 
     @Override
@@ -21,7 +30,23 @@ public class MainApplication extends Application {
         super.onCreate();
         setContext(this);
         DatabaseUtil.init(this);
-        refreshToken();
+        Handler handler = new Handler(Looper.getMainLooper());
+        handler.post(this::fetchProductNameData);
+        handler.post(this::refreshToken);
+    }
+
+    private void fetchProductNameData() {
+        ProductDBRepository dbRepository = ProductDBRepository.getInstance();
+        ProductRepository netRepository = ProductRepository.getInstance();
+        netRepository.getAllProductName().observe(ProcessLifecycleOwner.get(), productNames -> {
+            if(null == productNames){
+                Log.i(TAG, "fetchProductNameData: Cannot get Data");
+                return;
+            }
+
+            dbRepository.InsertProductNameData(productNames);
+            Log.d(TAG, "fetchProductNameData: "+dbRepository.getAllProductName().isEmpty());
+        });
     }
 
     public void refreshToken() {

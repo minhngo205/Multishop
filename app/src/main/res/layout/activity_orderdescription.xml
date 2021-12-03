@@ -167,82 +167,26 @@
                 layout="@layout/layout_paymentdetail" />
 
             <LinearLayout
+                android:id="@+id/layout_btn_rate"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/spacing_standard_new"
                 android:layout_marginEnd="@dimen/spacing_standard_new"
                 android:layout_marginBottom="@dimen/spacing_standard_new"
-                android:background="@drawable/bg_rectangle_order"
                 android:orientation="vertical"
                 android:visibility="gone">
 
-                <LinearLayout
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnRateProduct"
+                    style="@style/MaterialButtonStyle.Filled"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:paddingStart="@dimen/spacing_standard_new"
-                    android:paddingTop="@dimen/spacing_standard"
-                    android:paddingEnd="@dimen/spacing_standard_new"
-                    android:paddingBottom="@dimen/spacing_standard">
+                    android:shadowColor="@color/colorPrimary"
+                    android:text="Đánh giá sản phẩm"/>
 
-                    <TextView
-                        style="@style/Heading"
-                        android:text="Đánh giá sản phẩm:"
-                        android:textColor="@color/textColorPrimary" />
-                </LinearLayout>
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/_1sdp"
-                    android:layout_marginTop="@dimen/spacing_standard"
-                    android:layout_marginBottom="@dimen/spacing_standard"
-                    android:background="@color/view_color" />
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/spacing_standard"
-                    android:layout_marginEnd="@dimen/spacing_standard"
-                    android:orientation="horizontal"
-                    android:paddingStart="@dimen/spacing_standard"
-                    android:paddingEnd="@dimen/spacing_standard"
-                    android:paddingBottom="@dimen/spacing_standard">
-
-                    <RatingBar
-                        android:id="@+id/ratingBar"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:numStars="5"
-                        android:stepSize="1"
-                        android:theme="@style/RatingBar" />
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentEnd="true"
-                        android:layout_toEndOf="@id/ratingBar"
-                        android:gravity="end">
-
-                        <TextView
-                            android:id="@+id/txtRatings"
-                            style="@style/OrderTextView"
-                            android:layout_gravity="center_vertical"
-                            android:layout_marginTop="@dimen/spacing_control"
-                            android:text="3"
-                            android:textColor="@color/colorPrimary"
-                            android:textSize="@dimen/font_size_normal" />
-
-                        <TextView
-                            style="@style/OrderTextView"
-                            android:layout_gravity="center_vertical"
-                            android:layout_marginTop="@dimen/spacing_control"
-                            android:text="/5"
-                            android:textColor="@color/textColorSecondary"
-                            android:textSize="@dimen/font_size_small" />
-                    </LinearLayout>
-                </RelativeLayout>
             </LinearLayout>
         </LinearLayout>
+
     </androidx.core.widget.NestedScrollView>
 
 </RelativeLayout>

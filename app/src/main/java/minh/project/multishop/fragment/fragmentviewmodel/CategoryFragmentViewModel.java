@@ -1,6 +1,7 @@
 package minh.project.multishop.fragment.fragmentviewmodel;
 
 import android.annotation.SuppressLint;
+import android.util.Log;
 import android.view.View;
 import android.widget.Adapter;
 import android.widget.AdapterView;
@@ -160,6 +161,7 @@ public class CategoryFragmentViewModel extends BaseFragmentViewModel<CategoryFra
                 return;
             }
             categoryList.addAll(categories);
+            initBrandSpinner(categoryList.get(showPosition).getBrandList());
             adapter.notifyDataSetChanged();
         });
     }

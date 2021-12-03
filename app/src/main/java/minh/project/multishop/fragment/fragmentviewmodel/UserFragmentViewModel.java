@@ -10,18 +10,15 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.RelativeLayout;
 import android.widget.Toast;
 
-import androidx.activity.result.ActivityResult;
-import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 
+import minh.project.multishop.R;
 import minh.project.multishop.activity.CartActivity;
 import minh.project.multishop.activity.EditInfoActivity;
 import minh.project.multishop.activity.LoginActivity;
-import minh.project.multishop.R;
 import minh.project.multishop.activity.OrderCentreActivity;
 import minh.project.multishop.base.BaseDialog;
 import minh.project.multishop.base.BaseFragmentViewModel;
@@ -30,16 +27,13 @@ import minh.project.multishop.database.entity.UserInfo;
 import minh.project.multishop.database.repository.UserDBRepository;
 import minh.project.multishop.databinding.FragmentUserBinding;
 import minh.project.multishop.fragment.UserFragment;
-import minh.project.multishop.network.repository.UserNetRepository;
 
 public class UserFragmentViewModel extends BaseFragmentViewModel<UserFragment> {
 
-    public static final int REQUEST_LOGIN = 10001;
     private User mUser;
     private final UserInfo mUserInfo;
     private final UserDBRepository mUserDBRepository;
     private FragmentUserBinding binding;
-    private final UserNetRepository mUserNetRepository;
 
     /**
      * constructor
@@ -49,7 +43,6 @@ public class UserFragmentViewModel extends BaseFragmentViewModel<UserFragment> {
     public UserFragmentViewModel(UserFragment userFragment) {
         super(userFragment);
         mUserDBRepository = UserDBRepository.getInstance();
-        mUserNetRepository = UserNetRepository.getInstance();
         mUserInfo = mUserDBRepository.getUserInfo();
     }
 
