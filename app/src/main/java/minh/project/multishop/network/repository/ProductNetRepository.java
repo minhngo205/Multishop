@@ -4,9 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 import minh.project.multishop.database.entity.ProductName;
 import minh.project.multishop.models.Product;
@@ -18,23 +16,24 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class ProductRepository {
+public class ProductNetRepository {
     private final IAppAPI api;
 
-    private static final String TAG = "ProductRepository";
+    private static final String TAG = "ProductNetRepository";
 
     private MutableLiveData<List<Product>> allProduct;
+    private MutableLiveData<List<Product>> listProductData;
     private MutableLiveData<Product> product;
     private MutableLiveData<List<ProductName>> productNameData;
 
-    private static ProductRepository instance;
+    private static ProductNetRepository instance;
 
-    ProductRepository() {
+    ProductNetRepository() {
         api = RetroInstance.getAppAPI();
     }
 
-    public static ProductRepository getInstance(){
-        if(instance==null) instance = new ProductRepository();
+    public static ProductNetRepository getInstance(){
+        if(instance==null) instance = new ProductNetRepository();
         return instance;
     }
 
@@ -58,6 +57,29 @@ public class ProductRepository {
             loadProductNameData();
         }
         return productNameData;
+    }
+
+    public LiveData<List<Product>> getListProductByName(String name){
+        listProductData = new MutableLiveData<>();
+        loadProductByName(name);
+        return listProductData;
+    }
+
+    private void loadProductByName(String name) {
+        Call<GetListProductResponse> call = api.getListProductByName(name);
+        call.enqueue(new Callback<GetListProductResponse>() {
+            @Override
+            public void onResponse(@NonNull Call<GetListProductResponse> call, @NonNull Response<GetListProductResponse> response) {
+                if(response.isSuccessful() && response.body()!=null){
+                    listProductData.postValue(response.body().productList);
+                } else listProductData.postValue(null);
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<GetListProductResponse> call, @NonNull Throwable t) {
+                listProductData.postValue(null);
+            }
+        });
     }
 
     private void loadProductNameData() {

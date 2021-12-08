@@ -9,7 +9,6 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.LinearLayout;
@@ -17,7 +16,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.lifecycle.Observer;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -26,9 +25,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import minh.project.multishop.R;
 import minh.project.multishop.activity.CartActivity;
 import minh.project.multishop.activity.OrderSubmitActivity;
-import minh.project.multishop.R;
 import minh.project.multishop.adapter.CartAdapter;
 import minh.project.multishop.base.BaseActivityViewModel;
 import minh.project.multishop.base.BaseDialog;
@@ -41,6 +40,7 @@ import minh.project.multishop.network.dtos.DTORequest.EditCartRequest;
 import minh.project.multishop.network.repository.CartRepository;
 import minh.project.multishop.utils.CustomProgress;
 import minh.project.multishop.utils.MyButtonClickListener;
+import minh.project.multishop.utils.RecyclerViewSwipeHelper;
 import minh.project.multishop.utils.SwipeHelper;
 
 public class CartActivityViewModel extends BaseActivityViewModel<CartActivity> {
@@ -95,24 +95,22 @@ public class CartActivityViewModel extends BaseActivityViewModel<CartActivity> {
         recyclerBagList = mBinding.listShoppingCart;
         recyclerBagList.setAdapter(cartAdapter);
         recyclerBagList.setLayoutManager(new LinearLayoutManager(mActivity));
+
         SwipeHelper swipeHelper = new SwipeHelper(mActivity, recyclerBagList, 150) {
             @Override
-            public void instantiateMyButton(RecyclerView.ViewHolder viewHolder, List buffer) {
+            public void instantiateMyButton(RecyclerView.ViewHolder viewHolder, List<MyButton> buffer) {
 
                 buffer.add(new MyButton(mActivity,
                         R.drawable.ic_trash_can_regular__1_,
                         Color.parseColor("#D81B60"),
-                        new MyButtonClickListener() {
-                            @Override
-                            public void onClick(int pos) {
-                                showDeleteDialog(pos);
-                            }
-                        }
+                        pos -> showDeleteDialog(pos)
                 ));
             }
         };
 
-//        textEdit = mBinding.titleOrderEvaluation.
+        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(swipeHelper);
+        itemTouchHelper.attachToRecyclerView(recyclerBagList);
+
         layoutLoginFirst = mBinding.layoutLoginFirst;
         layoutBottom = mBinding.rlBottom;
 
@@ -140,19 +138,16 @@ public class CartActivityViewModel extends BaseActivityViewModel<CartActivity> {
         int deleteID = cartList.get(position).getID();
         CustomProgress dialog = CustomProgress.getInstance();
         dialog.showProgress(mActivity,"Đang xoá...",true);
-        cartRepository.deleteCartItem(mUser.getAccToken(),deleteID).observe(mActivity, new Observer<String>() {
-            @Override
-            public void onChanged(String s) {
-                if(null == s || s.isEmpty()){
-                    Toast.makeText(mActivity, "Đã xảy ra lỗi. Không thể xoá giỏ hàng", Toast.LENGTH_SHORT).show();
-                    dialog.hideProgress();
-                    return;
-                }
-
-                reloadData(getCheckedMap());
+        cartRepository.deleteCartItem(mUser.getAccToken(),deleteID).observe(mActivity, s -> {
+            if(null == s || s.isEmpty()){
+                Toast.makeText(mActivity, "Đã xảy ra lỗi. Không thể xoá giỏ hàng", Toast.LENGTH_SHORT).show();
                 dialog.hideProgress();
-                Toast.makeText(mActivity, "Server: "+s, Toast.LENGTH_SHORT).show();
+                return;
             }
+
+            reloadData(getCheckedMap());
+            dialog.hideProgress();
+            Toast.makeText(mActivity, "Server: "+s, Toast.LENGTH_SHORT).show();
         });
     }
 

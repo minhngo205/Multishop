@@ -8,11 +8,14 @@
     android:orientation="vertical"
     tools:context=".activity.SearchActivity">
 
+<!--    <include-->
+<!--        android:id="@+id/view_search"-->
+<!--        layout="@layout/view_search_box"/>-->
     <minh.project.multishop.activity.customview.SearchView
         android:id="@+id/view_search"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/white"/>
+        android:background="@color/white" />
 
     <TextView
         android:id="@+id/tv_history"

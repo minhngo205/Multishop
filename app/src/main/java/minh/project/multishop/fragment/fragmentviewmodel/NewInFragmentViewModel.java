@@ -3,7 +3,6 @@ package minh.project.multishop.fragment.fragmentviewmodel;
 import android.view.View;
 import android.widget.Toast;
 
-import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -18,14 +17,14 @@ import minh.project.multishop.base.BaseFragmentViewModel;
 import minh.project.multishop.databinding.FragmentNewInBinding;
 import minh.project.multishop.fragment.NewInFragment;
 import minh.project.multishop.models.Product;
-import minh.project.multishop.network.repository.ProductRepository;
+import minh.project.multishop.network.repository.ProductNetRepository;
 
 public class NewInFragmentViewModel extends BaseFragmentViewModel<NewInFragment> {
 
     private FragmentNewInBinding mBinding;
     private ShimmerFrameLayout mShimmerViewContainer;
     private RecyclerView rvNewIn;
-    private final ProductRepository mProductRepository;
+    private final ProductNetRepository mProductNetRepository;
     private HomeProductAdapter adapter;
 
     /**
@@ -35,7 +34,7 @@ public class NewInFragmentViewModel extends BaseFragmentViewModel<NewInFragment>
      */
     public NewInFragmentViewModel(NewInFragment newInFragment) {
         super(newInFragment);
-        mProductRepository = ProductRepository.getInstance();
+        mProductNetRepository = ProductNetRepository.getInstance();
     }
 
     @Override
@@ -52,7 +51,7 @@ public class NewInFragmentViewModel extends BaseFragmentViewModel<NewInFragment>
     }
 
     public void initNewInProductRV(){
-        mProductRepository.getAllProduct().observe(mFragment.getViewLifecycleOwner(), products -> {
+        mProductNetRepository.getAllProduct().observe(mFragment.getViewLifecycleOwner(), products -> {
             if(products==null){
                 Toast.makeText(mFragment.getContext(), "Could not get product Data", Toast.LENGTH_SHORT).show();
                 return;

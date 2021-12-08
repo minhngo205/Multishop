@@ -17,6 +17,7 @@ import androidx.activity.result.contract.ActivityResultContracts;
 
 import minh.project.multishop.R;
 import minh.project.multishop.activity.CartActivity;
+import minh.project.multishop.activity.ContactUsActivity;
 import minh.project.multishop.activity.EditInfoActivity;
 import minh.project.multishop.activity.LoginActivity;
 import minh.project.multishop.activity.OrderCentreActivity;
@@ -113,7 +114,7 @@ public class UserFragmentViewModel extends BaseFragmentViewModel<UserFragment> {
                 activityResultLauncher.launch(loginIntent);
                 break;
             case R.id.lv_scan: // Scan to pay
-
+                Toast.makeText(mFragment.getContext(), "Tính năng đang được phát triển", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.lv_account: // My Account
                 if(null == mUser){
@@ -135,16 +136,17 @@ public class UserFragmentViewModel extends BaseFragmentViewModel<UserFragment> {
                 mFragment.requireActivity().startActivity(new Intent(mFragment.getActivity(), OrderCentreActivity.class));
                 break;
             case R.id.lv_save: // Favourite
-
+                Toast.makeText(mFragment.getContext(), "Chức năng đang được phát triển", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.lv_set: // Setting
-
+                Toast.makeText(mFragment.getContext(), "Tính năng đang được phát triển thêm", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.lv_offline: // Offline Shop
-
+                Toast.makeText(mFragment.getContext(), "Tính năng cần được phát triển", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.lv_contact: // Contact Us
-
+                Intent contactUsIntent = new Intent(mFragment.getActivity(), ContactUsActivity.class);
+                mFragment.requireActivity().startActivity(contactUsIntent);
                 break;
             case R.id.lv_out: // Log out
                 checkSignOut();

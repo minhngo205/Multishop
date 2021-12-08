@@ -7,18 +7,14 @@ import android.os.Looper;
 import android.util.Log;
 import android.widget.Toast;
 
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ProcessLifecycleOwner;
 
-import java.util.List;
-
 import minh.project.multishop.database.DatabaseUtil;
-import minh.project.multishop.database.entity.ProductName;
 import minh.project.multishop.database.entity.User;
 import minh.project.multishop.database.repository.ProductDBRepository;
 import minh.project.multishop.database.repository.UserDBRepository;
 import minh.project.multishop.network.dtos.DTORequest.RefreshAccessTokenRequest;
-import minh.project.multishop.network.repository.ProductRepository;
+import minh.project.multishop.network.repository.ProductNetRepository;
 import minh.project.multishop.network.repository.UserNetRepository;
 
 public class MainApplication extends Application {
@@ -37,7 +33,7 @@ public class MainApplication extends Application {
 
     private void fetchProductNameData() {
         ProductDBRepository dbRepository = ProductDBRepository.getInstance();
-        ProductRepository netRepository = ProductRepository.getInstance();
+        ProductNetRepository netRepository = ProductNetRepository.getInstance();
         netRepository.getAllProductName().observe(ProcessLifecycleOwner.get(), productNames -> {
             if(null == productNames){
                 Log.i(TAG, "fetchProductNameData: Cannot get Data");

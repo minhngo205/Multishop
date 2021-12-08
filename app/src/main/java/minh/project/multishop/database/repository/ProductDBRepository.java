@@ -26,6 +26,10 @@ public class ProductDBRepository {
         return productNameDAO.getAllProductName();
     }
 
+    public List<String> getListNameRecord(){
+        return productNameDAO.getListNameRecord();
+    }
+
     public void InsertProductNameData(List<ProductName> productNames){
         productNameDAO.insertName(productNames);
     }

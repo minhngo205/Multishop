@@ -7,6 +7,9 @@ import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -19,7 +22,7 @@ import minh.project.multishop.R;
 
 public class SearchView extends LinearLayout {
 
-    private EditText editText;
+    private AutoCompleteTextView editText;
 
     private ImageView ivClear;
 
@@ -61,6 +64,7 @@ public class SearchView extends LinearLayout {
 
             }
         });
+        editText.setThreshold(3);
         requestKeyBoard(context, 200);
     }
 
@@ -70,6 +74,10 @@ public class SearchView extends LinearLayout {
 
     public void setIvBackListener(OnClickListener listener) {
         this.ivBack.setOnClickListener(listener);
+    }
+
+    public void setEditTextSelectedListener(AdapterView.OnItemClickListener listener){
+        editText.setOnItemClickListener(listener);
     }
 
     private void requestKeyBoard(Context context, int delay) {
@@ -84,5 +92,13 @@ public class SearchView extends LinearLayout {
                 inputManager.showSoftInput(editText, 0);
             }
         }, delay);
+    }
+
+    public void setAdapter(ArrayAdapter<String> adapter){
+        editText.setAdapter(adapter);
+    }
+
+    public AutoCompleteTextView getEditText() {
+        return editText;
     }
 }
