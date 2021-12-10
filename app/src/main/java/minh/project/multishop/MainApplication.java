@@ -45,7 +45,7 @@ public class MainApplication extends Application {
         });
     }
 
-    public void refreshToken() {
+    private void refreshToken() {
         UserDBRepository dbRepository = UserDBRepository.getInstance();
         UserNetRepository netRepository = UserNetRepository.getInstance();
         User mUser = dbRepository.getCurrentUser();

@@ -78,11 +78,39 @@
             android:gravity="end|center_vertical"
             android:textColor="@color/textColorSecondary"
             tools:text="05 Feb 2020" />
+
+        <LinearLayout
+            android:id="@+id/layout_response"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tvProductReviewSubHeading"
+            android:layout_marginStart="@dimen/spacing_standard"
+            android:layout_marginTop="@dimen/spacing_standard"
+            android:layout_toEndOf="@id/tvProductReviewRating"
+            android:background="@drawable/type_text_no_select"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/spacing_standard"
+                android:text="Phản hồi:"
+                android:textColor="@color/light_red_1"/>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:layout_marginHorizontal="@dimen/spacing_standard"
+                android:layout_marginBottom="@dimen/spacing_standard"
+                android:id="@+id/list_response"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
+
         <View
             android:layout_width="match_parent"
             android:layout_height="0.5dp"
             android:layout_marginTop="@dimen/spacing_standard"
-            android:layout_below="@id/tvProductReviewSubHeading"
+            android:layout_below="@id/layout_response"
             android:background="@color/view_color" />
 
     </RelativeLayout>

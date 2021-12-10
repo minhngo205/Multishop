@@ -65,41 +65,44 @@ public interface IAppAPI {
     Call<UserProfile> register(@Body RegisterRequest request);
 
     @GET("user/me")
-    Call<UserProfile> getProfile(@Header("Authorization") String value);
+    Call<UserProfile> getProfile(@Header("Authorization") String token);
 
     @PUT("user/me")
-    Call<UserProfile> updateProfile(@Header("Authorization") String value, @Body UserProfile profile);
+    Call<UserProfile> updateProfile(@Header("Authorization") String token, @Body UserProfile profile);
 
     //Cart API
     @GET("user/carts")
-    Call<List<CartItem>> getCartList(@Header("Authorization") String value);
+    Call<List<CartItem>> getCartList(@Header("Authorization") String token);
 
     @PUT("user/carts/add")
-    Call<EditCartResponse> addProductToCart(@Header("Authorization") String value, @Body EditCartRequest params);
+    Call<EditCartResponse> addProductToCart(@Header("Authorization") String token, @Body EditCartRequest params);
 
     @PUT("user/carts/remove")
-    Call<EditCartResponse> removeProductFromCart(@Header("Authorization") String value, @Body EditCartRequest params);
+    Call<EditCartResponse> removeProductFromCart(@Header("Authorization") String token, @Body EditCartRequest params);
 
     @DELETE("user/carts/{cartID}")
-    Call<String> deleteCartItem(@Header("Authorization") String value, @Path("cartID") int cartID);
+    Call<String> deleteCartItem(@Header("Authorization") String token, @Path("cartID") int cartID);
 
     //Order API
     @POST("user/orders")
-    Call<OrderDetailResponse> createOrder(@Header("Authorization") String value, @Body CreateOrderRequest params);
+    Call<OrderDetailResponse> createOrder(@Header("Authorization") String token, @Body CreateOrderRequest params);
 
     @GET("user/orders/{orderID}")
-    Call<OrderDetailResponse> getOrderDetail(@Header("Authorization") String value, @Path("orderID") int orderID);
+    Call<OrderDetailResponse> getOrderDetail(@Header("Authorization") String token, @Path("orderID") int orderID);
 
     @GET("user/orders?page=1&page_size=1")
-    Call<GetListOrderResponse> getTotalFirst(@Header("Authorization") String value);
+    Call<GetListOrderResponse> getTotalFirst(@Header("Authorization") String token);
 
     @GET("user/orders?page=1")
-    Call<GetListOrderResponse> getOrderByStatus(@Header("Authorization") String value, @Query("page_size") int size, @Query("status") String status);
+    Call<GetListOrderResponse> getOrderByStatus(@Header("Authorization") String token, @Query("page_size") int size, @Query("status") String status);
 
     //Review API
     @GET("ratings/{product_id}")
     Call<List<Rating>> getProductRating(@Path("product_id") int productID);
 
     @POST("user/ratings")
-    Call<Rating> rateProduct(@Header("Authorization") String value, @Body RateProductRequest request);
+    Call<Rating> rateProduct(@Header("Authorization") String token, @Body RateProductRequest request);
+
+    @GET("user/ratings")
+    Call<List<Rating>> getMyRating(@Header("Authorization") String token, @Query("product") int productID);
 }

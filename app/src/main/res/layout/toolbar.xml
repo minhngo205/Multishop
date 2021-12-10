@@ -1,4 +1,5 @@
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<com.google.android.material.card.MaterialCardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/title_edge"
     android:layout_width="match_parent"
@@ -68,4 +69,4 @@
 <!--            android:textSize="16sp"-->
 <!--            android:visibility="gone" />-->
     </RelativeLayout>
-</androidx.cardview.widget.CardView>
+</com.google.android.material.card.MaterialCardView>

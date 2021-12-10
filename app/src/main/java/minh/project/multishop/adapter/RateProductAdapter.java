@@ -1,5 +1,6 @@
 package minh.project.multishop.adapter;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -21,18 +22,27 @@ import java.util.List;
 
 import minh.project.multishop.R;
 import minh.project.multishop.models.OrderItem;
+import minh.project.multishop.models.Rating;
 import minh.project.multishop.utils.CurrencyFormat;
+import minh.project.multishop.utils.DateConverter;
 import minh.project.multishop.utils.OnProductRateListener;
 
 public class RateProductAdapter extends RecyclerView.Adapter<RateProductAdapter.MyViewHolder> {
 
     private final Context mContext;
     private final List<OrderItem> itemList;
+    private List<Rating> ratingList;
 
     private OnProductRateListener onProductRateListener;
 
     public void setOnProductRateListener(OnProductRateListener onProductRateListener) {
         this.onProductRateListener = onProductRateListener;
+    }
+
+    @SuppressLint("NotifyDataSetChanged")
+    public synchronized void setRatingList(List<Rating> ratingList) {
+        this.ratingList = ratingList;
+        notifyDataSetChanged();
     }
 
     public RateProductAdapter(Context context, List<OrderItem> itemList) {
@@ -64,8 +74,31 @@ public class RateProductAdapter extends RecyclerView.Adapter<RateProductAdapter.
             String comment = String.valueOf(holder.edtComment.getText());
             int rateIndex = (int) holder.ratingBar.getRating();
             Log.i("TAO Ở ĐÂY", "onClick: "+comment+" "+rateIndex);
-            onProductRateListener.onRateProduct(item.getProductID(),comment,rateIndex,holder.btnSubmit);
+            if(comment.trim().isEmpty()){
+                holder.edtComment.setError("Bạn cần phải nhận xét gì đó");
+                holder.edtComment.requestFocus();
+                return;
+            }
+            onProductRateListener.onRateProduct(item.getProductID(),comment.trim(),rateIndex,holder.btnSubmit, holder.edtComment, holder.ratingBar);
         });
+
+        if(null == ratingList){
+            return;
+        }
+
+        Rating rating = ratingList.get(position);
+        if(null!=rating){
+            holder.edtComment.setText(rating.getComment());
+            holder.ratingBar.setRating((float) rating.getRate());
+            holder.btnSubmit.setText(mContext.getString(R.string.already_rate, DateConverter.DateTimeFormat(rating.getUpdated_at())));
+
+            holder.edtComment.setClickable(false);
+            holder.edtComment.setCursorVisible(false);
+            holder.edtComment.setFocusable(false);
+            holder.edtComment.setFocusableInTouchMode(false);
+            holder.btnSubmit.setClickable(false);
+            holder.ratingBar.setIsIndicator(true);
+        }
     }
 
     @Override

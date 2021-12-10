@@ -120,7 +120,6 @@ public class OrderDetailActivityViewModel extends BaseActivityViewModel<OrderDet
                 Intent rateIntent = new Intent(mActivity, RateProductActivity.class);
                 rateIntent.putParcelableArrayListExtra("LIST_ITEM_DATA", listData);
                 mActivity.startActivity(rateIntent);
-                Toast.makeText(mActivity, "To rate product", Toast.LENGTH_SHORT).show();
                 break;
             default: break;
         }

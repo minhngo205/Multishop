@@ -20,6 +20,7 @@ public class RatingRepository {
 
     private MutableLiveData<List<Rating>> productRatings;
     private MutableLiveData<Rating> rateData;
+    private MutableLiveData<List<Rating>> myRateData;
 
     private RatingRepository(){
         api = RetroInstance.getAppAPI();
@@ -40,6 +41,29 @@ public class RatingRepository {
         rateData = new MutableLiveData<>();
         loadRateProduct(token,request);
         return rateData;
+    }
+
+    public LiveData<List<Rating>> getMyRate(String token, int productID){
+        myRateData = new MutableLiveData<>();
+        loadMyRate(token, productID);
+        return myRateData;
+    }
+
+    private void loadMyRate(String token, int productID) {
+        Call<List<Rating>> call = api.getMyRating("Bearer "+token,productID);
+        call.enqueue(new Callback<List<Rating>>() {
+            @Override
+            public void onResponse(@NonNull Call<List<Rating>> call, @NonNull Response<List<Rating>> response) {
+                if(response.isSuccessful()){
+                    myRateData.postValue(response.body());
+                } else myRateData.postValue(null);
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<List<Rating>> call, @NonNull Throwable t) {
+                myRateData.postValue(null);
+            }
+        });
     }
 
     private void loadRateProduct(String token, RateProductRequest request) {

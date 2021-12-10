@@ -11,5 +11,5 @@ public interface OnProductRateListener {
      * @param comment is the comment of Rating
      * @param rateIndex is the star index of Rating
      */
-    void onRateProduct(int productID, String comment, int rateIndex, View rateResult);
+    void onRateProduct(int productID, String comment, int rateIndex, View rateResult, View rateComment, View rateBar);
 }

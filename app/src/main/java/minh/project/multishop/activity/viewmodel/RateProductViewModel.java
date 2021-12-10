@@ -1,11 +1,16 @@
 package minh.project.multishop.activity.viewmodel;
 
 import android.view.View;
+import android.widget.EditText;
+import android.widget.RatingBar;
 import android.widget.Toast;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.google.android.material.button.MaterialButton;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import minh.project.multishop.R;
 import minh.project.multishop.activity.RateProductActivity;
@@ -14,6 +19,8 @@ import minh.project.multishop.base.BaseActivityViewModel;
 import minh.project.multishop.database.entity.User;
 import minh.project.multishop.database.repository.UserDBRepository;
 import minh.project.multishop.databinding.ActivityProductRatingBinding;
+import minh.project.multishop.models.OrderItem;
+import minh.project.multishop.models.Rating;
 import minh.project.multishop.network.dtos.DTORequest.RateProductRequest;
 import minh.project.multishop.network.repository.RatingRepository;
 import minh.project.multishop.utils.DateConverter;
@@ -23,6 +30,7 @@ public class RateProductViewModel extends BaseActivityViewModel<RateProductActiv
     private final ActivityProductRatingBinding mBinding;
     private final RateProductAdapter adapter;
     private final User mUser;
+    private final List<Rating> ratingData;
 
     /**
      * constructor
@@ -31,9 +39,24 @@ public class RateProductViewModel extends BaseActivityViewModel<RateProductActiv
      */
     public RateProductViewModel(RateProductActivity rateProductActivity) {
         super(rateProductActivity);
+        ratingData = new ArrayList<>();
         mBinding = rateProductActivity.getBinding();
         adapter = new RateProductAdapter(rateProductActivity,rateProductActivity.getItemList());
         mUser = UserDBRepository.getInstance().getCurrentUser();
+    }
+
+    private void getRateData() {
+        for(OrderItem item : mActivity.getItemList()){
+            RatingRepository.getInstance().getMyRate(mUser.getAccToken(), item.getProductID()).observe(mActivity, ratings -> {
+                if(null == ratings) return;
+                if(ratings.isEmpty()) ratingData.add(null);
+
+                ratingData.addAll(ratings);
+                if(ratingData.size() == mActivity.getItemList().size()){
+                    adapter.setRatingList(ratingData);
+                }
+            });
+        }
     }
 
     @Override
@@ -45,6 +68,7 @@ public class RateProductViewModel extends BaseActivityViewModel<RateProductActiv
 
     private void InitRateRecycleView() {
         mBinding.rcvProductRate.setLayoutManager(new LinearLayoutManager(mActivity));
+        getRateData();
         mBinding.rcvProductRate.setAdapter(adapter);
         adapter.setOnProductRateListener(mActivity);
     }
@@ -54,7 +78,7 @@ public class RateProductViewModel extends BaseActivityViewModel<RateProductActiv
 
     }
 
-    public void onRateProduct(int productID, String comment, int rateIndex, View rateResult) {
+    public void onRateProduct(int productID, String comment, int rateIndex, View rateResult, View rateComment, View rateBar) {
         if(null == mUser){
             return;
         }
@@ -67,7 +91,14 @@ public class RateProductViewModel extends BaseActivityViewModel<RateProductActiv
             }
 
             ((MaterialButton)rateResult).setText(mActivity.getString(R.string.already_rate, DateConverter.DateTimeFormat(rating.getUpdated_at())));
-            ((MaterialButton)rateResult).setClickable(false);
+            rateResult.setClickable(false);
+
+            ((EditText) rateComment).setClickable(false);
+            ((EditText) rateComment).setCursorVisible(false);
+            ((EditText) rateComment).setFocusable(false);
+            ((EditText) rateComment).setFocusableInTouchMode(false);
+
+            ((RatingBar) rateBar).setIsIndicator(true);
         });
     }
 }

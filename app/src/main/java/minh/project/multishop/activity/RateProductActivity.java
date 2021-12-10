@@ -48,8 +48,9 @@ public class RateProductActivity extends BaseActivity implements View.OnClickLis
         mViewModel.onClickEvent(view.getId());
     }
 
+
     @Override
-    public void onRateProduct(int productID, String comment, int rateIndex, View rateResult) {
-        mViewModel.onRateProduct(productID,comment,rateIndex,rateResult);
+    public void onRateProduct(int productID, String comment, int rateIndex, View rateResult, View rateComment, View rateBar) {
+        mViewModel.onRateProduct(productID,comment,rateIndex,rateResult,rateComment,rateBar);
     }
 }
