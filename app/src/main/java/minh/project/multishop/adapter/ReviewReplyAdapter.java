@@ -1,8 +1,6 @@
 package minh.project.multishop.adapter;
 
-import android.content.Context;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
@@ -11,7 +9,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.List;
 
 import minh.project.multishop.R;
-import minh.project.multishop.base.BaseBindingAdapter;
 import minh.project.multishop.databinding.ItemReviewResponseBinding;
 import minh.project.multishop.models.DTOComment;
 import minh.project.multishop.utils.DateConverter;

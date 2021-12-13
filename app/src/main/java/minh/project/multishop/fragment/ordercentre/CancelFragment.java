@@ -6,11 +6,9 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
@@ -19,12 +17,13 @@ import java.util.ArrayList;
 
 import minh.project.multishop.activity.OrderCentreActivity;
 import minh.project.multishop.adapter.OrderCenterListAdapter;
+import minh.project.multishop.base.BaseFragment;
 import minh.project.multishop.database.entity.User;
 import minh.project.multishop.databinding.FragmentCancelBinding;
 import minh.project.multishop.network.repository.OrderRepository;
 import minh.project.multishop.utils.CustomProgress;
 
-public class CancelFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
+public class CancelFragment extends BaseFragment implements SwipeRefreshLayout.OnRefreshListener {
 
     private FragmentCancelBinding mBinding;
     private OrderCenterListAdapter mAdapter;
@@ -71,13 +70,16 @@ public class CancelFragment extends Fragment implements SwipeRefreshLayout.OnRef
 
     private void loadOrder() {
         CustomProgress dialog = CustomProgress.getInstance();
-        dialog.showProgress(getContext(),"Đang tải...",true);
+        dialog.showProgress(getContext(),"Đang tải...",false);
         OrderRepository.getInstance().getListOrderByStatus(mUser.getAccToken(),CANCEL_ORDER).observe(mActivity, getListOrderResponse -> {
-            if(null == getListOrderResponse){
-                Toast.makeText(getActivity(), "Không có gì cả", Toast.LENGTH_SHORT).show();
+            if(null == getListOrderResponse || getListOrderResponse.results.isEmpty()){
+                mBinding.noItem.setVisibility(View.VISIBLE);
+                dialog.hideProgress();
+                mBinding.layoutRefreshCancel.setRefreshing(false);
                 return;
             }
 
+            mBinding.noItem.setVisibility(View.GONE);
             mAdapter.setListOrder(getListOrderResponse.results);
             dialog.hideProgress();
             mBinding.layoutRefreshCancel.setRefreshing(false);

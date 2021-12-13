@@ -39,8 +39,6 @@ import minh.project.multishop.models.OrderItem;
 import minh.project.multishop.network.dtos.DTORequest.EditCartRequest;
 import minh.project.multishop.network.repository.CartRepository;
 import minh.project.multishop.utils.CustomProgress;
-import minh.project.multishop.utils.MyButtonClickListener;
-import minh.project.multishop.utils.RecyclerViewSwipeHelper;
 import minh.project.multishop.utils.SwipeHelper;
 
 public class CartActivityViewModel extends BaseActivityViewModel<CartActivity> {
@@ -137,7 +135,7 @@ public class CartActivityViewModel extends BaseActivityViewModel<CartActivity> {
     private void deleteItem(int position) {
         int deleteID = cartList.get(position).getID();
         CustomProgress dialog = CustomProgress.getInstance();
-        dialog.showProgress(mActivity,"Đang xoá...",true);
+        dialog.showProgress(mActivity,"Đang xoá...",false);
         cartRepository.deleteCartItem(mUser.getAccToken(),deleteID).observe(mActivity, s -> {
             if(null == s || s.isEmpty()){
                 Toast.makeText(mActivity, "Đã xảy ra lỗi. Không thể xoá giỏ hàng", Toast.LENGTH_SHORT).show();
@@ -264,7 +262,7 @@ public class CartActivityViewModel extends BaseActivityViewModel<CartActivity> {
     public void onItemQuantityAdd(int position, View quantityView) {
         CartItem shoppingCart = cartList.get(position);
         CustomProgress dialog = CustomProgress.getInstance();
-        dialog.showProgress(mActivity,"Đang thêm...",true);
+        dialog.showProgress(mActivity,"Đang thêm...",false);
         EditCartRequest request = new EditCartRequest(shoppingCart.getProduct().productID,1);
         cartRepository.getAddCartData(mUser.getAccToken(),request).observe(mActivity, editCartResponse -> {
             if(editCartResponse==null){
@@ -296,7 +294,7 @@ public class CartActivityViewModel extends BaseActivityViewModel<CartActivity> {
             return;
         }
         CustomProgress dialog = CustomProgress.getInstance();
-        dialog.showProgress(mActivity,"Đang bớt...",true);
+        dialog.showProgress(mActivity,"Đang bớt...",false);
         EditCartRequest request = new EditCartRequest(shoppingCart.getProduct().productID,1);
         cartRepository.getRemoveCartData(mUser.getAccToken(),request).observe(mActivity, editCartResponse -> {
             if(editCartResponse==null){

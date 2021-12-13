@@ -31,7 +31,7 @@ import minh.project.multishop.base.BaseActivityViewModel;
 import minh.project.multishop.database.entity.User;
 import minh.project.multishop.database.repository.UserDBRepository;
 import minh.project.multishop.databinding.ActivityProductDetailBinding;
-import minh.project.multishop.databinding.CartBuyDialogLayoutBinding;
+import minh.project.multishop.databinding.DialogCartBuyLayoutBinding;
 import minh.project.multishop.models.Image;
 import minh.project.multishop.models.OrderItem;
 import minh.project.multishop.models.Product;
@@ -204,7 +204,7 @@ public class ProductDetailViewModel extends BaseActivityViewModel<ProductDetailA
     }
 
     private void showBottomSheetDialog(String action) {
-        final CartBuyDialogLayoutBinding binding = CartBuyDialogLayoutBinding.inflate(mActivity.getLayoutInflater());
+        final DialogCartBuyLayoutBinding binding = DialogCartBuyLayoutBinding.inflate(mActivity.getLayoutInflater());
         View viewRoot = binding.getRoot();
 
         final BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(mActivity);

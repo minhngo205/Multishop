@@ -13,13 +13,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Set;
 
 import minh.project.multishop.R;
 import minh.project.multishop.models.OrderItem;
-import minh.project.multishop.models.Product;
 import minh.project.multishop.utils.CurrencyFormat;
 
 public class OrderItemAdapter extends RecyclerView.Adapter<OrderItemAdapter.MyViewHolder> {

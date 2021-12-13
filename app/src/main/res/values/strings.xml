@@ -68,6 +68,7 @@
     <string name="already_rate">Đã đánh giá: %s</string>
     <string name="title_rate_product">Đánh giá sản phẩm</string>
     <string name="check_delete_history">Bạn có chắc chắn muốn xoá lịch sử tìm kiếm ?</string>
+    <string name="llb_no_items_in_order_center">\"Hổng\" có đơn nào cả !!!</string>
 
     <string-array name="search_hot">
         <item>Laptop Asus</item>

@@ -1,11 +1,9 @@
 package minh.project.multishop.activity.viewmodel;
 
 import android.annotation.SuppressLint;
-import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
-import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import java.util.ArrayList;

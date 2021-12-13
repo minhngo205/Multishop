@@ -1,11 +1,8 @@
 package minh.project.multishop.activity;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.os.Bundle;
 import android.view.KeyEvent;
 
-import minh.project.multishop.R;
 import minh.project.multishop.activity.viewmodel.SearchViewModel;
 import minh.project.multishop.base.BaseActivity;
 import minh.project.multishop.databinding.ActivitySearchBinding;

@@ -2,6 +2,8 @@ package minh.project.multishop.utils;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.view.View;
 import android.view.Window;
 import android.widget.ProgressBar;
@@ -34,6 +36,8 @@ public class CustomProgress {
         mProgressBar.setVisibility(View.VISIBLE);
         // you can change or add this line according to your need
         mProgressBar.setIndeterminate(true);
+
+        mDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         mDialog.setCancelable(cancelable);
         mDialog.setCanceledOnTouchOutside(cancelable);
         mDialog.show();

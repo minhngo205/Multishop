@@ -59,7 +59,7 @@ public class OrderRepository {
 
             @Override
             public void onFailure(@NonNull Call<GetListOrderResponse> call, @NonNull Throwable t) {
-
+                listOrderData.postValue(null);
             }
         });
     }

@@ -1,8 +1,11 @@
 package minh.project.multishop.adapter;
 
+import static minh.project.multishop.utils.CurrencyFormat.currencyFormat;
+
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Paint;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,7 +22,6 @@ import java.util.List;
 import minh.project.multishop.R;
 import minh.project.multishop.activity.ProductDetailActivity;
 import minh.project.multishop.models.Product;
-import minh.project.multishop.utils.CurrencyFormat;
 
 public class SearchResultAdapter extends RecyclerView.Adapter<SearchResultAdapter.MyViewHolder> {
 
@@ -51,8 +53,15 @@ public class SearchResultAdapter extends RecyclerView.Adapter<SearchResultAdapte
                 .placeholder(R.drawable.progress_bar_loading)
                 .into(holder.productThumb);
 
+        if (product.getIsDiscount()==0){
+            holder.productPrice.setText("");
+        } else {
+            holder.productPrice.setText(currencyFormat(product.getProductPrice()));
+            holder.productPrice.setPaintFlags(holder.productPrice.getPaintFlags()| Paint.STRIKE_THRU_TEXT_FLAG);
+        }
+        holder.salePrice.setText(currencyFormat(product.getSalePrice()));
+
         holder.productName.setText(product.getProductName());
-        holder.productPrice.setText(CurrencyFormat.currencyFormat(product.getSalePrice()));
         holder.itemView.setOnClickListener(view -> {
             Intent intent = new Intent(mContext, ProductDetailActivity.class);
             intent.putExtra("productID",product.getID());
@@ -70,13 +79,15 @@ public class SearchResultAdapter extends RecyclerView.Adapter<SearchResultAdapte
         ImageView productThumb;
         TextView productName;
         TextView productPrice;
+        TextView salePrice;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
 
             productThumb = itemView.findViewById(R.id.iv_product);
             productName = itemView.findViewById(R.id.tv_title);
-            productPrice = itemView.findViewById(R.id.tv_price);
+            productPrice = itemView.findViewById(R.id.product_price);
+            salePrice = itemView.findViewById(R.id.tv_sale_price);
         }
     }
 }

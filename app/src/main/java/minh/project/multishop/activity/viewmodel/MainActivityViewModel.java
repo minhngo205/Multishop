@@ -2,10 +2,8 @@ package minh.project.multishop.activity.viewmodel;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -15,20 +13,16 @@ import com.google.android.material.navigation.NavigationBarView;
 import java.util.ArrayList;
 import java.util.List;
 
+import minh.project.multishop.R;
 import minh.project.multishop.activity.CartActivity;
 import minh.project.multishop.activity.MainActivity;
-import minh.project.multishop.R;
 import minh.project.multishop.activity.SearchActivity;
 import minh.project.multishop.base.BaseActivityViewModel;
-import minh.project.multishop.database.entity.User;
-import minh.project.multishop.database.repository.UserDBRepository;
 import minh.project.multishop.databinding.ActivityMainBinding;
 import minh.project.multishop.fragment.CategoryFragment;
 import minh.project.multishop.fragment.HomeFragment;
 import minh.project.multishop.fragment.NewInFragment;
 import minh.project.multishop.fragment.UserFragment;
-import minh.project.multishop.network.dtos.DTORequest.RefreshAccessTokenRequest;
-import minh.project.multishop.network.repository.UserNetRepository;
 
 public class MainActivityViewModel extends BaseActivityViewModel<MainActivity> {
 
@@ -140,6 +134,7 @@ public class MainActivityViewModel extends BaseActivityViewModel<MainActivity> {
         for (Fragment fragment : fragmentList) {
             mActivity.getSupportFragmentManager().beginTransaction().remove(fragment).commit();
         }
+        mainBinding.bottomNavigationView.getMenu().getItem(0).setChecked(true);
     }
 
     private void showFragment(Fragment fragment) {

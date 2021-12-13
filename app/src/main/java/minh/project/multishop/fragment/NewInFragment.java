@@ -1,15 +1,12 @@
 package minh.project.multishop.fragment;
 
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import minh.project.multishop.R;
+import androidx.annotation.NonNull;
+
 import minh.project.multishop.base.BaseFragment;
 import minh.project.multishop.databinding.FragmentNewInBinding;
 import minh.project.multishop.fragment.fragmentviewmodel.NewInFragmentViewModel;

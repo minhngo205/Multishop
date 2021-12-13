@@ -7,16 +7,13 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
-import androidx.lifecycle.Observer;
-
-import minh.project.multishop.activity.LoginActivity;
 import minh.project.multishop.R;
+import minh.project.multishop.activity.LoginActivity;
 import minh.project.multishop.base.BaseActivityViewModel;
 import minh.project.multishop.database.entity.User;
 import minh.project.multishop.database.entity.UserInfo;
 import minh.project.multishop.database.repository.UserDBRepository;
 import minh.project.multishop.databinding.ActivityLoginBinding;
-import minh.project.multishop.models.UserProfile;
 import minh.project.multishop.network.dtos.DTORequest.LoginRequest;
 import minh.project.multishop.network.dtos.DTORequest.RegisterRequest;
 import minh.project.multishop.network.repository.UserNetRepository;
@@ -113,17 +110,14 @@ public class LoginActivityViewModel extends BaseActivityViewModel<LoginActivity>
     private void register(String name, String username, String password) {
         RegisterRequest registerRequest = new RegisterRequest(name,username,password);
 
-        netRepository.getRegisterData(registerRequest).observe(mActivity, new Observer<UserProfile>() {
-            @Override
-            public void onChanged(UserProfile userProfile) {
-                if(null == userProfile){
-                    Toast.makeText(mActivity, "Không thể đăng ký", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-
-                dbRepository.insertUserInfo(userProfile.castToInfo());
-                login(userProfile.getUsername(),password);
+        netRepository.getRegisterData(registerRequest).observe(mActivity, userProfile -> {
+            if(null == userProfile){
+                Toast.makeText(mActivity, "Không thể đăng ký", Toast.LENGTH_SHORT).show();
+                return;
             }
+
+            dbRepository.insertUserInfo(userProfile.castToInfo());
+            login(userProfile.getUsername(),password);
         });
     }
 

@@ -1,33 +1,29 @@
 package minh.project.multishop.fragment.ordercentre;
 
 import static minh.project.multishop.utils.Statistics.SHIPPING_ORDER;
-import static minh.project.multishop.utils.Statistics.WAITING_CONFIRM;
 
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Toast;
-
 import java.util.ArrayList;
 
-import minh.project.multishop.R;
 import minh.project.multishop.activity.OrderCentreActivity;
 import minh.project.multishop.adapter.OrderCenterListAdapter;
+import minh.project.multishop.base.BaseFragment;
 import minh.project.multishop.database.entity.User;
 import minh.project.multishop.databinding.FragmentShippingBinding;
 import minh.project.multishop.network.repository.OrderRepository;
 import minh.project.multishop.utils.CustomProgress;
 
-public class ShippingFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
+public class ShippingFragment extends BaseFragment implements SwipeRefreshLayout.OnRefreshListener {
 
     private FragmentShippingBinding mBinding;
     private OrderCenterListAdapter mAdapter;
@@ -74,13 +70,16 @@ public class ShippingFragment extends Fragment implements SwipeRefreshLayout.OnR
 
     private void loadOrder() {
         CustomProgress dialog = CustomProgress.getInstance();
-        dialog.showProgress(getContext(),"Đang tải...",true);
+        dialog.showProgress(getContext(),"Đang tải...",false);
         OrderRepository.getInstance().getListOrderByStatus(mUser.getAccToken(),SHIPPING_ORDER).observe(mActivity, getListOrderResponse -> {
-            if(null == getListOrderResponse){
-                Toast.makeText(getActivity(), "Không có gì cả", Toast.LENGTH_SHORT).show();
+            if(null == getListOrderResponse || getListOrderResponse.results.isEmpty()){
+                mBinding.noItem.setVisibility(View.VISIBLE);
+                dialog.hideProgress();
+                mBinding.layoutRefreshShipping.setRefreshing(false);
                 return;
             }
 
+            mBinding.noItem.setVisibility(View.GONE);
             mAdapter.setListOrder(getListOrderResponse.results);
             dialog.hideProgress();
             mBinding.layoutRefreshShipping.setRefreshing(false);
