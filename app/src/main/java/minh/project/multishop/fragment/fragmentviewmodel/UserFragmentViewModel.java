@@ -52,13 +52,9 @@ public class UserFragmentViewModel extends BaseFragmentViewModel<UserFragment> {
         binding = mFragment.getBinding();
 
         binding.tvSignIn.setOnClickListener(mFragment);
-        binding.lvScan.setOnClickListener(mFragment);
-        binding.lvAccount.setOnClickListener(mFragment);
         binding.lvBag.setOnClickListener(mFragment);
         binding.lvOrder.setOnClickListener(mFragment);
-        binding.lvSave.setOnClickListener(mFragment);
-        binding.lvSet.setOnClickListener(mFragment);
-        binding.lvOffline.setOnClickListener(mFragment);
+        binding.layoutWelcome.setOnClickListener(mFragment);
         binding.lvContact.setOnClickListener(mFragment);
         binding.lvOut.setOnClickListener(mFragment);
     }
@@ -113,10 +109,7 @@ public class UserFragmentViewModel extends BaseFragmentViewModel<UserFragment> {
                 Intent loginIntent = new Intent(mFragment.getActivity(), LoginActivity.class);
                 activityResultLauncher.launch(loginIntent);
                 break;
-            case R.id.lv_scan: // Scan to pay
-                Toast.makeText(mFragment.getContext(), "Tính năng đang được phát triển", Toast.LENGTH_SHORT).show();
-                break;
-            case R.id.lv_account: // My Account
+            case R.id.layout_welcome: // My Account
                 if(null == mUser){
                     Toast.makeText(mFragment.getContext(), "Bạn cần phải đăng nhập", Toast.LENGTH_SHORT).show();
                     return;
@@ -135,23 +128,12 @@ public class UserFragmentViewModel extends BaseFragmentViewModel<UserFragment> {
                 }
                 mFragment.requireActivity().startActivity(new Intent(mFragment.getActivity(), OrderCentreActivity.class));
                 break;
-            case R.id.lv_save: // Favourite
-                Toast.makeText(mFragment.getContext(), "Chức năng đang được phát triển", Toast.LENGTH_SHORT).show();
-                break;
-            case R.id.lv_set: // Setting
-                Toast.makeText(mFragment.getContext(), "Tính năng đang được phát triển thêm", Toast.LENGTH_SHORT).show();
-                break;
-            case R.id.lv_offline: // Offline Shop
-                Toast.makeText(mFragment.getContext(), "Tính năng cần được phát triển", Toast.LENGTH_SHORT).show();
-                break;
             case R.id.lv_contact: // Contact Us
                 Intent contactUsIntent = new Intent(mFragment.getActivity(), ContactUsActivity.class);
                 mFragment.requireActivity().startActivity(contactUsIntent);
                 break;
             case R.id.lv_out: // Log out
                 checkSignOut();
-                break;
-            case R.id.lv_left: // Default
                 break;
             default:
                 break;

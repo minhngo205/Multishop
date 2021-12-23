@@ -82,10 +82,8 @@
                     android:layout_alignBottom="@+id/tv_price"
                     android:layout_centerVertical="true"
                     android:layout_toStartOf="@id/edtQty"
-                    android:background="@drawable/bg_ractangal_stroked"
-                    android:padding="@dimen/_6sdp"
-                    android:src="@drawable/ic_remove"
-                    app:tint="@color/black" />
+                    android:padding="@dimen/_4sdp"
+                    android:src="@mipmap/minus" />
 
                 <TextView
                     android:id="@+id/edtQty"
@@ -108,11 +106,10 @@
                     android:layout_height="@dimen/_25sdp"
                     android:layout_centerVertical="true"
                     android:layout_alignParentEnd="true"
-                    android:background="@drawable/bg_ractangal_stroked"
                     android:layout_alignBottom="@+id/tv_price"
-                    android:padding="@dimen/_6sdp"
-                    android:src="@drawable/ic_add"
-                    app:tint="@color/black" />
+                    android:padding="@dimen/_4sdp"
+                    android:src="@mipmap/plus"
+                    />
 
 
 
