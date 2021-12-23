@@ -1,7 +1,6 @@
 package minh.project.multishop.fragment.fragmentviewmodel;
 
 import android.annotation.SuppressLint;
-import android.util.Log;
 import android.view.View;
 import android.widget.Adapter;
 import android.widget.AdapterView;
@@ -18,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 import java.util.List;
 
+import minh.project.multishop.adapter.BrandSpinnerAdapter;
 import minh.project.multishop.adapter.CategoryAdapter;
 import minh.project.multishop.adapter.ProductCateAdapter;
 import minh.project.multishop.base.BaseFragmentViewModel;
@@ -53,6 +53,8 @@ public class CategoryFragmentViewModel extends BaseFragmentViewModel<CategoryFra
     private MutableLiveData<List<Category>> liveCateData;
     private MutableLiveData<List<Product>> liveProdData;
     private final IAppAPI api;
+
+    private static final Brand defaultBrand = new Brand(-1,"Hãng sản xuất");
 
     public LiveData<List<Category>> getListCategory(){
         if(liveCateData==null){
@@ -167,10 +169,15 @@ public class CategoryFragmentViewModel extends BaseFragmentViewModel<CategoryFra
     }
 
     private void initBrandSpinner(List<Brand> brandList) {
-        List<String> brands = new ArrayList<>();
-        brands.add("(Tất cả)");
-        for(Brand b : brandList) brands.add(b.getBrandName());
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(mFragment.getContext(), android.R.layout.simple_spinner_item,brands);
+        List<Brand> brands = new ArrayList<>();
+        brands.add(defaultBrand);
+        brands.addAll(brandList);
+        ArrayAdapter<Brand> adapter = new BrandSpinnerAdapter(mFragment.requireContext(), android.R.layout.simple_spinner_item,brands);
+
+//        List<String> brands = new ArrayList<>();
+//        brands.add("Hãng sản xuất");
+//        for(Brand b : brandList) brands.add(b.getBrandName());
+//        ArrayAdapter<String> adapter = new ArrayAdapter<String>(mFragment.getContext(), android.R.layout.simple_spinner_item,brands);
 
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         mBinding.spinnerBrand.setAdapter(adapter);
@@ -195,7 +202,7 @@ public class CategoryFragmentViewModel extends BaseFragmentViewModel<CategoryFra
         }
 
         Adapter adapter = adapterView.getAdapter();
-        String search = (String) adapter.getItem(position);
+        String search = ((Brand) adapter.getItem(position)).getBrandName();
 
         List<Product> searchedProducts = queryByBrandName(search);
         productCateAdapter.setProductList(searchedProducts);

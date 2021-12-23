@@ -34,7 +34,7 @@
                     android:layout_gravity="center_horizontal"
                     android:layout_marginTop="@dimen/spacing_xlarge">
 
-                    <ImageView
+                    <de.hdodenhof.circleimageview.CircleImageView
                         android:id="@+id/ivProfileImage"
                         android:layout_width="@dimen/_110sdp"
                         android:layout_height="@dimen/_110sdp"
