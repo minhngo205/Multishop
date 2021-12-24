@@ -1,5 +1,6 @@
 package minh.project.multishop.adapter;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -68,6 +69,7 @@ public class BrandSpinnerAdapter extends ArrayAdapter<Brand> {
         return view;
     }
 
+    @SuppressLint("SetTextI18n")
     private void setBrandItem(View view, Brand item) {
         TextView brandName = view.findViewById(R.id.tvBrand);
 
