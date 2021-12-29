@@ -37,7 +37,7 @@
     <string name="current_position">%d/%d</string>
     <string name="product_color">Loại sản phẩm</string>
     <string name="product_version">Hãng sản xuất</string>
-    <string name="product_capacity">Capacity</string>
+    <string name="product_capacity">Chi tiết sản phẩm</string>
     <string name="product_count">Số lượng</string>
     <string name="product_send">Mô tả</string>
     <string name="product_address">Locating</string>
