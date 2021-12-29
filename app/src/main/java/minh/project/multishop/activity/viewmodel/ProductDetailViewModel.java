@@ -25,7 +25,7 @@ import minh.project.multishop.activity.CartActivity;
 import minh.project.multishop.activity.OrderSubmitActivity;
 import minh.project.multishop.activity.ProductDetailActivity;
 import minh.project.multishop.R;
-import minh.project.multishop.activity.RatingActivity;
+import minh.project.multishop.activity.ReviewActivity;
 import minh.project.multishop.adapter.ProductViewPagerAdapter;
 import minh.project.multishop.base.BaseActivityViewModel;
 import minh.project.multishop.database.entity.User;
@@ -175,8 +175,15 @@ public class ProductDetailViewModel extends BaseActivityViewModel<ProductDetailA
                 break;
             }
             case R.id.layout_evaluate:{
-                Intent reviewIntent = new Intent(mActivity, RatingActivity.class);
-                reviewIntent.putExtra("PRODUCT_ID",productDetail.getID());
+                Intent reviewIntent = new Intent(mActivity, ReviewActivity.class);
+                OrderItem product = new OrderItem(
+                        productDetail.productID,
+                        productDetail.imgThumbnail,
+                        productDetail.productName,
+                        productDetail.salePrice,
+                        -1
+                );
+                reviewIntent.putExtra("PRODUCT_INFO",product);
                 reviewIntent.putExtra("AVG_RATING",productDetail.getAvgRate());
                 mActivity.startActivity(reviewIntent);
                 break;

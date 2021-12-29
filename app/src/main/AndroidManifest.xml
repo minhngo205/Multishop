@@ -48,7 +48,7 @@
             android:name=".activity.CartActivity"
             android:exported="false" />
         <activity
-            android:name=".activity.RatingActivity"
+            android:name=".activity.ReviewActivity"
             android:exported="false" />
         <activity
             android:name=".activity.ProductDetailActivity"

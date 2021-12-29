@@ -9,43 +9,44 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import java.util.ArrayList;
 import java.util.List;
 
-import minh.project.multishop.activity.RatingActivity;
+import minh.project.multishop.activity.ReviewActivity;
 import minh.project.multishop.adapter.RatingAdapter;
 import minh.project.multishop.base.BaseActivityViewModel;
 import minh.project.multishop.databinding.ActivityRatingBinding;
 import minh.project.multishop.models.Rating;
 import minh.project.multishop.network.repository.RatingRepository;
 
-public class RatingActViewModel extends BaseActivityViewModel<RatingActivity> {
+public class ReviewActViewModel extends BaseActivityViewModel<ReviewActivity> {
 
     private final ActivityRatingBinding mBinding;
     private final int productID;
     private final RatingRepository ratingRepository;
     private final RatingAdapter adapter;
     private List<Rating> ratingData;
-    private int ratingCount;
     private int rate1count,rate2count,rate3count,rate4count,rate5count;
 
     /**
      * constructor
      *
-     * @param ratingActivity Activity object
+     * @param reviewActivity Activity object
      */
-    public RatingActViewModel(RatingActivity ratingActivity) {
-        super(ratingActivity);
-        mBinding = ratingActivity.getBinding();
-        productID = ratingActivity.getProductID();
+    public ReviewActViewModel(ReviewActivity reviewActivity) {
+        super(reviewActivity);
+        mBinding = reviewActivity.getBinding();
+        productID = reviewActivity.getProduct().getProductID();
         ratingRepository = RatingRepository.getInstance();
         adapter = new RatingAdapter(mActivity);
         ratingData = new ArrayList<>();
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     public void initView() {
         mBinding.toolbar.tvTitle.setText("Đánh giá");
         mBinding.layoutReview.rvReview.setLayoutManager(new LinearLayoutManager(mActivity));
         mBinding.layoutReview.rvReview.setAdapter(adapter);
         adapter.setRatingList(ratingData);
+        adapter.setProductInfo(mActivity.getProduct());
         disableSeekbar();
         initRatingInfo();
     }
@@ -61,7 +62,7 @@ public class RatingActViewModel extends BaseActivityViewModel<RatingActivity> {
 
     @SuppressLint("SetTextI18n")
     private void initRatingInfo() {
-        ratingCount = ratingData.size();
+        int ratingCount = ratingData.size();
         mBinding.layoutReview.tvReviewRate.setText(String.valueOf(mActivity.getAvgRating()));
         mBinding.layoutReview.tvTotalReview.setText(ratingCount +" đánh giá");
         for(Rating rating : ratingData){
@@ -89,11 +90,11 @@ public class RatingActViewModel extends BaseActivityViewModel<RatingActivity> {
                 default: break;
             }
         }
-        mBinding.layoutReview.sb1Star.setProgress(rate1count*100/ratingCount);
-        mBinding.layoutReview.sb2Star.setProgress(rate2count*100/ratingCount);
-        mBinding.layoutReview.sb3Star.setProgress(rate3count*100/ratingCount);
-        mBinding.layoutReview.sb4Star.setProgress(rate4count*100/ratingCount);
-        mBinding.layoutReview.sb5Star.setProgress(rate5count*100/ratingCount);
+        mBinding.layoutReview.sb1Star.setProgress(rate1count*100/ ratingCount);
+        mBinding.layoutReview.sb2Star.setProgress(rate2count*100/ ratingCount);
+        mBinding.layoutReview.sb3Star.setProgress(rate3count*100/ ratingCount);
+        mBinding.layoutReview.sb4Star.setProgress(rate4count*100/ ratingCount);
+        mBinding.layoutReview.sb5Star.setProgress(rate5count*100/ ratingCount);
     }
 
     public void initListRating() {
@@ -120,5 +121,13 @@ public class RatingActViewModel extends BaseActivityViewModel<RatingActivity> {
     @Override
     public void onClickEvent(int viewId) {
 
+    }
+
+    public void NewAvgRatingInfo() {
+        int sum = 0;
+        for (Rating rate: ratingData) {
+            sum += rate.getRate();
+        }
+        mBinding.layoutReview.tvReviewRate.setText(String.valueOf((double) sum/ratingData.size()));
     }
 }

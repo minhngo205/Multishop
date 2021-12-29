@@ -40,12 +40,13 @@
                 android:textSize="18sp" />
 
             <TextView
+                android:id="@+id/tv_user_info"
                 style="@style/viewParent.headerText"
-                android:text="Chỉnh sửa thông tin"
-                android:textSize="16sp"
-                android:textColor="#5D5C5C"
                 android:layout_below="@id/tv_user_name"
-                android:layout_toEndOf="@id/profileCircleImageView"/>
+                android:layout_toEndOf="@id/profileCircleImageView"
+                android:text="Chỉnh sửa thông tin"
+                android:textColor="#5D5C5C"
+                android:textSize="16sp" />
 
             <ImageView
                 style="@style/viewParent"

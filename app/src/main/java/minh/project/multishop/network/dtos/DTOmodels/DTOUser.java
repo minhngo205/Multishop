@@ -1,4 +1,4 @@
-package minh.project.multishop.models;
+package minh.project.multishop.network.dtos.DTOmodels;
 
 import com.google.gson.annotations.SerializedName;
 

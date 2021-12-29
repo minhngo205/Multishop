@@ -21,9 +21,10 @@ import minh.project.multishop.base.BaseFragment;
 import minh.project.multishop.database.entity.User;
 import minh.project.multishop.databinding.FragmentWaitingConfirmBinding;
 import minh.project.multishop.network.repository.OrderRepository;
-import minh.project.multishop.utils.CustomProgress;
+import minh.project.multishop.dialog.CustomProgress;
+import minh.project.multishop.utils.OnOrderListRefresh;
 
-public class WaitingConfirmFragment extends BaseFragment implements SwipeRefreshLayout.OnRefreshListener {
+public class WaitingConfirmFragment extends BaseFragment implements SwipeRefreshLayout.OnRefreshListener, OnOrderListRefresh {
 
     private FragmentWaitingConfirmBinding mBinding;
     private OrderCenterListAdapter mAdapter;
@@ -91,5 +92,10 @@ public class WaitingConfirmFragment extends BaseFragment implements SwipeRefresh
     public void onRefresh() {
         mAdapter.setListOrder(new ArrayList<>());
         loadOrder();
+    }
+
+    @Override
+    public void onDataRefresh() {
+        onRefresh();
     }
 }

@@ -10,6 +10,9 @@ import minh.project.multishop.models.Rating;
 import minh.project.multishop.network.IAppAPI;
 import minh.project.multishop.network.RetroInstance;
 import minh.project.multishop.network.dtos.DTORequest.RateProductRequest;
+import minh.project.multishop.network.dtos.DTORequest.ReplyReviewRequest;
+import minh.project.multishop.network.dtos.DTOResponse.ReplyReviewResponse;
+import org.jetbrains.annotations.NotNull;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -21,6 +24,7 @@ public class RatingRepository {
     private MutableLiveData<List<Rating>> productRatings;
     private MutableLiveData<Rating> rateData;
     private MutableLiveData<List<Rating>> myRateData;
+    private MutableLiveData<ReplyReviewResponse> replyReviewData;
 
     private RatingRepository(){
         api = RetroInstance.getAppAPI();
@@ -47,6 +51,29 @@ public class RatingRepository {
         myRateData = new MutableLiveData<>();
         loadMyRate(token, productID);
         return myRateData;
+    }
+
+    public LiveData<ReplyReviewResponse> ReplyReview(String token, int reviewID, ReplyReviewRequest request) {
+        replyReviewData = new MutableLiveData<>();
+        loadReplyReview(token,reviewID,request);
+        return replyReviewData;
+    }
+
+    private void loadReplyReview(String token, int reviewID, ReplyReviewRequest request) {
+        Call<ReplyReviewResponse> call = api.replyReview("Bearer "+token,reviewID,request);
+        call.enqueue(new Callback<ReplyReviewResponse>() {
+            @Override
+            public void onResponse(@NotNull Call<ReplyReviewResponse> call, @NotNull Response<ReplyReviewResponse> response) {
+                if(response.isSuccessful()){
+                    replyReviewData.postValue(response.body());
+                } else replyReviewData.postValue(null);
+            }
+
+            @Override
+            public void onFailure(@NotNull Call<ReplyReviewResponse> call, @NotNull Throwable t) {
+                myRateData.postValue(null);
+            }
+        });
     }
 
     private void loadMyRate(String token, int productID) {

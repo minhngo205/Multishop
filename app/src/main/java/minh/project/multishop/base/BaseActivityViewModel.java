@@ -4,7 +4,7 @@ import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 
-import minh.project.multishop.utils.InternetConnection;
+import minh.project.multishop.dialog.InternetConnection;
 
 public abstract class BaseActivityViewModel<T extends BaseActivity> {
     // Activity object

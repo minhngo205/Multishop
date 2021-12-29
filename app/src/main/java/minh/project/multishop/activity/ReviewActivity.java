@@ -4,16 +4,17 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Toast;
 
-import minh.project.multishop.activity.viewmodel.RatingActViewModel;
+import minh.project.multishop.activity.viewmodel.ReviewActViewModel;
 import minh.project.multishop.base.BaseActivity;
 import minh.project.multishop.databinding.ActivityRatingBinding;
+import minh.project.multishop.models.OrderItem;
 
-public class RatingActivity extends BaseActivity {
+public class ReviewActivity extends BaseActivity {
 
     private ActivityRatingBinding mBinding;
-    private int productID;
+    private OrderItem product;
     private double avgRating;
-    private RatingActViewModel mViewModel;
+    private ReviewActViewModel mViewModel;
     private boolean isInit = false;
 
     @Override
@@ -24,11 +25,10 @@ public class RatingActivity extends BaseActivity {
 
         Intent intent = getIntent();
         if(null != intent){
-            productID = intent.getIntExtra("PRODUCT_ID",-1);
+            product = intent.getParcelableExtra("PRODUCT_INFO");
             avgRating = intent.getDoubleExtra("AVG_RATING",-1);
         }
-        Toast.makeText(this, "Product ID: "+productID, Toast.LENGTH_SHORT).show();
-        mViewModel = new RatingActViewModel(this);
+        mViewModel = new ReviewActViewModel(this);
     }
 
     @Override
@@ -40,8 +40,14 @@ public class RatingActivity extends BaseActivity {
         }
     }
 
-    public int getProductID() {
-        return productID;
+    @Override
+    public void recreate() {
+        super.recreate();
+        mViewModel.NewAvgRatingInfo();
+    }
+
+    public OrderItem getProduct() {
+        return product;
     }
 
     public ActivityRatingBinding getBinding() {

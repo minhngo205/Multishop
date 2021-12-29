@@ -1,4 +1,4 @@
-package minh.project.multishop.base;
+package minh.project.multishop.dialog;
 
 import android.content.Context;
 import android.graphics.Color;
@@ -35,7 +35,7 @@ public class BaseDialog {
 
     private final TextView btnCancel;
 
-    private boolean cancelFlag = false;
+    private final boolean cancelFlag;
 
     public BaseDialog(@NonNull Context context, Bundle mData, boolean cancelable) {
         AlertDialog.Builder builder = new AlertDialog.Builder(context);

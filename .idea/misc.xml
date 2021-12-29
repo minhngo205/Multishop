@@ -107,6 +107,7 @@
         <entry key="..\:/Hoc tap/AndroidCode/Multishop/app/src/main/res/drawable/spinner_background.xml" value="0.3431111111111111" />
         <entry key="..\:/Hoc tap/AndroidCode/Multishop/app/src/main/res/drawable/spinner_outline.xml" value="0.3431111111111111" />
         <entry key="..\:/Hoc tap/AndroidCode/Multishop/app/src/main/res/drawable/textview_border_shape.xml" value="0.40208333333333335" />
+        <entry key="..\:/Hoc tap/AndroidCode/Multishop/app/src/main/res/drawable/textview_radius.xml" value="0.34684684684684686" />
         <entry key="..\:/Hoc tap/AndroidCode/Multishop/app/src/main/res/font/main_font.xml" value="0.4161458333333333" />
         <entry key="..\:/Hoc tap/AndroidCode/Multishop/app/src/main/res/layout/activity_add_address.xml" value="0.23693693693693693" />
         <entry key="..\:/Hoc tap/AndroidCode/Multishop/app/src/main/res/layout/activity_cart.xml" value="0.3859375" />
@@ -127,6 +128,7 @@
         <entry key="..\:/Hoc tap/AndroidCode/Multishop/app/src/main/res/layout/cart_buy_dialog_layout.xml" value="0.3859375" />
         <entry key="..\:/Hoc tap/AndroidCode/Multishop/app/src/main/res/layout/catalogue_type_background.xml" value="0.3220108695652174" />
         <entry key="..\:/Hoc tap/AndroidCode/Multishop/app/src/main/res/layout/diag_base.xml" value="0.21770833333333334" />
+        <entry key="..\:/Hoc tap/AndroidCode/Multishop/app/src/main/res/layout/dialog_canceled_infor.xml" value="0.17342342342342343" />
         <entry key="..\:/Hoc tap/AndroidCode/Multishop/app/src/main/res/layout/dialog_cart_buy_layout.xml" value="0.33378378378378376" />
         <entry key="..\:/Hoc tap/AndroidCode/Multishop/app/src/main/res/layout/dialog_no_internet.xml" value="0.33378378378378376" />
         <entry key="..\:/Hoc tap/AndroidCode/Multishop/app/src/main/res/layout/dialog_progress.xml" value="0.33378378378378376" />
@@ -172,6 +174,7 @@
         <entry key="..\:/Hoc tap/AndroidCode/Multishop/app/src/main/res/layout/view_search_box.xml" value="0.33378378378378376" />
         <entry key="..\:/Hoc tap/AndroidCode/Multishop/app/src/main/res/layout/view_search_res.xml" value="0.17300724637681159" />
         <entry key="..\:/Hoc tap/AndroidCode/Multishop/app/src/main/res/menu/bottom_navigation_items.xml" value="0.3859375" />
+        <entry key="..\:/Hoc tap/AndroidCode/Multishop/app/src/main/res/menu/menu_review.xml" value="0.18603603603603602" />
         <entry key="..\:/Hoc tap/AndroidCode/Multishop/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.22864583333333333" />
         <entry key="..\:/Hoc tap/AndroidCode/Multishop/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.3431111111111111" />
       </map>

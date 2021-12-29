@@ -6,10 +6,12 @@ import static minh.project.multishop.utils.Statistics.TAB_SHIPPING_INDEX;
 import static minh.project.multishop.utils.Statistics.TAB_SUCCESS_INDEX;
 import static minh.project.multishop.utils.Statistics.TAB_WAITING_CONFIRM_INDEX;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 import androidx.viewpager2.widget.ViewPager2;
@@ -26,12 +28,11 @@ import minh.project.multishop.fragment.ordercentre.ConfirmedFragment;
 import minh.project.multishop.fragment.ordercentre.ShippingFragment;
 import minh.project.multishop.fragment.ordercentre.SuccessFragment;
 import minh.project.multishop.fragment.ordercentre.WaitingConfirmFragment;
+import minh.project.multishop.utils.OnOrderListRefresh;
 
 public class OrderCentreActivity extends AppCompatActivity {
 
     private ActivityOrderCentreBinding mBinding;
-
-    private FragmentStateAdapter mAdapter;
 
     private List<Fragment> mFragments;
 
@@ -41,11 +42,11 @@ public class OrderCentreActivity extends AppCompatActivity {
         mBinding = ActivityOrderCentreBinding.inflate(getLayoutInflater());
         setContentView(mBinding.getRoot());
 
-        int startPage = 0;
-        initData(startPage);
+        initData();
     }
 
-    private void initData(int startPage) {
+    @SuppressLint("SetTextI18n")
+    private void initData() {
         mBinding.titleOrderCenter.tvTitle.setText("Đơn hàng của tôi");
         User user = UserDBRepository.getInstance().getCurrentUser();
         mFragments = new ArrayList<>();
@@ -55,7 +56,7 @@ public class OrderCentreActivity extends AppCompatActivity {
         mFragments.add(new SuccessFragment(this, user));
         mFragments.add(new CancelFragment(this, user));
 
-        mAdapter = new FragmentStateAdapter(this) {
+        FragmentStateAdapter mAdapter = new FragmentStateAdapter(this) {
             @NonNull
             @Override
             public Fragment createFragment(int position) {
@@ -92,24 +93,24 @@ public class OrderCentreActivity extends AppCompatActivity {
     private void selectTab(int i) {
         switch (i) {
             case TAB_WAITING_CONFIRM_INDEX:
-                mBinding.tabWaiting.setTextColor(getResources().getColor(R.color.red));
-                mBinding.viewWaiting.setBackgroundColor(getResources().getColor(R.color.red));
+                mBinding.tabWaiting.setTextColor(ContextCompat.getColor(this,R.color.red));
+                mBinding.viewWaiting.setBackgroundColor(ContextCompat.getColor(this,R.color.red));
                 break;
             case TAB_CONFIRMED_INDEX:
-                mBinding.tabConfirmed.setTextColor(getResources().getColor(R.color.red));
-                mBinding.viewConfirmed.setBackgroundColor(getResources().getColor(R.color.red));
+                mBinding.tabConfirmed.setTextColor(ContextCompat.getColor(this,R.color.red));
+                mBinding.viewConfirmed.setBackgroundColor(ContextCompat.getColor(this,R.color.red));
                 break;
             case TAB_SHIPPING_INDEX:
-                mBinding.tabShipping.setTextColor(getResources().getColor(R.color.red));
-                mBinding.viewShipping.setBackgroundColor(getResources().getColor(R.color.red));
+                mBinding.tabShipping.setTextColor(ContextCompat.getColor(this,R.color.red));
+                mBinding.viewShipping.setBackgroundColor(ContextCompat.getColor(this,R.color.red));
                 break;
             case TAB_SUCCESS_INDEX:
-                mBinding.tabCompleteOrder.setTextColor(getResources().getColor(R.color.red));
-                mBinding.viewCompleteOrder.setBackgroundColor(getResources().getColor(R.color.red));
+                mBinding.tabCompleteOrder.setTextColor(ContextCompat.getColor(this,R.color.red));
+                mBinding.viewCompleteOrder.setBackgroundColor(ContextCompat.getColor(this,R.color.red));
                 break;
             case TAB_CANCEL_INDEX:
-                mBinding.tabCancelOrder.setTextColor(getResources().getColor(R.color.red));
-                mBinding.viewCancelOrder.setBackgroundColor(getResources().getColor(R.color.red));
+                mBinding.tabCancelOrder.setTextColor(ContextCompat.getColor(this,R.color.red));
+                mBinding.viewCancelOrder.setBackgroundColor(ContextCompat.getColor(this,R.color.red));
                 break;
             default:
                 break;
@@ -118,19 +119,25 @@ public class OrderCentreActivity extends AppCompatActivity {
     }
 
     private void resetColor() {
-        mBinding.tabWaiting.setTextColor(getResources().getColor(R.color.black));
-        mBinding.viewWaiting.setBackgroundColor(getResources().getColor(R.color.white));
+        mBinding.tabWaiting.setTextColor(ContextCompat.getColor(this,R.color.black));
+        mBinding.viewWaiting.setBackgroundColor(ContextCompat.getColor(this,R.color.white));
 
-        mBinding.tabConfirmed.setTextColor(getResources().getColor(R.color.black));
-        mBinding.viewConfirmed.setBackgroundColor(getResources().getColor(R.color.white));
+        mBinding.tabConfirmed.setTextColor(ContextCompat.getColor(this,R.color.black));
+        mBinding.viewConfirmed.setBackgroundColor(ContextCompat.getColor(this,R.color.white));
 
-        mBinding.tabShipping.setTextColor(getResources().getColor(R.color.black));
-        mBinding.viewShipping.setBackgroundColor(getResources().getColor(R.color.white));
+        mBinding.tabShipping.setTextColor(ContextCompat.getColor(this,R.color.black));
+        mBinding.viewShipping.setBackgroundColor(ContextCompat.getColor(this,R.color.white));
 
-        mBinding.tabCompleteOrder.setTextColor(getResources().getColor(R.color.black));
-        mBinding.viewCompleteOrder.setBackgroundColor(getResources().getColor(R.color.white));
+        mBinding.tabCompleteOrder.setTextColor(ContextCompat.getColor(this,R.color.black));
+        mBinding.viewCompleteOrder.setBackgroundColor(ContextCompat.getColor(this,R.color.white));
 
-        mBinding.tabCancelOrder.setTextColor(getResources().getColor(R.color.black));
-        mBinding.viewCancelOrder.setBackgroundColor(getResources().getColor(R.color.white));
+        mBinding.tabCancelOrder.setTextColor(ContextCompat.getColor(this,R.color.black));
+        mBinding.viewCancelOrder.setBackgroundColor(ContextCompat.getColor(this,R.color.white));
+    }
+
+    public void onDataRefresh() {
+        for (Fragment fragment : mFragments) {
+            if(fragment.getClass() == WaitingConfirmFragment.class) ((OnOrderListRefresh) fragment).onDataRefresh();
+        }
     }
 }

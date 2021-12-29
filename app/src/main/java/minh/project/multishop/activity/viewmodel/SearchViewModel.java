@@ -1,8 +1,8 @@
 package minh.project.multishop.activity.viewmodel;
 
-import static minh.project.multishop.base.BaseDialog.CANCEL_BUTTON;
-import static minh.project.multishop.base.BaseDialog.CONFIRM_BUTTON;
-import static minh.project.multishop.base.BaseDialog.CONTENT;
+import static minh.project.multishop.dialog.BaseDialog.CANCEL_BUTTON;
+import static minh.project.multishop.dialog.BaseDialog.CONFIRM_BUTTON;
+import static minh.project.multishop.dialog.BaseDialog.CONTENT;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -23,7 +23,7 @@ import minh.project.multishop.R;
 import minh.project.multishop.activity.SearchActivity;
 import minh.project.multishop.activity.SearchResultActivity;
 import minh.project.multishop.base.BaseActivityViewModel;
-import minh.project.multishop.base.BaseDialog;
+import minh.project.multishop.dialog.BaseDialog;
 import minh.project.multishop.database.entity.SearchHistory;
 import minh.project.multishop.database.repository.ProductDBRepository;
 import minh.project.multishop.database.repository.SearchHistoryRepository;

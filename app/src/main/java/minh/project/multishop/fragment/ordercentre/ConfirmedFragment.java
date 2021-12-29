@@ -21,7 +21,7 @@ import minh.project.multishop.base.BaseFragment;
 import minh.project.multishop.database.entity.User;
 import minh.project.multishop.databinding.FragmentConfirmedBinding;
 import minh.project.multishop.network.repository.OrderRepository;
-import minh.project.multishop.utils.CustomProgress;
+import minh.project.multishop.dialog.CustomProgress;
 
 public class ConfirmedFragment extends BaseFragment implements SwipeRefreshLayout.OnRefreshListener {
 

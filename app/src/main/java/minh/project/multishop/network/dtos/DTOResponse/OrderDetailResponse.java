@@ -1,8 +1,5 @@
 package minh.project.multishop.network.dtos.DTOResponse;
 
-import android.os.Parcel;
-import android.os.Parcelable;
-
 import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
@@ -11,8 +8,7 @@ import java.util.List;
 
 import minh.project.multishop.models.OrderItem;
 import minh.project.multishop.network.dtos.DTOmodels.DTOOrderItemResponse;
-import minh.project.multishop.network.dtos.DTOmodels.Payment;
-import minh.project.multishop.utils.DateConverter;
+import minh.project.multishop.models.Payment;
 
 public class OrderDetailResponse {
     @SerializedName("id")

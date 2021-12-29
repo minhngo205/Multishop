@@ -1,8 +1,8 @@
 package minh.project.multishop.activity.viewmodel;
 
-import static minh.project.multishop.base.BaseDialog.CANCEL_BUTTON;
-import static minh.project.multishop.base.BaseDialog.CONFIRM_BUTTON;
-import static minh.project.multishop.base.BaseDialog.CONTENT;
+import static minh.project.multishop.dialog.BaseDialog.CANCEL_BUTTON;
+import static minh.project.multishop.dialog.BaseDialog.CONFIRM_BUTTON;
+import static minh.project.multishop.dialog.BaseDialog.CONTENT;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -28,7 +28,7 @@ import minh.project.multishop.activity.OrderSubmitActivity;
 import minh.project.multishop.R;
 import minh.project.multishop.adapter.OrderItemAdapter;
 import minh.project.multishop.base.BaseActivityViewModel;
-import minh.project.multishop.base.BaseDialog;
+import minh.project.multishop.dialog.BaseDialog;
 import minh.project.multishop.database.entity.User;
 import minh.project.multishop.database.entity.UserInfo;
 import minh.project.multishop.database.repository.UserDBRepository;
@@ -48,11 +48,9 @@ public class OrderSubmitViewModel extends BaseActivityViewModel<OrderSubmitActiv
     private UserInfo userInfo;
     private final User mUser;
     private final OrderRepository orderRepository;
-    private final UserDBRepository userDBRepository;
     private ArrayList<OrderItem> orderItemList;
 
     private static final int SHIPPING_FEE = 30000;
-    private final int TotalPrice = 0;
 
     /**
      * constructor
@@ -64,12 +62,13 @@ public class OrderSubmitViewModel extends BaseActivityViewModel<OrderSubmitActiv
         mBinding = mActivity.getBinding();
         orderItemList = new ArrayList<>();
         adapter = new OrderItemAdapter(mActivity);
-        userDBRepository = UserDBRepository.getInstance();
+        UserDBRepository userDBRepository = UserDBRepository.getInstance();
         userInfo = userDBRepository.getUserInfo();
         mUser = userDBRepository.getCurrentUser();
         orderRepository = OrderRepository.getInstance();
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     public void initView() {
         rvOrderItems = mBinding.rvItems;
@@ -166,7 +165,7 @@ public class OrderSubmitViewModel extends BaseActivityViewModel<OrderSubmitActiv
                 getPaymentMethode(),
                 DTOOrderItemRequests
         );
-        orderRepository.getOrderData(mUser.getAccToken(),request).observe(mActivity, createOrderResponse -> {
+        orderRepository.getCreateOrderData(mUser.getAccToken(),request).observe(mActivity, createOrderResponse -> {
             if(null == createOrderResponse){
                 Toast.makeText(mActivity, "Không thể đặt hàng", Toast.LENGTH_SHORT).show();
                 return;

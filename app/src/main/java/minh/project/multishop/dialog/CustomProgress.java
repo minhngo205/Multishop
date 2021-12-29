@@ -1,4 +1,4 @@
-package minh.project.multishop.utils;
+package minh.project.multishop.dialog;
 
 import android.app.Dialog;
 import android.content.Context;

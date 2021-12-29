@@ -24,7 +24,7 @@
     <string name="title_catalogue">Danh mục</string>
     <string name="title_new_in">Khuyến mãi</string>
     <string name="recommendation">Gợi ý cho bạn</string>
-    <string name="sys_integrity_detecting">Detecting...</string>
+    <string name="sys_integrity_detecting">Detecting…</string>
     <string name="sys_integrity_detect_success">System integrity is OK</string>
     <string name="welcome">Welcome</string>
     <string name="first_press_back">Nhấn quay lại lần nữa để thoát</string>
@@ -69,6 +69,10 @@
     <string name="title_rate_product">Đánh giá sản phẩm</string>
     <string name="check_delete_history">Bạn có chắc chắn muốn xoá lịch sử tìm kiếm ?</string>
     <string name="llb_no_items_in_order_center">\"Hổng\" có đơn nào cả !!!</string>
+    <string name="order_center_cancel_order">Huỷ đơn</string>
+    <string name="order_center_confirm_cancel_order">Bạn có chắc chắn muốn huỷ đơn hàng ?</string>
+    <string name="order_cancel_infor">Đơn hàng: %d</string>
+    <string name="cancel_time">Đã huỷ: %s</string>
 
     <string-array name="search_hot">
         <item>Laptop Asus</item>

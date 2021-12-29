@@ -1,8 +1,8 @@
 package minh.project.multishop.fragment.fragmentviewmodel;
 
-import static minh.project.multishop.base.BaseDialog.CANCEL_BUTTON;
-import static minh.project.multishop.base.BaseDialog.CONFIRM_BUTTON;
-import static minh.project.multishop.base.BaseDialog.CONTENT;
+import static minh.project.multishop.dialog.BaseDialog.CANCEL_BUTTON;
+import static minh.project.multishop.dialog.BaseDialog.CONFIRM_BUTTON;
+import static minh.project.multishop.dialog.BaseDialog.CONTENT;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -21,7 +21,7 @@ import minh.project.multishop.activity.ContactUsActivity;
 import minh.project.multishop.activity.EditInfoActivity;
 import minh.project.multishop.activity.LoginActivity;
 import minh.project.multishop.activity.OrderCentreActivity;
-import minh.project.multishop.base.BaseDialog;
+import minh.project.multishop.dialog.BaseDialog;
 import minh.project.multishop.base.BaseFragmentViewModel;
 import minh.project.multishop.database.entity.User;
 import minh.project.multishop.database.entity.UserInfo;
@@ -59,16 +59,18 @@ public class UserFragmentViewModel extends BaseFragmentViewModel<UserFragment> {
         binding.lvOut.setOnClickListener(mFragment);
     }
 
+    @SuppressLint("SetTextI18n")
     public void checkSignIn() {
         mUser = mUserDBRepository.getCurrentUser();
         if (mUser == null) { // no sign
-            binding.layoutWelcome.setVisibility(View.GONE);
+            binding.tvUserName.setText("Khách");
+            binding.tvUserInfo.setText("Đăng nhập để sử dụng đầy đủ chức năng");
             binding.tvSignIn.setVisibility(View.VISIBLE);
             return;
         }
 
         // sign in
-        binding.layoutWelcome.setVisibility(View.VISIBLE);
+        binding.tvUserInfo.setText("Chỉnh sửa thông tin");
         binding.tvSignIn.setVisibility(View.GONE);
         Log.d("TAG", "checkSignIn: "+mUserInfo);
         if(null == mUserInfo || mUserInfo.getName().isEmpty()){
@@ -111,7 +113,7 @@ public class UserFragmentViewModel extends BaseFragmentViewModel<UserFragment> {
                 break;
             case R.id.layout_welcome: // My Account
                 if(null == mUser){
-                    Toast.makeText(mFragment.getContext(), "Bạn cần phải đăng nhập", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(mFragment.getContext(), "Bạn phải đăng nhập để sử dụng tính năng này", Toast.LENGTH_SHORT).show();
                     return;
                 }
                 Intent editInfoIntent = new Intent(mFragment.getActivity(), EditInfoActivity.class);

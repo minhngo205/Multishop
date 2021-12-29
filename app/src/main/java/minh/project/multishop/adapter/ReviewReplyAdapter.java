@@ -10,7 +10,7 @@ import java.util.List;
 
 import minh.project.multishop.R;
 import minh.project.multishop.databinding.ItemReviewResponseBinding;
-import minh.project.multishop.models.DTOComment;
+import minh.project.multishop.network.dtos.DTOmodels.DTOComment;
 import minh.project.multishop.utils.DateConverter;
 
 public class ReviewReplyAdapter extends RecyclerView.Adapter<ReviewReplyAdapter.MyViewHolder> {

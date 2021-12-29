@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import minh.project.multishop.database.entity.ProductName;
@@ -25,6 +26,7 @@ public class ProductNetRepository {
     private MutableLiveData<List<Product>> listProductData;
     private MutableLiveData<Product> product;
     private MutableLiveData<List<ProductName>> productNameData;
+    private MutableLiveData<List<Product>> homeProduct;
 
     private static ProductNetRepository instance;
 
@@ -63,6 +65,36 @@ public class ProductNetRepository {
         listProductData = new MutableLiveData<>();
         loadProductByName(name);
         return listProductData;
+    }
+
+    public LiveData<List<Product>> getHomeProduct(){
+        if(homeProduct==null){
+            homeProduct = new MutableLiveData<>();
+            loadHomeProductData();
+        }
+        return homeProduct;
+    }
+
+    private void loadHomeProductData() {
+        IAppAPI api = RetroInstance.getAppAPI();
+        Call<GetListProductResponse> call = api.getHomeListProduct();
+        call.enqueue(new Callback<GetListProductResponse>() {
+            @Override
+            public void onResponse(@NonNull Call<GetListProductResponse> call, @NonNull Response<GetListProductResponse> response) {
+                if(response.isSuccessful()){
+                    if(response.body()!=null){
+                        homeProduct.postValue(response.body().productList);
+                    } else {
+                        homeProduct.postValue(null);
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<GetListProductResponse> call, @NonNull Throwable t) {
+                homeProduct.postValue(null);
+            }
+        });
     }
 
     private void loadProductByName(String name) {

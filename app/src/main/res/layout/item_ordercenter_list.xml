@@ -101,24 +101,24 @@
 
         <!--    </RelativeLayout>-->
 
-        <!--    <RelativeLayout-->
-        <!--        android:id="@+id/order_to_be_received_oper"-->
-        <!--        android:layout_width="match_parent"-->
-        <!--        android:layout_height="wrap_content"-->
-        <!--        android:visibility="gone">-->
+            <RelativeLayout
+                android:id="@+id/order_to_be_cancel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone">
 
-        <!--        <TextView-->
-        <!--            android:id="@+id/tv_confirm_order"-->
-        <!--            android:layout_width="80dp"-->
-        <!--            android:layout_height="30dp"-->
-        <!--            android:layout_alignParentEnd="true"-->
-        <!--            android:layout_marginTop="10dp"-->
-        <!--            android:layout_marginEnd="20dp"-->
-        <!--            android:background="@drawable/textview_radius"-->
-        <!--            android:gravity="center"-->
-        <!--            android:text="@string/order_center_confirm_order"-->
-        <!--            android:textColor="@color/white" />-->
-        <!--    </RelativeLayout>-->
+                <TextView
+                    android:id="@+id/tv_cancel_order"
+                    android:layout_width="80dp"
+                    android:layout_height="30dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="20dp"
+                    android:background="@drawable/textview_radius"
+                    android:gravity="center"
+                    android:text="@string/order_center_cancel_order"
+                    android:textColor="@color/white" />
+            </RelativeLayout>
 
         <View
             android:layout_width="match_parent"

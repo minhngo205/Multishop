@@ -6,17 +6,12 @@ import android.widget.Adapter;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
-
 import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
-import java.util.ArrayList;
-import java.util.List;
-
 import minh.project.multishop.adapter.BrandSpinnerAdapter;
 import minh.project.multishop.adapter.CategoryAdapter;
 import minh.project.multishop.adapter.ProductCateAdapter;
@@ -32,6 +27,9 @@ import minh.project.multishop.network.dtos.DTOResponse.GetListProductResponse;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class CategoryFragmentViewModel extends BaseFragmentViewModel<CategoryFragment> {
     private static final String TAG = "CategoryFragment";

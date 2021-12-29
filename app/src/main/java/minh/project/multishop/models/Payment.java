@@ -1,4 +1,4 @@
-package minh.project.multishop.network.dtos.DTOmodels;
+package minh.project.multishop.models;
 
 public class Payment {
     public int id;

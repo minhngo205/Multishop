@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+<com.google.android.material.card.MaterialCardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -25,11 +26,16 @@
             android:layout_marginEnd="@dimen/spacing_standard_new">
 
             <TextView
+                android:id="@+id/header"
                 style="@style/Heading"
                 android:layout_centerVertical="true"
-                android:text="Trả lời đánh giá" />
+                android:text="Đánh giá sản phẩm đã mua" />
 
         </RelativeLayout>
+
+        <include
+            android:id="@+id/layout_product_view"
+            layout="@layout/item_product_search_res"/>
 
 
         <View
@@ -62,14 +68,45 @@
 
         </RelativeLayout>
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btnSubmit"
-            style="@style/MaterialButtonStyle.Filled"
+
+        <RatingBar
+            android:id="@+id/ratingBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginStart="@dimen/spacing_standard_new"
+            android:layout_marginTop="@dimen/spacing_standard_new"
+            android:layout_marginEnd="@dimen/spacing_standard_new"
+            android:numStars="5"
+            android:stepSize="1.0"
+            android:rating="5"
+            android:theme="@style/RatingBar" />
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/spacing_standard_new"
-            android:shadowColor="@color/colorPrimary"
-            android:text="Trả lời"/>
+            android:orientation="horizontal">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnSubmit"
+                style="@style/MaterialButtonStyle.Filled"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_margin="@dimen/spacing_standard_new"
+                android:shadowColor="@color/colorPrimary"
+                android:text="Xác nhận" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnCancel"
+                style="@style/MaterialButtonStyle.Stroked"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_margin="@dimen/spacing_standard_new"
+                android:shadowColor="@color/colorPrimary"
+                android:text="Huỷ" />
+        </LinearLayout>
     </LinearLayout>
 
 </com.google.android.material.card.MaterialCardView>
