@@ -10,11 +10,19 @@ public class ProductDescriptionActivity extends AppCompatActivity {
 
     private ActivityProductDecriptionBinding mBinding;
 
+    @SuppressLint("SetJavaScriptEnabled")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mBinding = ActivityProductDecriptionBinding.inflate(getLayoutInflater());
         setContentView(mBinding.getRoot());
+
+//        mBinding.webviewPage.setWebChromeClient(new WebChromeClient());
+//        mBinding.webviewPage.setWebViewClient(new WebViewClient());
+//        mBinding.webviewPage.clearCache(true);
+//        mBinding.webviewPage.clearHistory();
+        mBinding.webviewPage.getSettings().setJavaScriptEnabled(true);
+//        mBinding.webviewPage.getSettings().setJavaScriptCanOpenWindowsAutomatically(true);
 
         Intent intent = getIntent();
         if(intent!=null){
@@ -24,8 +32,7 @@ public class ProductDescriptionActivity extends AppCompatActivity {
 
         setupToolBar();
     }
-
-    @SuppressLint("SetJavaScriptEnabled")
+    
     private void setUpData(String data) {
         mBinding.webviewPage.loadDataWithBaseURL(
                 null,

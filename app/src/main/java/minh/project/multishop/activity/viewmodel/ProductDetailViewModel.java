@@ -20,6 +20,7 @@ import minh.project.multishop.database.entity.User;
 import minh.project.multishop.database.repository.UserDBRepository;
 import minh.project.multishop.databinding.ActivityProductDetailBinding;
 import minh.project.multishop.databinding.DialogCartBuyLayoutBinding;
+import minh.project.multishop.dialog.CustomProgress;
 import minh.project.multishop.models.Image;
 import minh.project.multishop.models.OrderItem;
 import minh.project.multishop.models.Product;
@@ -49,6 +50,8 @@ public class ProductDetailViewModel extends BaseActivityViewModel<ProductDetailA
     
     private final ProductNetRepository productNetRepository;
 
+    private final CustomProgress progressDialog;
+
     /**
      * constructor
      *
@@ -60,6 +63,7 @@ public class ProductDetailViewModel extends BaseActivityViewModel<ProductDetailA
         mUser = dbRepository.getCurrentUser();
         cartRepository = CartRepository.getInstance();
         productNetRepository = ProductNetRepository.getInstance();
+        progressDialog = CustomProgress.getInstance();
     }
 
     @Override
@@ -104,6 +108,7 @@ public class ProductDetailViewModel extends BaseActivityViewModel<ProductDetailA
     }
 
     public void initProductView() {
+        progressDialog.showProgress(mActivity,"Đang tải...",false);
         productNetRepository.getProductByID(mActivity.getProductID()).observe(mActivity, this::updateView);
     }
 
@@ -115,6 +120,7 @@ public class ProductDetailViewModel extends BaseActivityViewModel<ProductDetailA
         }
         productDetail = product;
         initView();
+        progressDialog.hideProgress();
     }
 
     @SuppressLint("NonConstantResourceId")

@@ -52,7 +52,7 @@
             android:layout_marginStart="@dimen/tab_5dp"
             android:layout_marginTop="10dp"
             android:layout_toEndOf="@id/versionView1"
-            android:text="Hệ thống thông tin và ERP"
+            android:text="Kiến trúc Phần mềm"
             android:textStyle="bold" />
     </RelativeLayout>
 
@@ -362,7 +362,7 @@
             android:layout_alignParentBottom="true"
             android:layout_marginStart="20dp"
             android:paddingTop="@dimen/tab_10dp"
-            android:text="Nhóm 2 - Lớp 17PFIEV3"
+            android:text="Nhóm 6 - Lớp 17PFIEV3"
             android:textSize="16sp"
             android:textStyle="bold" />
     </RelativeLayout>

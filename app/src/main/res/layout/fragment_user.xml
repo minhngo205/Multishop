@@ -4,7 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FCFCFC">
+    android:background="#F7F8FC">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -61,7 +61,7 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:layout_marginTop="20dp"
-            android:background="#FCFCFC">
+            android:background="#F7F8FC">
 
             <TextView
                 android:gravity="center"
@@ -124,8 +124,9 @@
 
 
         <TextView
+            android:id="@+id/tv_version"
             style="@style/viewParent.headerText.settingsMiniTitle"
-            android:text="Phiên bản 1.0.0"
+            android:text="@string/string_version"
             android:textAlignment="center"/>
 
     </LinearLayout>

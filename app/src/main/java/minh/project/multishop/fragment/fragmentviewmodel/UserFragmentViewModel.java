@@ -7,6 +7,7 @@ import static minh.project.multishop.dialog.BaseDialog.CONTENT;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -57,6 +58,15 @@ public class UserFragmentViewModel extends BaseFragmentViewModel<UserFragment> {
         binding.layoutWelcome.setOnClickListener(mFragment);
         binding.lvContact.setOnClickListener(mFragment);
         binding.lvOut.setOnClickListener(mFragment);
+
+        try {
+            String versionName = mFragment.requireContext().getPackageManager()
+                    .getPackageInfo(mFragment.requireContext().getPackageName(), 0).versionName;
+
+            binding.tvVersion.setText(mFragment.requireContext().getString(R.string.string_version,versionName));
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
     }
 
     @SuppressLint("SetTextI18n")

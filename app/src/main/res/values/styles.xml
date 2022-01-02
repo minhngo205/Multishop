@@ -10,6 +10,7 @@
 <!--        <item name="android:windowTranslucentStatus">true</item>-->
 <!--        <item name="android:windowTranslucentNavigation">true</item>-->
     </style>
+
     <!-- vertical division  -->
     <style name="common_vertical_division_line_style">
         <item name="android:layout_width">0.5dp</item>

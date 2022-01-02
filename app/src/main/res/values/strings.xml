@@ -73,6 +73,7 @@
     <string name="order_center_confirm_cancel_order">Bạn có chắc chắn muốn huỷ đơn hàng ?</string>
     <string name="order_cancel_infor">Đơn hàng: %d</string>
     <string name="cancel_time">Đã huỷ: %s</string>
+    <string name="string_version">Phiên bản %s</string>
 
     <string-array name="search_hot">
         <item>Laptop Asus</item>

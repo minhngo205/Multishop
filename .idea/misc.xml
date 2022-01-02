@@ -3,6 +3,7 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Hoc tap/AndroidCode/Multishop/app/src/main/res/drawable-v23/splashbackground.xml" value="0.29444444444444445" />
         <entry key="..\:/Hoc tap/AndroidCode/Multishop/app/src/main/res/drawable-v24/bg_ractangal_stroked.xml" value="0.34774774774774775" />
         <entry key="..\:/Hoc tap/AndroidCode/Multishop/app/src/main/res/drawable-v24/bg_ractangle_rounded_stroke.xml" value="0.3431111111111111" />
         <entry key="..\:/Hoc tap/AndroidCode/Multishop/app/src/main/res/drawable-v24/bg_rectangle_order.xml" value="0.2072072072072072" />
@@ -55,6 +56,8 @@
         <entry key="..\:/Hoc tap/AndroidCode/Multishop/app/src/main/res/drawable/checkbox_style_selector.xml" value="0.40208333333333335" />
         <entry key="..\:/Hoc tap/AndroidCode/Multishop/app/src/main/res/drawable/circle_add_delete_type.xml" value="0.23385416666666667" />
         <entry key="..\:/Hoc tap/AndroidCode/Multishop/app/src/main/res/drawable/circle_add_delete_type_red.xml" value="0.40208333333333335" />
+        <entry key="..\:/Hoc tap/AndroidCode/Multishop/app/src/main/res/drawable/continue_background_disable.xml" value="0.34684684684684686" />
+        <entry key="..\:/Hoc tap/AndroidCode/Multishop/app/src/main/res/drawable/continue_background_selector.xml" value="0.34684684684684686" />
         <entry key="..\:/Hoc tap/AndroidCode/Multishop/app/src/main/res/drawable/corner_text_type.xml" value="0.23385416666666667" />
         <entry key="..\:/Hoc tap/AndroidCode/Multishop/app/src/main/res/drawable/dot_no_selected.xml" value="0.22864583333333333" />
         <entry key="..\:/Hoc tap/AndroidCode/Multishop/app/src/main/res/drawable/half_corner_text_type_1.xml" value="0.23385416666666667" />
@@ -106,6 +109,7 @@
         <entry key="..\:/Hoc tap/AndroidCode/Multishop/app/src/main/res/drawable/select_position_bgd.xml" value="0.23385416666666667" />
         <entry key="..\:/Hoc tap/AndroidCode/Multishop/app/src/main/res/drawable/spinner_background.xml" value="0.3431111111111111" />
         <entry key="..\:/Hoc tap/AndroidCode/Multishop/app/src/main/res/drawable/spinner_outline.xml" value="0.3431111111111111" />
+        <entry key="..\:/Hoc tap/AndroidCode/Multishop/app/src/main/res/drawable/splashbackground.xml" value="0.29444444444444445" />
         <entry key="..\:/Hoc tap/AndroidCode/Multishop/app/src/main/res/drawable/textview_border_shape.xml" value="0.40208333333333335" />
         <entry key="..\:/Hoc tap/AndroidCode/Multishop/app/src/main/res/drawable/textview_radius.xml" value="0.34684684684684686" />
         <entry key="..\:/Hoc tap/AndroidCode/Multishop/app/src/main/res/font/main_font.xml" value="0.4161458333333333" />
@@ -125,6 +129,7 @@
         <entry key="..\:/Hoc tap/AndroidCode/Multishop/app/src/main/res/layout/activity_review.xml" value="0.3859375" />
         <entry key="..\:/Hoc tap/AndroidCode/Multishop/app/src/main/res/layout/activity_search.xml" value="0.33378378378378376" />
         <entry key="..\:/Hoc tap/AndroidCode/Multishop/app/src/main/res/layout/activity_search_result.xml" value="0.22522522522522523" />
+        <entry key="..\:/Hoc tap/AndroidCode/Multishop/app/src/main/res/layout/activity_splash.xml" value="0.2" />
         <entry key="..\:/Hoc tap/AndroidCode/Multishop/app/src/main/res/layout/bg_top_shadow.xml" value="0.19324324324324324" />
         <entry key="..\:/Hoc tap/AndroidCode/Multishop/app/src/main/res/layout/cart_buy_dialog_layout.xml" value="0.3859375" />
         <entry key="..\:/Hoc tap/AndroidCode/Multishop/app/src/main/res/layout/catalogue_type_background.xml" value="0.3220108695652174" />
